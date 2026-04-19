@@ -1,0 +1,108 @@
+<div class="admin-panel-content">
+  <div class="header-seccion">
+    <h1>Gestión de Misiones</h1>
+    <div class="header-actions">
+      <button class="btn-crear-tarea" (click)="abrirModalCrear()">+ Nueva Misión</button>
+    </div>
+  </div>
+
+  <div class="tabla-container">
+    <table class="tabla-colabora">
+      <thead>
+      <tr>
+        <th>Urgencia</th>
+        <th>Misión</th>
+        <th>Descripción</th>
+        <th>Estado</th>
+        <th class="text-center">Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let t of tareas">
+        <td style="width: 130px;">
+          <select [(ngModel)]="t.urgencia" [ngClass]="t.urgencia?.toLowerCase()" class="select-inline-badge">
+            <option value="Alta">Alta</option>
+            <option value="Media">Media</option>
+            <option value="Baja">Baja</option>
+          </select>
+        </td>
+        <td><input type="text" [(ngModel)]="t.titulo" class="input-inline"></td>
+        <td><textarea [(ngModel)]="t.descripcion" class="textarea-inline" rows="1"></textarea></td>
+        <td style="width: 150px;">
+          <select [(ngModel)]="t.estado" class="select-admin-mustard-small">
+            <option value="Pendiente">Pendiente</option>
+            <option value="En curso">En curso</option>
+            <option value="Finalizada">Finalizada</option>
+          </select>
+        </td>
+        <td class="text-center">
+          <button class="btn-eliminar-soft" (click)="abrirModalBorrar(t)">Borrar</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="table-footer-actions">
+    <button class="btn-mustard-large" (click)="abrirModalConfirmarCambios()">Guardar cambios</button>
+  </div>
+</div> <div class="modal-overlay" *ngIf="mostrarModalCrear">
+  <div class="modal-card modal-crear">
+    <h3>Crear Nueva Misión</h3>
+    <div class="form-crear">
+      <div class="field">
+        <label>Título de la misión</label>
+        <input type="text" [(ngModel)]="nuevaTarea.titulo" placeholder="Ej: Limpieza de gateras">
+      </div>
+      <div class="field">
+        <label>Descripción</label>
+        <textarea [(ngModel)]="nuevaTarea.descripcion" rows="3" placeholder="Detalla la tarea..."></textarea>
+      </div>
+      <div class="field">
+        <label>Urgencia</label>
+        <select [(ngModel)]="nuevaTarea.urgencia" [ngClass]="nuevaTarea.urgencia?.toLowerCase()">
+          <option value="Alta">Alta</option>
+          <option value="Media">Media</option>
+          <option value="Baja">Baja</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" (click)="mostrarModalCrear = false">Cancelar</button>
+      <button class="btn-rol" (click)="crearTarea()">Crear Misión</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" *ngIf="mostrarConfirmarGuardar">
+  <div class="modal-card">
+    <h3>¿Aplicar cambios?</h3>
+    <p>Se actualizarán todas las tareas en la base de datos.</p>
+    <div class="modal-actions">
+      <button class="btn-cancel" (click)="mostrarConfirmarGuardar = false">Cancelar</button>
+      <button class="btn-rol" (click)="confirmarGuardarTodo()">Guardar todo</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" *ngIf="tareaParaBorrar">
+  <div class="modal-card">
+    <h3 [style.color]="errorBorrado ? '#c53030' : '#4A4E69'">
+      {{ errorBorrado ? 'No se puede eliminar' : '¿Eliminar misión?' }}
+    </h3>
+    <p *ngIf="!errorBorrado">
+      Estás a punto de borrar: <strong>{{ tareaParaBorrar.titulo }}</strong>.
+    </p>
+    <div *ngIf="errorBorrado" class="error-box-inline">
+      {{ errorBorrado }}
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="btn-cancel" (click)="tareaParaBorrar = null">
+        {{ errorBorrado ? 'Entendido' : 'Cancelar' }}
+      </button>
+      <button type="button" class="btn-confirm-delete" (click)="confirmarBorrado()" *ngIf="!errorBorrado">
+        Confirmar eliminación
+      </button>
+    </div>
+  </div>
+</div>

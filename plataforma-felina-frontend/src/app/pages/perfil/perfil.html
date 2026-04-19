@@ -1,0 +1,69 @@
+<div class="perfil-page-bg">
+  <div class="profile-main-container">
+
+    <div class="profile-banner">
+      <button (click)="logout()" class="btn-logout-social">
+        <i class="fas fa-sign-out-alt"></i> Salir
+      </button>
+
+      <div class="avatar-overlap">
+        <div class="main-avatar-wrapper" (click)="mostrarModal = true">
+          <img [src]="authService.user()?.fotoUrl || 'assets/default-avatar.png'" alt="Avatar">
+          <div class="avatar-edit-hint">
+            <i class="fas fa-camera"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-content-card">
+      <div class="user-titles">
+        <h1>{{ authService.user()?.nombre }} {{ authService.user()?.apellido }}</h1>
+        <span class="badge-rol">{{ authService.user()?.rol?.nombre }}</span>
+      </div>
+
+      <div class="insignias-row">
+        <div class="insignia-slot" title="Socio">
+          <div class="circle-badge empty"></div>
+        </div>
+        <div class="insignia-slot" title="Colaborador">
+          <div class="circle-badge empty"></div>
+        </div>
+        <div class="insignia-slot" title="Veterano">
+          <div class="circle-badge empty"></div>
+        </div>
+      </div>
+
+      <hr class="separator-soft">
+
+      <div class="contact-details">
+        <h3>Información de contacto</h3>
+        <div class="details-grid">
+          <div class="detail-box">
+            <label>Email</label>
+            <p>{{ authService.user()?.email }}</p>
+          </div>
+          <div class="detail-box">
+            <label>Teléfono</label>
+            <p>{{ authService.user()?.telefono || 'No proporcionado' }}</p>
+          </div>
+        </div>
+        <button class="btn-edit-info">Editar perfil</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" *ngIf="mostrarModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Elige tu personaje gato</h3>
+        <button class="btn-close" (click)="mostrarModal = false">&times;</button>
+      </div>
+      <div class="avatar-gallery">
+        <div *ngFor="let url of fotosGatos" class="gallery-item" (click)="seleccionarAvatar(url)">
+          <img [src]="url">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+<nav class="navbar">
+  <a routerLink="/" class="navbar-logo">
+    <img src="assets/logo/fullLogo.png" alt="Logo">
+  </a>
+
+  <div class="navbar-right-side">
+    <div class="navbar-links">
+      <a routerLink="/gatos">Gatos</a>
+      <a routerLink="/como-ayudar">¿Cómo ayudar?</a>
+      <a routerLink="/colabora">Colabora</a>
+
+      <!-- Panel solo para admins -->
+      <a *ngIf="authService.user()?.rol?.nombre === 'ADMIN'"
+         routerLink="/admin/panel"
+         class="link-admin">
+        Panel
+      </a>
+
+      <a *ngIf="!authService.isLoggedIn()" routerLink="/login" class="btn-login">
+        Iniciar Sesión
+      </a>
+
+
+      <div *ngIf="authService.isLoggedIn()" class="user-menu-container">
+        <a routerLink="/perfil" class="user-profile-link" title="Ir a mi perfil">
+          <img [src]="authService.user()?.fotoUrl || 'assets/default-avatar.png'"
+               class="nav-avatar"
+               alt="Perfil">
+          <span class="username">Hola, {{ authService.user()?.nombre }}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>

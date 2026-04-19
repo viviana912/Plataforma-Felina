@@ -1,0 +1,68 @@
+<div class="colabora-container">
+
+  <div *ngIf="authService.isLoggedIn(); else mensajeInvitacion" class="muro-tareas">
+
+    <div class="header-seccion">
+      <h1>Lista de tareas</h1>
+      <p>Hola <strong>{{ authService.user()?.nombre }}</strong>, ayuda a nuestros gatos:</p>
+
+      <div class="filtros">
+        <label for="filtroUrgencia">Urgencia:</label>
+        <select id="filtroUrgencia" [(ngModel)]="filtroSeleccionado" (change)="filtrar()">
+          <option value="Todas">Todas las misiones</option>
+          <option value="Alta">🔴 Alta Prioridad</option>
+          <option value="Media">🟡 Media</option>
+          <option value="Baja">🟢 Baja</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="tabla-container">
+      <table class="tabla-colabora">
+        <thead>
+        <tr>
+          <th>Urgencia</th>
+          <th>Misión</th>
+          <th>Descripción</th>
+          <th>Estado</th>
+          <th>Acción</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let tarea of tareasFiltradas">
+          <td>
+              <span class="badge-urgencia" [ngClass]="tarea.urgencia ? tarea.urgencia.toLowerCase() : ''">
+                {{ tarea.urgencia }}
+              </span>
+          </td>
+          <td class="titulo-tarea">{{ tarea.titulo }}</td>
+          <td class="desc-tarea">{{ tarea.descripcion }}</td>
+          <td><span class="status-tag">{{ tarea.estado }}</span></td>
+          <td>
+            <button class="btn-postular" (click)="postular(tarea)">Yo me encargo</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <div *ngIf="tareasFiltradas.length === 0" class="sin-tareas">
+        Actualmente no hay misiones de tipo "{{ filtroSeleccionado }}".
+      </div>
+    </div>
+  </div>
+
+  <ng-template #mensajeInvitacion>
+    <div class="invitacion-card">
+      <h2>¡Te necesitamos!</h2>
+      <p>Para poder ver las misiones de voluntariado y ayudar a los gatos, primero debes formar parte de nuestra comunidad.</p>
+
+      <div class="acciones-invitacion">
+        <a routerLink="/login" class="btn-primario">Iniciar Sesión</a>
+        <a routerLink="/register" class="btn-secundario">Crear Cuenta</a>
+      </div>
+
+      <p class="footer-note">¿Tienes dudas? <a routerLink="/">Volver al inicio</a></p>
+    </div>
+  </ng-template>
+
+</div>

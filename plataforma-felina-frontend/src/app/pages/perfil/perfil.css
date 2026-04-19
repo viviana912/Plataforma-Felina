@@ -1,0 +1,133 @@
+/* Contenedor de fondo: Quitamos el padding superior para que pegue al nav */
+.perfil-page-bg {
+  background-color: #f3efef;
+  min-height: calc(100vh - 80px);
+  padding: 0 0 40px 0; /* Solo padding abajo y a los lados */
+  display: flex;
+  justify-content: center;
+}
+
+/* Contenedor principal: Solo redondeamos las esquinas de ABAJO */
+.profile-main-container {
+  width: 100%;
+  max-width: 1000px;
+  background: white;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Banner: Recto arriba para pegar con el Navbar */
+.profile-banner {
+  height: 280px;
+  background: linear-gradient(135deg, #4A4E69 0%, #9A8C98 100%);
+  position: relative;
+  width: 100%;
+  border-top: none; /* Aseguramos que no haya bordes extraños */
+}
+
+/* Avatar superpuesto */
+.avatar-overlap {
+  position: absolute;
+  bottom: -60px;
+  left: 50px;
+}
+
+.main-avatar-wrapper {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 6px solid white;
+  background: white;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+}
+
+.main-avatar-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+
+.avatar-edit-hint {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.3); color: white;
+  display: flex; justify-content: center; align-items: center;
+  opacity: 0; transition: 0.3s; font-size: 1.5rem;
+}
+.main-avatar-wrapper:hover .avatar-edit-hint { opacity: 1; }
+
+/* Cuerpo de la tarjeta */
+.profile-content-card {
+  padding: 80px 50px 40px;
+  text-align: left;
+}
+
+.user-titles h1 {
+  color: #4A4E69;
+  font-size: 2.2rem;
+  margin: 0;
+}
+
+.badge-rol {
+  display: inline-block;
+  margin-top: 10px;
+  background: #EBCB8B;
+  color: #4A4E69;
+  padding: 4px 15px;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 0.85rem;
+}
+
+/* INSIGNIAS */
+.insignias-row {
+  display: flex;
+  gap: 20px;
+  margin: 30px 0;
+}
+
+.circle-badge {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  border: 2px dashed #9A8C98;
+  transition: 0.3s;
+}
+
+.circle-badge.empty:hover {
+  border-color: #EBCB8B;
+  transform: translateY(-3px);
+}
+
+/* CONTACTO */
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  margin: 20px 0;
+}
+
+.detail-box label { color: #9A8C98; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; }
+.detail-box p { color: #4A4E69; font-size: 1.1rem; margin-top: 5px; }
+
+.btn-edit-info {
+  background: #EBCB8B; color: #4A4E69; border: none;
+  padding: 12px 25px; border-radius: 10px; font-weight: 600;
+  cursor: pointer; width: 100%; max-width: 200px;
+}
+
+.btn-logout-social {
+  position: absolute; top: 20px; right: 20px;
+  background: rgba(255, 255, 255, 0.2); border: 1px solid white;
+  color: white; padding: 8px 18px; border-radius: 8px; cursor: pointer;
+}
+
+/* MODAL */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.7); display: flex; justify-content: center; align-items: center; z-index: 2000;
+}
+.modal-card { background: white; padding: 30px; border-radius: 20px; width: 500px; max-height: 80vh; overflow-y: auto; }
+.avatar-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px; }
+.avatar-gallery img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; cursor: pointer; transition: 0.2s; }
+.avatar-gallery img:hover { transform: scale(1.05); border: 3px solid #EBCB8B; }

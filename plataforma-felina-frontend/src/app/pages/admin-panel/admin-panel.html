@@ -1,0 +1,27 @@
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>Administración</h2>
+      <p>{{ usuarioService.usuarioActual?.nombre }} (Admin)</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a routerLink="usuarios" routerLinkActive="active-link">
+        <span class="icon"></span> Gestión Usuarios
+      </a>
+      <a routerLink="tareas" routerLinkActive="active-link">
+        <span class="icon"></span> Gestión Tareas
+      </a>
+      <a routerLink="fichas" routerLinkActive="active-link">
+        <span class="icon"></span> Gestión Fichas
+      </a>
+      <a routerLink="solicitudes" routerLinkActive="active-link">
+        <span class="icon"></span> Solicitudes
+      </a>
+    </nav>
+  </aside>
+
+  <main class="admin-main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

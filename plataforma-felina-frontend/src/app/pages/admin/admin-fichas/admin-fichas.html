@@ -1,0 +1,116 @@
+<div class="admin-panel-content">
+  <div class="header-seccion">
+    <h1>Gestión de Gatos </h1>
+    <div class="header-actions">
+      <button class="btn-nuevo-michi" (click)="nuevoGato()">
+        <span class="icon-plus">+</span>
+        Nuevo Gato
+      </button>
+    </div>
+  </div>
+
+  <div class="tabla-container">
+    <table class="tabla-admin">
+      <thead>
+      <tr>
+        <th>Foto</th>
+        <th>Nombre</th>
+        <th>Estado</th>
+        <th>Urgente</th>
+        <th class="text-right">Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let g of gatos" [class.seleccionado]="gatoEditando?.id === g.id">
+        <td><img [src]="g.fotoUrl || 'assets/placeholder-cat.png'" class="img-mini-thumb"></td>
+        <td><strong>{{ g.nombre }}</strong></td>
+        <td>
+            <span class="badge-estado" [ngClass]="g.estado?.toLowerCase()">
+              {{ g.estado }}
+            </span>
+        </td>
+        <td>{{ g.urgente ? ' SÍ' : 'No' }}</td>
+        <td class="text-right">
+          <button class="btn-action btn-edit" (click)="seleccionarParaEditar(g)">
+            Editar
+          </button>
+          <button class="btn-action btn-delete" (click)="abrirModalBorrar(g)">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="edit-drawer" [class.open]="gatoEditando">
+  <div class="drawer-header">
+    <h3>{{ gatoEditando?.id ? 'Editar Ficha' : 'Nueva Ficha' }}</h3>
+    <button class="close-btn-top" (click)="cerrarEditor()">×</button>
+  </div>
+
+  <div class="drawer-body" *ngIf="gatoEditando">
+    <div class="img-preview-container">
+      <img [src]="gatoEditando.fotoUrl || 'assets/placeholder-cat.png'">
+      <div class="input-group">
+        <label>URL de la imagen</label>
+        <input type="text" [(ngModel)]="gatoEditando.fotoUrl">
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label>Nombre</label>
+      <input type="text" [(ngModel)]="gatoEditando.nombre">
+    </div>
+
+    <div class="input-row">
+      <div class="input-group">
+        <label>Estado</label>
+        <select [(ngModel)]="gatoEditando.estado">
+          <option value="ADOPTABLE">Adoptable</option>
+          <option value="APADRINABLE">Apadrinable</option>
+          <option value="APADRINADO">Apadrinado</option>
+          <option value="ADOPTADO">Adoptado</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label>Sexo</label>
+        <select [(ngModel)]="gatoEditando.sexo">
+          <option value="Macho">Macho</option>
+          <option value="Hembra">Hembra</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label>Fecha de Nacimiento</label>
+      <input type="date" [(ngModel)]="gatoEditando.fechaNacimiento">
+    </div>
+
+    <div class="input-group checkbox-group">
+      <input type="checkbox" id="urg" [(ngModel)]="gatoEditando.urgente">
+      <label for="urg">¿Es una adopción urgente?</label>
+    </div>
+
+    <div class="input-group">
+      <label>Caracter / Historia</label>
+      <textarea [(ngModel)]="gatoEditando.caracter" rows="4"></textarea>
+    </div>
+  </div>
+
+  <div class="drawer-footer">
+    <button class="btn-cancel" (click)="cerrarEditor()">Cancelar</button>
+    <button class="btn-save" (click)="guardarGato()">Guardar Cambios</button>
+  </div>
+</div>
+
+<div class="modal-overlay" *ngIf="gatoParaBorrar">
+  <div class="modal-card">
+    <h3>¿Eliminar a {{ gatoParaBorrar.nombre }}?</h3>
+    <div class="modal-actions">
+      <button class="btn-cancel" (click)="gatoParaBorrar = null">Cancelar</button>
+      <button class="btn-confirm-delete" (click)="confirmarBorrado()">Eliminar</button>
+    </div>
+  </div>
+</div>

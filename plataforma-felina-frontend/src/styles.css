@@ -1,0 +1,8 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden; /* Evita que aparezca una barra de desplazamiento horizontal */
+  font-family: Inter;
+  background-color: #f3efef;
+}

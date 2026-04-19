@@ -1,0 +1,77 @@
+<div class="admin-panel-content">
+  <div class="header-seccion">
+    <h1>Solicitudes de Colaboradores</h1>
+    <p>Gestione los nuevos voluntarios y sus permisos de acceso</p>
+  </div>
+
+  <div class="tabla-container">
+    <table class="tabla-colabora">
+      <thead>
+      <tr>
+        <th>Candidato</th>
+        <th>Fecha Solicitud</th>
+        <th>Mensaje / Motivación</th>
+        <th>Estado</th>
+        <th class="text-center">Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let s of solicitudes">
+        <td>
+          <div class="user-info-flex">
+            <span class="user-avatar-circle">{{ s.usuario.nombre[0] }}</span>
+            <div class="user-data">
+              <strong>{{ s.usuario.nombre }} {{ s.usuario.apellido }}</strong>
+              <small>{{ s.usuario.email }}</small>
+            </div>
+          </div>
+        </td>
+        <td>{{ s.fechaSolicitud | date:'dd/MM/yyyy' }}</td>
+        <td class="desc-tarea">{{ s.mensaje || 'Sin mensaje adicional' }}</td>
+        <td>
+          <div class="select-wrapper">
+            <select [ngModel]="s.estado" (ngModelChange)="abrirModalCambioEstado(s, $event)" class="select-admin-mustard">
+              <option value="PENDIENTE">Pendiente</option>
+              <option value="APROBADA">Aprobada</option>
+              <option value="RECHAZADA">Rechazada</option>
+            </select>
+          </div>
+        </td>
+        <td class="text-center">
+          <button class="btn-eliminar-soft" (click)="abrirModalEliminar(s)">Eliminar</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="solicitudes.length === 0" class="empty-state">
+      <p>No hay solicitudes de colaboración pendientes.</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" *ngIf="solicitudParaEditar">
+  <div class="modal-card">
+    <h3>Actualizar Solicitud</h3>
+    <p>
+      ¿Confirmas cambiar el estado de la solicitud de <strong>{{ solicitudParaEditar.usuario.nombre }}</strong> a
+      <strong>{{ nuevoEstadoPendiente }}</strong>?
+      <span *ngIf="nuevoEstadoPendiente === 'APROBADA'"><br><br>Esto otorgará permisos de colaborador automáticamente.</span>
+    </p>
+    <div class="modal-actions">
+      <button class="btn-cancel" (click)="cerrarModalEstado()">Cancelar</button>
+      <button class="btn-rol" (click)="confirmarCambioEstado()">Confirmar Cambio</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" *ngIf="solicitudAEliminar">
+  <div class="modal-card">
+    <h3>Eliminar Registro</h3>
+    <p>¿Estás seguro de borrar la solicitud de <strong>{{ solicitudAEliminar.usuario.nombre }}</strong>? Esta acción no se puede deshacer.</p>
+    <div class="modal-actions">
+      <button class="btn-cancel" (click)="solicitudAEliminar = null">Cancelar</button>
+      <button class="btn-confirm" (click)="confirmarEliminacion()">Eliminar Registro</button>
+    </div>
+  </div>
+</div>

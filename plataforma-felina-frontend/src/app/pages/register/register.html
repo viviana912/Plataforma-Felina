@@ -1,0 +1,23 @@
+<div class="login-container">
+  <div class="login-card">
+    <h2>Crea tu cuenta</h2>
+    <form (ngSubmit)="onRegister()">
+      <div class="form-group">
+        <input [(ngModel)]="usuario.nombre" name="nombre" placeholder="Nombre" required>
+      </div>
+      <div class="form-group">
+        <input [(ngModel)]="usuario.apellido" name="apellido" placeholder="Apellido" required>
+      </div>
+      <div class="form-group">
+        <input type="email" [(ngModel)]="usuario.email" name="email" placeholder="Email" required>
+      </div>
+      <div class="form-group">
+        <input type="password" [(ngModel)]="usuario.password" name="passwordHash" placeholder="Contraseña" required>
+      </div>
+      <div class="form-group">
+        <input [(ngModel)]="usuario.telefono" name="telefono" placeholder="Teléfono" required>
+      </div>
+      <button type="submit" class="btn-submit">Registrarse</button>
+    </form>
+  </div>
+</div>

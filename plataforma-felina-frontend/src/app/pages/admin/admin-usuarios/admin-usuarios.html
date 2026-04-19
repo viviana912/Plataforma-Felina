@@ -1,0 +1,63 @@
+<div class="admin-panel-content">
+  <div class="header-seccion">
+    <h1>Gestión de Voluntarios</h1>
+  </div>
+
+  <div class="tabla-container">
+    <table class="tabla-colabora">
+      <thead>
+      <tr>
+        <th>Voluntario</th>
+        <th>Correo Electrónico</th>
+        <th>Rol asignado</th>
+        <th class="text-center">Gestión</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let u of usuarios">
+        <td class="titulo-tarea">
+          <div class="user-info-flex">
+            <span class="user-avatar-circle">{{ u.nombre[0] }}</span>
+            {{ u.nombre }} {{ u.apellido }}
+          </div>
+        </td>
+        <td class="desc-tarea">{{ u.email }}</td>
+        <td>
+          <div class="select-wrapper">
+            <select [ngModel]="u.rol?.id" (ngModelChange)="abrirModalRol(u, $event)" class="select-admin-mustard">
+              <option [ngValue]="1">Administrador</option>
+              <option [ngValue]="2">Usuario</option>
+            </select>
+          </div>
+        </td>
+        <td class="text-center">
+          <button class="btn-eliminar-soft" (click)="abrirModalEliminar(u)">Dar de baja</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  <div class="modal-overlay" *ngIf="usuarioAEliminar">
+    <div class="modal-card">
+      <h3>Confirmar eliminación</h3>
+      <p>¿Estás seguro de que deseas eliminar permanentemente al usuario <strong>{{ usuarioAEliminar.nombre }} {{ usuarioAEliminar.apellido }}</strong>?</p>
+      <div class="modal-actions">
+        <button class="btn-cancel" (click)="usuarioAEliminar = null">Cancelar</button>
+        <button class="btn-confirm" (click)="confirmarEliminacion()">Eliminar Usuario</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" *ngIf="usuarioParaEditarRol">
+    <div class="modal-card">
+      <h3>Actualizar permisos</h3>
+      <p>¿Confirmas el cambio de rol para <strong>{{ usuarioParaEditarRol.nombre }}</strong>? Pasará a tener permisos de
+        <strong>{{ nuevoRolPendiente === 1 ? 'ADMIN' : 'USER' }}</strong>.</p>
+      <div class="modal-actions">
+        <button class="btn-cancel" (click)="cerrarModalRol()">Cancelar</button>
+        <button class="btn-rol" (click)="confirmarCambioRol()">Actualizar Rol</button>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,60 @@
+<div class="container">
+
+  <header class="gatos-header">
+    <div class="header-content-wrapper">
+      <span class="subtitle">Adopta un amigo</span>
+      <h1>Nuestros Bigotes en Adopción</h1>
+      <div class="header-decoration"></div>
+      <p class="intro-text">
+        Cada uno de estos gatos tiene una historia de superación. Todos se entregan vacunados,
+        desparasitados y con muchas ganas de encontrar un hogar.
+        <strong>Tu oportunidad de cambiar una vida empieza aquí.</strong>
+      </p>
+    </div>
+  </header>
+  <div *ngIf="gatos.length === 0" class="no-gatos">
+
+    <p>No hay gatos disponibles por el momento.</p>
+
+  </div>
+
+
+
+  <div class="cards">
+
+    <div *ngFor="let gato of gatos" class="card">
+
+      <div class="card-body" [routerLink]="['/gato', gato.id]" style="cursor: pointer;">
+
+
+
+        <div class="gato-foto-wrapper">
+
+          <img [src]="gato.fotoUrl" [alt]="gato.nombre" class="gato-foto">
+
+
+
+        </div>
+
+
+
+        <h3>{{ gato.nombre }}</h3>
+
+        <p><strong>Raza:</strong> {{ gato.raza }}</p>
+
+        <p><strong>Color:</strong> {{ gato.color }}</p>
+
+      </div>
+
+      <button (click)="solicitarAdopcion(gato.id)" class="card-button">
+
+        Solicitar adopción
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
