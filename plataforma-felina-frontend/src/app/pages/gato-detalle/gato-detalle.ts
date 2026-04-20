@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { GatoService } from '../../services/gato'; // Ajusta la ruta a tu servicio
+import { GatoService } from '../../services/gato';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -12,31 +12,33 @@ import { RouterLink } from '@angular/router';
   styleUrl: './gato-detalle.css'
 })
 export class GatoDetalleComponent implements OnInit {
+  private cdr = inject(ChangeDetectorRef);
 
-  gato: any = null; // Aquí se guardará el objeto que traiga el backend
+  gato: any = null;
 
   constructor(
     private route: ActivatedRoute,
-    private gatoService: GatoService // Inyectamos tu servicio real
-  ) {
-
-  }
+    private gatoService: GatoService
+  ) {}
 
   ngOnInit(): void {
-    // Capturamos el ID de la URL
-    const id = this.route.snapshot.paramMap.get('id');
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
 
-    if (id) {
-      // Llamada real a tu base de datos a través del servicio
+      console.log('ID recibido:', id);
+
+      if (!id) return;
+
       this.gatoService.getGatoById(id).subscribe({
         next: (data) => {
           this.gato = data;
+          this.cdr.markForCheck();
         },
         error: (err) => {
-          console.error('Error al traer el gato de la base de datos', err);
+          console.error('Error:', err);
         }
       });
-    }
+    });
   }
 
   abrirFormulario() {

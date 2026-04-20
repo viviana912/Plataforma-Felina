@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { UsuarioService } from '../../services/usuario';
@@ -17,6 +17,7 @@ export class PerfilComponent implements OnInit {
   usuarioService = inject(UsuarioService);
   gatoService = inject(GatoService);
   router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
 
   fotosGatos: string[] = [];
   avatarSeleccionadoUrl: string | null = null;
@@ -31,6 +32,7 @@ export class PerfilComponent implements OnInit {
     this.gatoService.getGatos().subscribe({
       next: (gatos) => {
         this.fotosGatos = gatos.map(g => g.fotoUrl);
+        this.cdr.markForCheck();
       },
       error: (err) => console.error('Error cargando gatos', err)
     });

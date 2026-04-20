@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SolicitudColaboradorService } from '../../../services/solicitud-colaborador';
@@ -12,6 +12,7 @@ import { SolicitudColaboradorService } from '../../../services/solicitud-colabor
 })
 export class AdminSolicitudesComponent implements OnInit {
   private service = inject(SolicitudColaboradorService);
+  private cdr = inject(ChangeDetectorRef);
 
   solicitudes: any[] = [];
 
@@ -26,7 +27,10 @@ export class AdminSolicitudesComponent implements OnInit {
 
   cargar() {
     this.service.getAll().subscribe({
-      next: (data) => this.solicitudes = data,
+      next: (data) => {
+        this.solicitudes = data;
+        this.cdr.markForCheck();
+      },
       error: (e) => console.error(e)
     });
   }

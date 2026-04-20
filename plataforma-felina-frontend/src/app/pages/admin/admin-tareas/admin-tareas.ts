@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TareaService } from '../../../services/tarea';
@@ -12,6 +12,7 @@ import { TareaService } from '../../../services/tarea';
 })
 export class AdminTareasComponent implements OnInit {
   private tareaService = inject(TareaService);
+  private cdr = inject(ChangeDetectorRef);
 
   tareas: any[] = [];
 
@@ -35,7 +36,10 @@ export class AdminTareasComponent implements OnInit {
 
   cargarTareas() {
     this.tareaService.getTareas().subscribe({
-      next: (data) => this.tareas = data,
+      next: (data) => {
+        this.tareas = data;
+        this.cdr.markForCheck();
+      },
       error: (err) => console.error('Error al cargar misiones:', err)
     });
   }

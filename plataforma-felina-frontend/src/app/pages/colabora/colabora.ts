@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -15,6 +15,7 @@ import { AuthService } from '../../services/auth.service';
 export class ColaboraComponent implements OnInit {
   usuarioService = inject(UsuarioService);
   authService = inject(AuthService);
+  private cdr = inject(ChangeDetectorRef);
 
   tareasOriginales: Tarea[] = [];
   tareasFiltradas: Tarea[] = [];
@@ -29,6 +30,7 @@ export class ColaboraComponent implements OnInit {
       next: (datos) => {
         this.tareasOriginales = datos;
         this.tareasFiltradas = datos;
+        this.cdr.markForCheck();
       },
       error: (err) => console.error('Error al cargar tareas:', err)
     });

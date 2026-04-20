@@ -26,11 +26,8 @@ export class GatosComponent implements OnInit {
   cargarGatos() {
     this.gatoService.getGatos().subscribe({
       next: (data) => {
-        console.log(" llegaron:", data);
         this.gatos = [...data];
-
-        this.cdr.detectChanges();
-
+        this.cdr.markForCheck();
       },
       error: (err) => console.error("Error detectado:", err)
     });

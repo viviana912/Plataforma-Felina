@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FichaService } from '../../../services/fichas';
@@ -12,6 +12,7 @@ import { FichaService } from '../../../services/fichas';
 })
 export class AdminFichasComponent implements OnInit {
   private fichaService = inject(FichaService);
+  private cdr = inject(ChangeDetectorRef);
 
   gatos: any[] = [];
   gatoEditando: any = null;
@@ -23,7 +24,10 @@ export class AdminFichasComponent implements OnInit {
 
   cargarGatos() {
     this.fichaService.getGatos().subscribe({
-      next: (res) => this.gatos = res,
+      next: (res) => {
+        this.gatos = res;
+        this.cdr.markForCheck();
+      },
       error: (err) => console.error('Error al cargar gatos:', err)
     });
   }

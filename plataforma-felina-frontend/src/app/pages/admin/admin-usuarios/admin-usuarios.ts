@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UsuarioService } from '../../../services/usuario';
 import { FormsModule}  from '@angular/forms';
@@ -12,6 +12,7 @@ import { FormsModule}  from '@angular/forms';
 })
 export class AdminUsuariosComponent implements OnInit {
   private usuarioService = inject(UsuarioService);
+  private cdr = inject(ChangeDetectorRef);
   usuarios: any[] = [];
 
   usuarioAEliminar: any = null;
@@ -26,7 +27,7 @@ export class AdminUsuariosComponent implements OnInit {
     this.usuarioService.getUsuarios().subscribe({
       next: (data) => {
         this.usuarios = data;
-        console.log('Usuarios recibidos:', data);
+        this.cdr.markForCheck();
       },
       error: (err) => console.error('Error cargando usuarios', err)
     });
