@@ -1,0 +1,38 @@
+services:
+
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-db
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345678
+      MYSQL_DATABASE: plataforma_felina
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+
+  backend:
+    build: ./plataforma-felina-backend
+    container_name: backend-app
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/plataforma_felina?createDatabaseIfNotExist=true&serverTimezone=UTC&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 12345678
+
+  frontend:
+    build: ./plataforma-felina-frontend
+    container_name: frontend-app
+    restart: always
+    ports:
+      - "4200:80"
+
+volumes:
+  mysql_data:
