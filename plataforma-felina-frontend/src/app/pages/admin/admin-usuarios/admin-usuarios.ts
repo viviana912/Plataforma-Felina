@@ -19,6 +19,8 @@ export class AdminUsuariosComponent implements OnInit {
   usuarioParaEditarRol: any = null;
   nuevoRolPendiente: number | null = null;
 
+  trackById = (_: number, u: any) => u.id;
+
   ngOnInit() {
     this.cargarUsuarios();
   }

@@ -14,7 +14,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let u of usuarios">
+      <tr *ngFor="let u of usuarios; trackBy: trackById">
         <td class="titulo-tarea">
           <div class="user-info-flex">
             <span class="user-avatar-circle">{{ u.nombre[0] }}</span>
@@ -25,8 +25,8 @@
         <td>
           <div class="select-wrapper">
             <select [ngModel]="u.rol?.id" (ngModelChange)="abrirModalRol(u, $event)" class="select-admin-mustard">
-              <option [ngValue]="1">Administrador</option>
-              <option [ngValue]="2">Usuario</option>
+              <option [ngValue]="2">Administrador</option>
+              <option [ngValue]="1">Usuario</option>
             </select>
           </div>
         </td>
@@ -54,7 +54,7 @@
     <div class="modal-card">
       <h3>Actualizar permisos</h3>
       <p>¿Confirmas el cambio de rol para <strong>{{ usuarioParaEditarRol.nombre }}</strong>? Pasará a tener permisos de
-        <strong>{{ nuevoRolPendiente === 1 ? 'ADMIN' : 'USER' }}</strong>.</p>
+        <strong>{{ nuevoRolPendiente === 2 ? 'ADMIN' : 'USER' }}</strong>.</p>
       <div class="modal-actions">
         <button class="btn-cancel" (click)="cerrarModalRol()">Cancelar</button>
         <button class="btn-rol" (click)="confirmarCambioRol()">Actualizar Rol</button>
