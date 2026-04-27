@@ -46,7 +46,6 @@ Thumbs.db
 # Secretos y variables de entorno
 .env
 .env.local
-src/environments/environment.prod.ts
 
 # Logs de despliegue y herramientas
 .vercel
