@@ -1,13 +1,14 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SolicitudColaboradorService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/api/solicitudes-colaborador'; // Ajusta según tu Controller
+  private apiUrl = `${environment.apiUrl}/api/solicitudes-colaborador`;
 
   // Obtener todas las solicitudes para la tabla del admin
   getAll(): Observable<any[]> {

@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface Solicitud {
   id: {
@@ -19,7 +20,7 @@ export interface Solicitud {
 })
 export class SolicitudService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/api/solicitudes';
+  private apiUrl = `${environment.apiUrl}/api/solicitudes`;
 
   getAll(): Observable<Solicitud[]> {
     return this.http.get<Solicitud[]>(this.apiUrl);

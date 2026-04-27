@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {tap} from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 export interface Usuario {
   id?: number;
@@ -44,8 +45,8 @@ export interface Insignias {
   providedIn: 'root'
 })
 export class UsuarioService {
-  private apiUrl = 'http://localhost:8080/api/usuarios';
-  private tareasUrl = 'http://localhost:8080/api/tareas';
+  private apiUrl = `${environment.apiUrl}/api/usuarios`;
+  private tareasUrl = `${environment.apiUrl}/api/tareas`;
 
   public usuarioActual: Usuario | null = null;
 
