@@ -1,28 +1,39 @@
 <nav class="navbar">
-  <a routerLink="/" class="navbar-logo">
+  <a routerLink="/" class="navbar-logo" (click)="closeMenu()">
     <img src="assets/logo/fullLogo.png" alt="Logo">
   </a>
 
-  <div class="navbar-right-side">
-    <div class="navbar-links">
-      <a routerLink="/gatos">Gatos</a>
-      <a routerLink="/como-ayudar">¿Cómo ayudar?</a>
-      <a routerLink="/colabora">Colabora</a>
+  <button
+    type="button"
+    class="hamburger"
+    [class.open]="menuOpen()"
+    [attr.aria-expanded]="menuOpen()"
+    aria-label="Abrir menú"
+    (click)="toggleMenu()">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </button>
 
-      <!-- Panel solo para admins -->
+  <div class="navbar-right-side" [class.open]="menuOpen()">
+    <div class="navbar-links">
+      <a routerLink="/gatos" (click)="closeMenu()">Gatos</a>
+      <a routerLink="/como-ayudar" (click)="closeMenu()">¿Cómo ayudar?</a>
+      <a routerLink="/colabora" (click)="closeMenu()">Colabora</a>
+
       <a *ngIf="authService.user()?.rol?.nombre === 'ADMIN'"
          routerLink="/admin/panel"
-         class="link-admin">
+         class="link-admin"
+         (click)="closeMenu()">
         Panel
       </a>
 
-      <a *ngIf="!authService.isLoggedIn()" routerLink="/login" class="btn-login">
+      <a *ngIf="!authService.isLoggedIn()" routerLink="/login" class="btn-login" (click)="closeMenu()">
         Iniciar Sesión
       </a>
 
-
       <div *ngIf="authService.isLoggedIn()" class="user-menu-container">
-        <a routerLink="/perfil" class="user-profile-link" title="Ir a mi perfil">
+        <a routerLink="/perfil" class="user-profile-link" title="Ir a mi perfil" (click)="closeMenu()">
           <img [src]="authService.user()?.fotoUrl || 'assets/default-avatar.png'"
                class="nav-avatar"
                alt="Perfil">
@@ -32,3 +43,5 @@
     </div>
   </div>
 </nav>
+
+<div class="menu-backdrop" *ngIf="menuOpen()" (click)="closeMenu()"></div>
