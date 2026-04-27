@@ -43,6 +43,34 @@ public class SolicitudService {
         return solicitudRepository.save(solicitud);
     }
 
+    public Solicitud actualizarEstado(SolicitudId id, String nuevoEstado) {
+        Solicitud solicitud = findOne(id);
+        solicitud.setEstado(nuevoEstado);
+        Solicitud guardada = solicitudRepository.save(solicitud);
+
+        if ("APROBADA".equalsIgnoreCase(nuevoEstado)) {
+            sincronizarEstadoGato(guardada);
+        }
+
+        return guardada;
+    }
+
+    private void sincronizarEstadoGato(Solicitud solicitud) {
+        Gato gato = solicitud.getGato();
+        if (gato == null) return;
+
+        String tipo = solicitud.getTipoSolicitud();
+        if (tipo == null) return;
+
+        switch (tipo.toUpperCase()) {
+            case "ADOPCION" -> gato.setEstado("ADOPTADO");
+            case "APADRINAMIENTO" -> gato.setEstado("APADRINADO");
+            case "ACOGIDA" -> gato.setEstado("EN_ACOGIDA");
+            default -> { return; }
+        }
+        gatoService.save(gato);
+    }
+
     public void delete(SolicitudId id) {
         solicitudRepository.deleteById(id);
     }

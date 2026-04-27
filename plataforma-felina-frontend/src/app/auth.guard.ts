@@ -20,3 +20,20 @@ export const adminGuard: CanActivateFn = (route, state) => {
   router.navigate(['/login']);
   return false;
 };
+
+export const authGuard: CanActivateFn = (route, state) => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+
+  // Cargamos sesión por si se ha refrescado la página
+  authService.checkSession();
+
+  // Si hay usuario logueado (cualquier rol), pasa
+  if (authService.isLoggedIn()) {
+    return true;
+  }
+
+  // Si no está logueado, a login
+  router.navigate(['/login']);
+  return false;
+};

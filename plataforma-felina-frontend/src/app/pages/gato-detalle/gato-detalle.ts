@@ -1,8 +1,8 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { GatoService } from '../../services/gato';
+import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-gato-detalle',
@@ -13,8 +13,11 @@ import { RouterLink } from '@angular/router';
 })
 export class GatoDetalleComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
+  private router = inject(Router);
+  private authService = inject(AuthService);
 
   gato: any = null;
+  isLoggedIn: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,26 +25,27 @@ export class GatoDetalleComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.isLoggedIn = this.authService.isLoggedIn();
+
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
-
-      console.log('ID recibido:', id);
-
-      if (!id) return;
-
-      this.gatoService.getGatoById(id).subscribe({
-        next: (data) => {
-          this.gato = data;
-          this.cdr.markForCheck();
-        },
-        error: (err) => {
-          console.error('Error:', err);
-        }
-      });
+      if (id) {
+        this.gatoService.getGatoById(id).subscribe({
+          next: (data) => {
+            this.gato = data;
+            this.cdr.markForCheck();
+          },
+          error: (err) => console.error('Error:', err)
+        });
+      }
     });
   }
 
   abrirFormulario() {
-    // Aquí podrías redirigir al formulario de adopción pasando el ID
+    if (this.isLoggedIn) {
+      this.router.navigate(['/adoptar', this.gato.id]);
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 }

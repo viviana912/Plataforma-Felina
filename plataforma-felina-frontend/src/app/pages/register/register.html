@@ -1,22 +1,63 @@
 <div class="login-container">
   <div class="login-card">
     <h2>Crea tu cuenta</h2>
-    <form (ngSubmit)="onRegister()">
+    <form [formGroup]="form" (ngSubmit)="onRegister()">
+
       <div class="form-group">
-        <input [(ngModel)]="usuario.nombre" name="nombre" placeholder="Nombre" required>
+        <input formControlName="nombre" placeholder="Nombre">
+        <small class="error" *ngIf="form.get('nombre')?.touched && form.get('nombre')?.invalid">
+          <ng-container *ngIf="form.get('nombre')?.errors?.['required']">El nombre es obligatorio.</ng-container>
+          <ng-container *ngIf="form.get('nombre')?.errors?.['minlength']">Mínimo 2 caracteres.</ng-container>
+          <ng-container *ngIf="form.get('nombre')?.errors?.['pattern']">Solo letras y espacios.</ng-container>
+        </small>
       </div>
+
       <div class="form-group">
-        <input [(ngModel)]="usuario.apellido" name="apellido" placeholder="Apellido" required>
+        <input formControlName="apellido" placeholder="Apellido">
+        <small class="error" *ngIf="form.get('apellido')?.touched && form.get('apellido')?.invalid">
+          <ng-container *ngIf="form.get('apellido')?.errors?.['required']">El apellido es obligatorio.</ng-container>
+          <ng-container *ngIf="form.get('apellido')?.errors?.['minlength']">Mínimo 2 caracteres.</ng-container>
+          <ng-container *ngIf="form.get('apellido')?.errors?.['pattern']">Solo letras y espacios.</ng-container>
+        </small>
       </div>
+
       <div class="form-group">
-        <input type="email" [(ngModel)]="usuario.email" name="email" placeholder="Email" required>
+        <input type="email" formControlName="email" placeholder="Email">
+        <small class="error" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+          <ng-container *ngIf="form.get('email')?.errors?.['required']">El email es obligatorio.</ng-container>
+          <ng-container *ngIf="form.get('email')?.errors?.['email']">Introduce un email válido.</ng-container>
+        </small>
       </div>
+
       <div class="form-group">
-        <input type="password" [(ngModel)]="usuario.password" name="passwordHash" placeholder="Contraseña" required>
+        <input formControlName="telefono" placeholder="Teléfono">
+        <small class="error" *ngIf="form.get('telefono')?.touched && form.get('telefono')?.invalid">
+          <ng-container *ngIf="form.get('telefono')?.errors?.['required']">El teléfono es obligatorio.</ng-container>
+          <ng-container *ngIf="form.get('telefono')?.errors?.['pattern']">Teléfono español de 9 dígitos (empieza por 6, 7, 8 o 9).</ng-container>
+        </small>
       </div>
+
       <div class="form-group">
-        <input [(ngModel)]="usuario.telefono" name="telefono" placeholder="Teléfono" required>
+        <input type="password" formControlName="password" placeholder="Contraseña">
+        <small class="error" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
+          <ng-container *ngIf="form.get('password')?.errors?.['required']">La contraseña es obligatoria.</ng-container>
+          <ng-container *ngIf="form.get('password')?.errors?.['minlength']">Mínimo 8 caracteres.</ng-container>
+          <ng-container *ngIf="form.get('password')?.errors?.['pattern']">Debe incluir al menos una mayúscula y un número.</ng-container>
+        </small>
       </div>
+
+      <div class="form-group">
+        <input type="password" formControlName="confirmar" placeholder="Confirmar contraseña">
+        <small class="error" *ngIf="form.get('confirmar')?.touched && (form.get('confirmar')?.invalid || form.errors?.['passwordsNoCoinciden'])">
+          <ng-container *ngIf="form.get('confirmar')?.errors?.['required']">Confirma tu contraseña.</ng-container>
+          <ng-container *ngIf="!form.get('confirmar')?.errors?.['required'] && form.errors?.['passwordsNoCoinciden']">
+            Las contraseñas no coinciden.
+          </ng-container>
+        </small>
+      </div>
+
+      <p class="error-msg" *ngIf="errorMsg">{{ errorMsg }}</p>
+
       <button type="submit" class="btn-submit">Registrarse</button>
     </form>
   </div>

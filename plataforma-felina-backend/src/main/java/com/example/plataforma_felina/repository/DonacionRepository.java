@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DonacionRepository extends JpaRepository<Donacion,Long> {
+
+    boolean existsByUsuarioId(Long usuarioId);
 }

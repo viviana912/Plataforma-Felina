@@ -33,6 +33,12 @@ export interface Rol {
   nombre: string; //'ADMIN', 'USER'
 }
 
+export interface Insignias {
+  familia: boolean;
+  donante: boolean;
+  veterano: boolean;
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -84,5 +90,9 @@ export class UsuarioService {
   actualizarFoto(id: number, url: string): Observable<void> {
     // El backend espera un Map con la clave "fotoUrl" según el Controller que diseñamos
     return this.http.patch<void>(`${this.apiUrl}/${id}/foto`, { fotoUrl: url });
+  }
+
+  getInsignias(id: number): Observable<Insignias> {
+    return this.http.get<Insignias>(`${this.apiUrl}/${id}/insignias`);
   }
 }

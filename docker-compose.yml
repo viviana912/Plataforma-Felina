@@ -26,6 +26,8 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/plataforma_felina?createDatabaseIfNotExist=true&serverTimezone=UTC&useSSL=false
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 12345678
+    volumes:
+      - uploads_data:/app/uploads
 
   frontend:
     build: ./plataforma-felina-frontend
@@ -36,3 +38,4 @@ services:
 
 volumes:
   mysql_data:
+  uploads_data:

@@ -1,0 +1,171 @@
+<div class="admin-panel-content">
+  <div class="header-seccion">
+    <h1>Adopciones y Apadrinamientos</h1>
+    <p>Revisa y gestiona las solicitudes de los usuarios</p>
+  </div>
+
+  <div class="filtros-tipo">
+    <button class="filtro-pill"
+            [class.activo]="filtroTipo === 'TODAS'"
+            (click)="filtroTipo = 'TODAS'">
+      Todas ({{ solicitudes.length }})
+    </button>
+    <button class="filtro-pill"
+            [class.activo]="filtroTipo === 'ADOPCION'"
+            (click)="filtroTipo = 'ADOPCION'">
+      <i class="fa-solid fa-house-chimney-user"></i> Adopciones
+    </button>
+    <button class="filtro-pill"
+            [class.activo]="filtroTipo === 'APADRINAMIENTO'"
+            (click)="filtroTipo = 'APADRINAMIENTO'">
+      <i class="fa-solid fa-hand-holding-heart"></i> Apadrinamientos
+    </button>
+  </div>
+
+  <div class="tabla-container">
+    <table class="tabla-colabora">
+      <thead>
+      <tr>
+        <th>Usuario</th>
+        <th>Gato</th>
+        <th>Tipo</th>
+        <th>Fecha</th>
+        <th>Estado</th>
+        <th class="text-center">Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let s of solicitudesFiltradas">
+        <td>
+          <div class="user-info-flex">
+            <span class="user-avatar-circle">{{ s.usuario.nombre[0] }}</span>
+            <div class="user-data">
+              <strong>{{ s.usuario.nombre }} {{ s.usuario.apellido }}</strong>
+              <small>{{ s.usuario.email }}</small>
+            </div>
+          </div>
+        </td>
+        <td>
+          <div class="gato-info-flex">
+            <img *ngIf="s.gato.fotoUrl" [src]="s.gato.fotoUrl" [alt]="s.gato.nombre" class="gato-mini-thumb">
+            <strong>{{ s.gato.nombre }}</strong>
+          </div>
+        </td>
+        <td>
+          <span class="badge-tipo"
+                [class.adopcion]="s.tipoSolicitud === 'ADOPCION'"
+                [class.apadrinamiento]="s.tipoSolicitud === 'APADRINAMIENTO'">
+            {{ s.tipoSolicitud }}
+          </span>
+        </td>
+        <td>{{ s.fechaSolicitud | date:'dd/MM/yyyy' }}</td>
+        <td>
+          <div class="select-wrapper">
+            <select [ngModel]="s.estado"
+                    (ngModelChange)="abrirModalCambioEstado(s, $event)"
+                    class="select-admin-mustard">
+              <option value="PENDIENTE">Pendiente</option>
+              <option value="APROBADA">Aprobada</option>
+              <option value="RECHAZADA">Rechazada</option>
+            </select>
+          </div>
+        </td>
+        <td class="text-center">
+          <button class="btn-detalle" (click)="abrirModalDetalle(s)" title="Ver detalle">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+          <button class="btn-eliminar-soft" (click)="abrirModalEliminar(s)">Eliminar</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="solicitudesFiltradas.length === 0" class="empty-state">
+      <p>No hay solicitudes para mostrar con el filtro seleccionado.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Modal confirmar cambio de estado -->
+<div class="modal-overlay" *ngIf="solicitudParaEditar">
+  <div class="modal-card">
+    <h3>Actualizar Solicitud</h3>
+    <p>
+      ¿Confirmas cambiar el estado de la solicitud de
+      <strong>{{ solicitudParaEditar.usuario.nombre }}</strong>
+      sobre <strong>{{ solicitudParaEditar.gato.nombre }}</strong> a
+      <strong>{{ nuevoEstadoPendiente }}</strong>?
+    </p>
+    <div class="modal-actions">
+      <button class="btn-cancel" (click)="cerrarModalEstado()">Cancelar</button>
+      <button class="btn-rol" (click)="confirmarCambioEstado()">Confirmar Cambio</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal confirmar eliminación -->
+<div class="modal-overlay" *ngIf="solicitudAEliminar">
+  <div class="modal-card">
+    <h3>Eliminar Solicitud</h3>
+    <p>
+      ¿Estás seguro de borrar la solicitud de
+      <strong>{{ solicitudAEliminar.usuario.nombre }}</strong>
+      sobre <strong>{{ solicitudAEliminar.gato.nombre }}</strong>?
+      Esta acción no se puede deshacer.
+    </p>
+    <div class="modal-actions">
+      <button class="btn-cancel" (click)="solicitudAEliminar = null">Cancelar</button>
+      <button class="btn-confirm" (click)="confirmarEliminacion()">Eliminar Solicitud</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal ver detalle -->
+<div class="modal-overlay" *ngIf="solicitudDetalle">
+  <div class="modal-card modal-detalle">
+    <h3>Detalle de la Solicitud</h3>
+
+    <div class="detalle-grid">
+      <div class="detalle-item">
+        <label>Solicitante</label>
+        <p>{{ solicitudDetalle.usuario.nombre }} {{ solicitudDetalle.usuario.apellido }}</p>
+        <small>{{ solicitudDetalle.usuario.email }}</small>
+      </div>
+      <div class="detalle-item">
+        <label>Gato</label>
+        <p>{{ solicitudDetalle.gato.nombre }}</p>
+        <small>{{ solicitudDetalle.gato.raza }}</small>
+      </div>
+      <div class="detalle-item">
+        <label>Tipo</label>
+        <p>{{ solicitudDetalle.tipoSolicitud }}</p>
+      </div>
+      <div class="detalle-item">
+        <label>Estado actual</label>
+        <p>{{ solicitudDetalle.estado }}</p>
+      </div>
+      <div class="detalle-item">
+        <label>Fecha</label>
+        <p>{{ solicitudDetalle.fechaSolicitud | date:'dd/MM/yyyy HH:mm' }}</p>
+      </div>
+      <div class="detalle-item">
+        <label>Condiciones de vivienda</label>
+        <p>{{ solicitudDetalle.condicionesVivienda || '—' }}</p>
+      </div>
+    </div>
+
+    <div class="detalle-bloque">
+      <label>Experiencia previa con animales</label>
+      <p>{{ solicitudDetalle.experienciaPrevia || 'Sin información' }}</p>
+    </div>
+
+    <div class="detalle-bloque">
+      <label>Motivo de adopción</label>
+      <p>{{ solicitudDetalle.motivoAdopcion || 'Sin información' }}</p>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-rol" (click)="cerrarModalDetalle()">Cerrar</button>
+    </div>
+  </div>
+</div>

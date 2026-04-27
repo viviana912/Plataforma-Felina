@@ -23,14 +23,12 @@
       </div>
 
       <div class="insignias-row">
-        <div class="insignia-slot" title="Socio">
-          <div class="circle-badge empty"></div>
-        </div>
-        <div class="insignia-slot" title="Colaborador">
-          <div class="circle-badge empty"></div>
-        </div>
-        <div class="insignia-slot" title="Veterano">
-          <div class="circle-badge empty"></div>
+        <div *ngFor="let ins of insigniasCatalogo"
+             class="insignia-slot"
+             [class.locked]="!desbloqueada(ins.clave)"
+             [attr.title]="ins.titulo + ' — ' + ins.descripcion">
+          <img [src]="ins.imagen" [alt]="ins.titulo" class="insignia-img">
+          <span class="insignia-label">{{ ins.titulo }}</span>
         </div>
       </div>
 
@@ -49,6 +47,61 @@
           </div>
         </div>
         <button class="btn-edit-info">Editar perfil</button>
+      </div>
+
+      <hr class="separator-soft">
+
+      <div class="tabs-section">
+        <div class="tabs-nav">
+          <button class="tab-btn" [class.active]="activeTab === 'solicitudes'" (click)="seleccionarTab('solicitudes')">
+            <i class="fa-solid fa-paw"></i> Solicitudes de adopción
+          </button>
+          <button class="tab-btn" [class.active]="activeTab === 'familia'" (click)="seleccionarTab('familia')">
+            <i class="fa-solid fa-heart"></i> Mi familia felina
+          </button>
+        </div>
+
+        <div class="tab-content" *ngIf="activeTab === 'solicitudes'">
+          <div *ngIf="solicitudesPendientes.length === 0" class="empty-state">
+            <i class="fa-solid fa-paw empty-icon"></i>
+            <p>No tienes solicitudes pendientes ni rechazadas.</p>
+          </div>
+          <div *ngIf="solicitudesPendientes.length > 0" class="solicitudes-grid">
+            <div *ngFor="let s of solicitudesPendientes" class="solicitud-card">
+              <div class="img-wrapper-badge">
+                <img [src]="s.gato?.fotoUrl || 'assets/default-avatar.png'" [alt]="s.gato?.nombre || 'Gato'" class="solicitud-gato-img">
+              </div>
+              <div class="solicitud-info">
+                <h4>{{ s.gato?.nombre || 'Gato' }}</h4>
+                <span class="estado-badge" [ngClass]="'estado-' + (s.estado || '').toLowerCase()">
+                  {{ s.estado || 'Sin estado' }}
+                </span>
+                <p class="fecha" *ngIf="s.fechaSolicitud">{{ s.fechaSolicitud | date:'dd/MM/yyyy' }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content" *ngIf="activeTab === 'familia'">
+          <div *ngIf="familiaFelina.length === 0" class="empty-state">
+            <i class="fa-solid fa-cat empty-icon"></i>
+            <p>Todavía no tienes gatos adoptados, en acogida ni apadrinados.</p>
+          </div>
+          <div *ngIf="familiaFelina.length > 0" class="solicitudes-grid">
+            <div *ngFor="let s of familiaFelina" class="solicitud-card">
+              <div class="img-wrapper-badge">
+                <img [src]="s.gato?.fotoUrl || 'assets/default-avatar.png'" [alt]="s.gato?.nombre || 'Gato'" class="solicitud-gato-img">
+                <span class="tipo-badge" [ngClass]="'tipo-' + (s.tipoSolicitud || '').toLowerCase()">
+                  {{ etiquetaTipo(s.tipoSolicitud) }}
+                </span>
+              </div>
+              <div class="solicitud-info">
+                <h4>{{ s.gato?.nombre || 'Gato' }}</h4>
+                <p class="fecha" *ngIf="s.fechaSolicitud">Desde {{ s.fechaSolicitud | date:'dd/MM/yyyy' }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -1,6 +1,6 @@
 /* Contenedor de fondo: Quitamos el padding superior para que pegue al nav */
 .perfil-page-bg {
-  background-color: #f3efef;
+  background-color: var(--color-fondo-pagina);
   min-height: calc(100vh - 80px);
   padding: 0 0 40px 0; /* Solo padding abajo y a los lados */
   display: flex;
@@ -22,7 +22,7 @@
 /* Banner: Recto arriba para pegar con el Navbar */
 .profile-banner {
   height: 280px;
-  background: linear-gradient(135deg, #4A4E69 0%, #9A8C98 100%);
+  background: linear-gradient(135deg, var(--color-texto-berenjena) 0%, var(--color-principal-malva) 100%);
   position: relative;
   width: 100%;
   border-top: none; /* Aseguramos que no haya bordes extraños */
@@ -63,7 +63,7 @@
 }
 
 .user-titles h1 {
-  color: #4A4E69;
+  color: var(--color-texto-berenjena);
   font-size: 2.2rem;
   margin: 0;
 }
@@ -71,8 +71,8 @@
 .badge-rol {
   display: inline-block;
   margin-top: 10px;
-  background: #EBCB8B;
-  color: #4A4E69;
+  background: var(--color-mostaza-suave);
+  color: var(--color-texto-berenjena);
   padding: 4px 15px;
   border-radius: 50px;
   font-weight: bold;
@@ -82,21 +82,52 @@
 /* INSIGNIAS */
 .insignias-row {
   display: flex;
-  gap: 20px;
+  gap: 25px;
   margin: 30px 0;
+  flex-wrap: wrap;
 }
 
-.circle-badge {
-  width: 65px;
-  height: 65px;
-  border-radius: 50%;
-  border: 2px dashed #9A8C98;
-  transition: 0.3s;
+.insignia-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: help;
+  transition: transform 0.2s ease;
 }
 
-.circle-badge.empty:hover {
-  border-color: #EBCB8B;
+.insignia-slot:hover {
   transform: translateY(-3px);
+}
+
+.insignia-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--color-mostaza-suave);
+  background: white;
+  transition: filter 0.3s ease, opacity 0.3s ease, border-color 0.3s ease;
+  box-shadow: var(--sombra-suave);
+}
+
+.insignia-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-texto-berenjena);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.insignia-slot.locked .insignia-img {
+  filter: grayscale(1);
+  opacity: 0.4;
+  border-color: var(--color-principal-malva);
+  border-style: dashed;
+}
+
+.insignia-slot.locked .insignia-label {
+  color: var(--color-principal-malva);
 }
 
 /* CONTACTO */
@@ -107,11 +138,11 @@
   margin: 20px 0;
 }
 
-.detail-box label { color: #9A8C98; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; }
-.detail-box p { color: #4A4E69; font-size: 1.1rem; margin-top: 5px; }
+.detail-box label { color: var(--color-principal-malva); font-size: 0.75rem; font-weight: bold; text-transform: uppercase; }
+.detail-box p { color: var(--color-texto-berenjena); font-size: 1.1rem; margin-top: 5px; }
 
 .btn-edit-info {
-  background: #EBCB8B; color: #4A4E69; border: none;
+  background: var(--color-mostaza-suave); color: var(--color-texto-berenjena); border: none;
   padding: 12px 25px; border-radius: 10px; font-weight: 600;
   cursor: pointer; width: 100%; max-width: 200px;
 }
@@ -122,6 +153,172 @@
   color: white; padding: 8px 18px; border-radius: 8px; cursor: pointer;
 }
 
+/* PESTAÑAS */
+.tabs-section {
+  margin-top: 30px;
+}
+
+.tabs-nav {
+  display: flex;
+  gap: 10px;
+  border-bottom: 2px solid var(--color-detalle-tarjeta);
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 12px 20px;
+  cursor: pointer;
+  color: var(--color-principal-malva);
+  font-weight: 600;
+  font-size: 1rem;
+  border-bottom: 3px solid transparent;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: -2px;
+}
+
+.tab-btn:hover {
+  color: var(--color-texto-berenjena);
+}
+
+.tab-btn.active {
+  color: var(--color-texto-berenjena);
+  border-bottom-color: var(--color-mostaza-suave);
+}
+
+.tab-content {
+  animation: fadeIn 0.25s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: none; }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--color-principal-malva);
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  opacity: 0.4;
+  display: block;
+}
+
+.solicitudes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.solicitud-card {
+  background: var(--color-fondo-crema);
+  border-radius: 15px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: 0.2s;
+  box-shadow: var(--sombra-suave);
+}
+
+.solicitud-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--sombra-tarjeta-hover);
+}
+
+.img-wrapper-badge {
+  position: relative;
+  width: 100%;
+}
+
+.solicitud-gato-img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+}
+
+.solicitud-info {
+  text-align: center;
+  margin-top: 12px;
+  width: 100%;
+}
+
+.solicitud-info h4 {
+  margin: 0 0 8px;
+  color: var(--color-texto-berenjena);
+  font-size: 1.05rem;
+}
+
+.solicitud-info .fecha {
+  color: var(--color-principal-malva);
+  font-size: 0.8rem;
+  margin-top: 8px;
+  margin-bottom: 0;
+}
+
+.estado-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 0.72rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.estado-pendiente {
+  background: var(--color-mostaza-suave);
+  color: var(--color-texto-berenjena);
+}
+
+.estado-aprobada,
+.estado-completada,
+.estado-activa {
+  background: var(--color-exito-bg);
+  color: var(--color-exito);
+}
+
+.estado-rechazada {
+  background: var(--color-peligro-bg);
+  color: var(--color-peligro);
+}
+
+.tipo-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  padding: 4px 10px;
+  border-radius: 50px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.tipo-acogida {
+  background: var(--color-principal-malva);
+}
+
+.tipo-apadrinamiento {
+  background: var(--color-texto-berenjena);
+}
+
+.tipo-adopcion {
+  background: var(--color-exito);
+}
+
 /* MODAL */
 .modal-overlay {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -130,4 +327,4 @@
 .modal-card { background: white; padding: 30px; border-radius: 20px; width: 500px; max-height: 80vh; overflow-y: auto; }
 .avatar-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px; }
 .avatar-gallery img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; cursor: pointer; transition: 0.2s; }
-.avatar-gallery img:hover { transform: scale(1.05); border: 3px solid #EBCB8B; }
+.avatar-gallery img:hover { transform: scale(1.05); border: 3px solid var(--color-mostaza-suave); }

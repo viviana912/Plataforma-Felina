@@ -23,4 +23,13 @@ export class FichaService {
   deleteGato(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }
+
+  uploadFoto(file: File): Observable<{ url: string; fullUrl: string }> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<{ url: string; fullUrl: string }>(
+      'http://localhost:8080/api/uploads',
+      formData
+    );
+  }
 }

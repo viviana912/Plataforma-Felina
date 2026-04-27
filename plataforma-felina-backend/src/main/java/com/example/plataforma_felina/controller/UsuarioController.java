@@ -1,6 +1,7 @@
 package com.example.plataforma_felina.controller;
 
 
+import com.example.plataforma_felina.dto.InsigniasDTO;
 import com.example.plataforma_felina.dto.Login;
 import com.example.plataforma_felina.dto.LoginResponse;
 import com.example.plataforma_felina.dto.Registro;
@@ -49,6 +50,11 @@ public class UsuarioController {
     @GetMapping("/{id}")
     public UsuarioDTO getById(@PathVariable Long id) {
         return usuarioService.getDTOById(id);
+    }
+
+    @GetMapping("/{id}/insignias")
+    public InsigniasDTO getInsignias(@PathVariable Long id) {
+        return usuarioService.getInsignias(id);
     }
 
     @DeleteMapping("/{id}")

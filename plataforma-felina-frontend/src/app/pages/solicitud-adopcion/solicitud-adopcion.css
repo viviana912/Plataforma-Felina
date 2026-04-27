@@ -1,0 +1,120 @@
+.solicitud-container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.back-link {
+  margin-bottom: 20px;
+}
+
+.back-link a {
+  color: var(--color-principal-malva);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: color 0.3s;
+}
+
+.back-link a:hover {
+  color: var(--color-texto-berenjena);
+}
+
+/* Tarjeta con info del gato — inspirada en gato-detalle (sombra offset mostaza) */
+.gato-card {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(74, 78, 105, 0.08);
+  margin-bottom: 25px;
+}
+
+.gato-card img {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 6px 6px 0px var(--color-cta-mostaza);
+  flex-shrink: 0;
+}
+
+.gato-info .label {
+  color: var(--color-principal-malva);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+}
+
+.gato-info h2 {
+  margin: 5px 0 12px;
+  color: var(--color-texto-berenjena);
+  font-size: 2rem;
+}
+
+.info-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.info-tag {
+  background: var(--color-fondo-crema);
+  padding: 4px 14px;
+  border-radius: 20px;
+  color: var(--color-texto-berenjena);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* Tarjeta del formulario */
+.form-card {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(74, 78, 105, 0.08);
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 35px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--color-fondo-crema);
+}
+
+.form-header h1 {
+  color: var(--color-texto-berenjena);
+  font-size: 2rem;
+  margin: 0 0 10px;
+}
+
+.form-header p {
+  color: var(--color-principal-malva);
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* Iconos en los labels (color mostaza como acento del proyecto) */
+.form-group label i {
+  color: var(--color-cta-mostaza);
+  margin-right: 8px;
+}
+
+.btn-submit i {
+  margin-right: 8px;
+}
+
+/* Responsive: en móvil la gato-card se apila */
+@media (max-width: 600px) {
+  .gato-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .form-card {
+    padding: 25px;
+  }
+}

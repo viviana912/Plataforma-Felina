@@ -30,7 +30,15 @@ export class GatoService {
     return this.http.get<Gato[]>(this.apiUrl);
   }
 
+  getGatosDisponibles(): Observable<Gato[]> {
+    return this.http.get<Gato[]>(`${this.apiUrl}/disponibles`);
+  }
+
   getGatoById(id: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
+  }
+
+  getGatosAdoptados(): Observable<Gato[]> {
+    return this.http.get<Gato[]>(`${this.apiUrl}/adoptados`);
   }
 }

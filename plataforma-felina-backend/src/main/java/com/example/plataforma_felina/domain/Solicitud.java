@@ -26,6 +26,16 @@ public class Solicitud {
 
     private String estado;
 
+    @Column(name = "experiencia_previa", columnDefinition = "TEXT")
+    private String experienciaPrevia;
+
+    @Column(name = "motivo_adopcion", columnDefinition = "TEXT")
+    private String motivoAdopcion;
+
+    @Column(name = "condiciones_vivienda")
+    private String condicionesVivienda;
+
+
     @ManyToOne
     @MapsId("usuarioId")
     @JoinColumn(name = "id_usuario")

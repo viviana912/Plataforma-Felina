@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   min-height: 80vh;
-  background-color: #F8F9FA;
+  background-color: var(--color-fondo-pagina);
 }
 
 .login-card {
@@ -13,7 +13,13 @@
   box-shadow: 0 10px 30px rgba(74, 78, 105, 0.1);
   width: 100%;
   max-width: 400px;
-  border: 1px solid #9A8C98;
+  border: 1px solid var(--color-principal-malva);
+  box-sizing: border-box;
+}
+
+/* Variante ancha para formularios con más campos (ej. solicitud-adopcion) */
+.login-card--wide {
+  max-width: 650px;
 }
 
 .login-header {
@@ -22,12 +28,12 @@
 }
 
 .login-header h2 {
-  color: #4A4E69;
+  color: var(--color-texto-berenjena);
   margin-bottom: 10px;
 }
 
 .login-header p {
-  color: #9A8C98;
+  color: var(--color-principal-malva);
 }
 
 .form-group {
@@ -37,28 +43,53 @@
 .form-group label {
   display: block;
   margin-bottom: 8px;
-  color: #4A4E69;
+  color: var(--color-texto-berenjena);
   font-weight: 600;
 }
 
-.form-group input {
+.form-group input,
+.form-group textarea,
+.form-group select {
   width: 100%;
   padding: 12px;
-  border: 2px solid #F4F1F4;
+  border: 2px solid var(--color-detalle-tarjeta);
   border-radius: 10px;
   outline: none;
   transition: border-color 0.3s;
+  font-family: inherit;
+  font-size: 1rem;
+  box-sizing: border-box;
 }
 
-.form-group input:focus {
-  border-color: #9A8C98;
+.form-group textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--color-principal-malva);
+}
+
+.form-group input.ng-invalid.ng-touched,
+.form-group textarea.ng-invalid.ng-touched,
+.form-group select.ng-invalid.ng-touched {
+  border-color: #c0392b;
+}
+
+.form-group .error {
+  display: block;
+  color: #c0392b;
+  font-size: 0.85rem;
+  margin-top: 6px;
 }
 
 .btn-submit {
   width: 100%;
   padding: 14px;
-  background-color: #E9C46A;
-  color: #4A4E69;
+  background-color: var(--color-cta-mostaza);
+  color: var(--color-texto-berenjena);
   border: none;
   border-radius: 10px;
   font-size: 1.1rem;
@@ -69,8 +100,24 @@
 }
 
 .btn-submit:hover {
-  background-color: #d4b259;
+  background-color: var(--color-cta-mostaza-hover);
   transform: translateY(-2px);
+}
+
+.btn-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.error-msg {
+  color: #c0392b;
+  background: #fdecea;
+  padding: 10px 15px;
+  border-radius: 10px;
+  margin: 15px 0;
+  text-align: center;
+  font-size: 0.9rem;
 }
 
 .login-footer {
@@ -80,7 +127,7 @@
 }
 
 .login-footer a {
-  color: #9A8C98;
+  color: var(--color-principal-malva);
   text-decoration: none;
   display: block;
   margin-bottom: 10px;
@@ -88,6 +135,6 @@
 
 .login-footer span a {
   display: inline;
-  color: #4A4E69;
+  color: var(--color-texto-berenjena);
   font-weight: bold;
 }

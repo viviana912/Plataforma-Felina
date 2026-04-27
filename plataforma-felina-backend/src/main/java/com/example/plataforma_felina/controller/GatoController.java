@@ -22,6 +22,11 @@ public class GatoController {
         return gatoService.getAllGatos();
     }
 
+    @GetMapping("/disponibles")
+    public List<Gato> getDisponibles() {
+        return gatoService.getDisponibles();
+    }
+
     @GetMapping("/{id}")
     public Gato getById(@PathVariable Long id) {
         return gatoService.findOne(id);
@@ -57,4 +62,9 @@ public class GatoController {
 
         return gatoService.save(existing);
     }
+
+    @GetMapping("/adoptados")
+public List<Gato> getAdoptados() {
+    return gatoService.getAdoptados();
+}
 }

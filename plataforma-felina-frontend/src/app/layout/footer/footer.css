@@ -1,5 +1,5 @@
 .footer-minimal {
-  background-color: #4A4E69; /* Tu color pizarra */
+  background-color: var(--color-oscuro);
   color: white;
   padding: 40px 50px;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -43,16 +43,16 @@
 }
 
 .footer-title {
-  color: #EBCB8B;
-  font-size: 1.8rem; /* Un poco más grande para acompañar al logo */
+  color: var(--color-mostaza-suave);
+  font-size: 1.8rem;
   margin: 0;
   font-weight: bold;
 }
 
 .footer-slogan {
-  font-size: 0.95rem; /* Un poco más legible */
+  font-size: 0.95rem;
   font-style: italic;
-  color: #d1d1d1; /* Un gris más claro para que resalte sobre el pizarra */
+  color: var(--color-texto-claro);
   margin-top: 4px;
 }
 
@@ -70,19 +70,19 @@
 }
 
 .legal-links a {
-  color: #d1d1d1;
+  color: var(--color-texto-claro);
   text-decoration: none;
   font-size: 0.85rem;
   transition: color 0.3s;
 }
 
 .legal-links a:hover {
-  color: #EBCB8B;
+  color: var(--color-mostaza-suave);
 }
 
 .copyright-text {
   font-size: 0.75rem;
-  color: #9A8C98;
+  color: var(--color-principal-malva);
   margin: 0;
 }
 
@@ -110,18 +110,18 @@
 }
 
 .contact-link i, .bizum-mini i {
-  color: #EBCB8B;
+  color: var(--color-mostaza-suave);
   margin-right: 8px;
   width: 16px;
 }
 
 .bizum-mini {
   font-size: 0.95rem;
-  color: #d1d1d1;
+  color: var(--color-texto-claro);
 }
 
 .bizum-mini strong {
-  color: #EBCB8B;
+  color: var(--color-mostaza-suave);
 }
 
 /* --- RESPONSIVO --- */

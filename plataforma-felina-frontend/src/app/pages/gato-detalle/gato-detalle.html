@@ -1,5 +1,3 @@
-
-
 <div class="ficha-container" *ngIf="gato">
   <div class="back-link">
     <a routerLink="/gatos"><i class="fa-solid fa-arrow-left"></i> Volver al listado</a>
@@ -11,7 +9,7 @@
     </div>
 
     <div class="ficha-info">
-      <span class="estado-adopcion">Disponible para adopción</span>
+      <span class="estado-adopcion">{{ gato.estado || 'Disponible' }}</span>
       <h1>{{ gato.nombre }}</h1>
 
       <div class="info-tags">
@@ -25,14 +23,22 @@
         <p>{{ gato.descripcion || 'Este pequeño está deseando encontrar un hogar...' }}</p>
       </div>
 
-      <div class="datos-tecnicos">
+      <div class="datos-tecnicos" *ngIf="isLoggedIn; else avisoRegistro">
         <div class="dato"><strong>Color:</strong> {{ gato.color }}</div>
-        <div class="dato"><strong>Salud:</strong> Vacunado, Desparasitado, Chip.</div>
+        <div class="dato"><strong>Salud y Vacunas:</strong> {{ gato.vacunas }}</div>
+        <div class="dato"><strong>Carácter:</strong> {{ gato.caracter }}</div>
+        
+        <button class="btn-solicitar-grande" (click)="abrirFormulario()">
+          Presentar solicitud de adopción
+        </button>
       </div>
 
-      <button class="btn-solicitar-grande" (click)="abrirFormulario()">
-        Quiero adoptar a a{{ gato.nombre }}
-      </button>
+      <ng-template #avisoRegistro>
+        <div class="banner-privado">
+          <p><i class="fa-solid fa-lock"></i> Inicia sesión o regístrate para ver el historial de salud y presentar una solicitud.</p>
+          <button class="btn-solicitar-grande" routerLink="/login">Iniciar sesión para adoptar</button>
+        </div>
+      </ng-template>
     </div>
   </div>
 </div>

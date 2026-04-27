@@ -1,6 +1,6 @@
 .admin-panel-content {
   padding: 40px;
-  background-color: #f3efef;
+  background-color: var(--color-fondo-pagina);
   min-height: 90vh;
 }
 
@@ -10,7 +10,7 @@
 }
 
 .header-seccion h1 {
-  color: #4A4E69;
+  color: var(--color-texto-berenjena);
   font-size: 2rem;
 }
 
@@ -27,7 +27,7 @@
 }
 
 .tabla-colabora th {
-  background-color: #9A8C98;
+  background-color: var(--color-principal-malva);
   color: white;
   padding: 15px;
   text-transform: uppercase;
@@ -45,14 +45,14 @@
   background: transparent;
   width: 100%;
   font-family: inherit;
-  color: #4A4E69;
+  color: var(--color-texto-berenjena);
   padding: 8px;
   border-radius: 5px;
 }
 
 .input-inline:focus, .textarea-inline:focus {
   background: #fff;
-  border-color: #ebcB8B;
+  border-color: var(--color-mostaza-suave);
   outline: none;
 }
 
@@ -70,8 +70,8 @@
 }
 
 .alta {
-  background-color: #f4c9c9 !important;
-  color: #f64343 !important;
+  background-color: var(--color-peligro-bg) !important;
+  color: var(--color-peligro) !important;
 }
 
 .media {
@@ -85,9 +85,9 @@
 }
 
 .select-admin-mustard-small {
-  background: #ebcB8B;
-  border: 1px solid #d4b259;
-  color: #4A4E69;
+  background: var(--color-mostaza-suave);
+  border: 1px solid var(--color-cta-mostaza-hover);
+  color: var(--color-texto-berenjena);
   font-weight: bold;
   border-radius: 5px;
   padding: 5px;
@@ -102,8 +102,8 @@
 }
 
 .btn-mustard-large {
-  background-color: #ebcB8B;
-  color: #4A4E69;
+  background-color: var(--color-mostaza-suave);
+  color: var(--color-texto-berenjena);
   border: none;
   padding: 12px 25px;
   border-radius: 8px;
@@ -112,8 +112,8 @@
 }
 
 .btn-eliminar-soft {
-  border: 1px solid #f4c9c9;
-  color: #f64343;
+  border: 1px solid var(--color-peligro-bg);
+  color: var(--color-peligro);
   background: transparent;
   padding: 5px 10px;
   border-radius: 5px;
@@ -157,7 +157,7 @@
 }
 
 .btn-rol {
-  background: #ebcB8B;
+  background: var(--color-mostaza-suave);
   border: none;
   padding: 10px 15px;
   border-radius: 5px;
@@ -166,7 +166,7 @@
 }
 
 .btn-confirm-delete {
-  background: #f64343;
+  background: var(--color-peligro);
   color: white;
   border: none;
   padding: 10px 15px;
@@ -183,7 +183,7 @@
 }
 
 .btn-crear-tarea {
-  background-color: #4A4E69;
+  background-color: var(--color-texto-berenjena);
   color: white;
   border: none;
   padding: 12px 25px;
@@ -195,7 +195,7 @@
 }
 
 .btn-crear-tarea:hover {
-  background-color: #22223b;
+  background-color: var(--color-oscuro);
   transform: translateY(-2px);
 }
 
@@ -213,7 +213,7 @@
 .field label {
   font-size: 0.85rem;
   font-weight: bold;
-  color: #9A8C98;
+  color: var(--color-principal-malva);
   margin-bottom: 5px;
 }
 

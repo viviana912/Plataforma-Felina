@@ -140,12 +140,14 @@
 
 /* Botón estilo Home */
 .btn-primary {
+  display: inline-block;
   background-color: #EBCB8B;
   color: #4A4E69;
   padding: 15px 30px;
   border-radius: 30px;
   border: none;
   font-weight: bold;
+  text-decoration: none;
   cursor: pointer;
   transition: 0.3s;
 }

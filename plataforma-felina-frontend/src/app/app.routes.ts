@@ -10,10 +10,12 @@ import {AdminUsuariosComponent} from './pages/admin/admin-usuarios/admin-usuario
 import {AdminTareasComponent} from './pages/admin/admin-tareas/admin-tareas';
 import {AdminFichasComponent} from './pages/admin/admin-fichas/admin-fichas';
 import {AdminSolicitudesComponent} from './pages/admin/admin-solicitudes/admin-solicitudes';
+import {AdminAdopcionesComponent} from './pages/admin/admin-adopciones/admin-adopciones';
 import {PerfilComponent} from './pages/perfil/perfil';
 import {ComoAyudar} from './pages/como-ayudar/como-ayudar';
 import {GatoDetalleComponent} from './pages/gato-detalle/gato-detalle';
-import {adminGuard} from './auth.guard';
+import {SolicitudAdopcionComponent} from './pages/solicitud-adopcion/solicitud-adopcion';
+import {adminGuard, authGuard} from './auth.guard';
 
 
 export const routes: Routes = [
@@ -28,6 +30,11 @@ export const routes: Routes = [
   {path: 'perfil', component: PerfilComponent},
   { path: 'como-ayudar', component: ComoAyudar},
   { path: 'gato/:id', component: GatoDetalleComponent},
+  {
+    path: 'adoptar/:gatoId',
+    component: SolicitudAdopcionComponent,
+    canActivate: [authGuard]
+  },
 
   {
     path: 'admin/panel',
@@ -38,6 +45,7 @@ export const routes: Routes = [
       {path: 'tareas', component: AdminTareasComponent },
       { path: 'fichas', component: AdminFichasComponent },
       { path: 'solicitudes', component: AdminSolicitudesComponent },
+      { path: 'adopciones', component: AdminAdopcionesComponent },
       {
         path: 'admin/panel',
         component: AdminPanelComponent,

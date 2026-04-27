@@ -2,13 +2,19 @@ package com.example.plataforma_felina.service;
 
 import com.example.plataforma_felina.domain.Rol;
 import com.example.plataforma_felina.domain.Usuario;
+import com.example.plataforma_felina.dto.InsigniasDTO;
 import com.example.plataforma_felina.dto.Registro;
 import com.example.plataforma_felina.dto.UsuarioDTO;
+import com.example.plataforma_felina.repository.DonacionRepository;
 import com.example.plataforma_felina.repository.RolRepository;
+import com.example.plataforma_felina.repository.SolicitudRepository;
 import com.example.plataforma_felina.repository.UsuarioRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,13 +24,19 @@ public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
     private final RolRepository rolRepository;
+    private final SolicitudRepository solicitudRepository;
+    private final DonacionRepository donacionRepository;
 
     public UsuarioService(UsuarioRepository usuarioRepository,
                           PasswordEncoder passwordEncoder,
-                          RolRepository rolRepository) {
+                          RolRepository rolRepository,
+                          SolicitudRepository solicitudRepository,
+                          DonacionRepository donacionRepository) {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
         this.rolRepository = rolRepository;
+        this.solicitudRepository = solicitudRepository;
+        this.donacionRepository = donacionRepository;
     }
 
     public List<UsuarioDTO> getAllUsuarios() {
@@ -45,8 +57,11 @@ public class UsuarioService {
 
     public UsuarioDTO register(Registro request) {
         if (usuarioRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new RuntimeException("El email ya está registrado");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "El email ya está registrado");
         }
+
+        Rol rolUser = rolRepository.findByNombre("USER")
+                .orElseThrow(() -> new RuntimeException("Rol USER no encontrado en la base de datos"));
 
         Usuario usuario = Usuario.builder()
                 .nombre(request.getNombre())
@@ -55,6 +70,7 @@ public class UsuarioService {
                 .telefono(request.getTelefono())
                 .passwordHash(passwordEncoder.encode(request.getPassword()))
                 .fotoUrl("assets/default-avatar.png")
+                .rol(rolUser)
                 .build();
 
         return toDTO(usuarioRepository.save(usuario));
@@ -111,5 +127,16 @@ public class UsuarioService {
         Usuario usuario = findOne(id);
         usuario.setFotoUrl(nuevaFotoUrl);
         usuarioRepository.save(usuario);
+    }
+
+    public InsigniasDTO getInsignias(Long usuarioId) {
+        Usuario usuario = findOne(usuarioId);
+
+        boolean familia = solicitudRepository.existsByUsuarioIdAndEstado(usuarioId, "APROBADA");
+        boolean donante = donacionRepository.existsByUsuarioId(usuarioId);
+        boolean veterano = usuario.getFechaRegistro() != null
+                && usuario.getFechaRegistro().isBefore(LocalDateTime.now().minusYears(1));
+
+        return new InsigniasDTO(familia, donante, veterano);
     }
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -31,6 +32,9 @@ public class Usuario {
     private String telefono;
     private String fotoUrl;
 
+    @Column(name = "fecha_registro")
+    private LocalDateTime fechaRegistro;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_rol")
     @JsonIgnoreProperties({"usuarios"})
@@ -40,4 +44,11 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario")
     @JsonIgnore // Para evitar el bucle
     private List<SolicitudTarea> solicitudesTarea;
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.fechaRegistro == null) {
+            this.fechaRegistro = LocalDateTime.now();
+        }
+    }
 }

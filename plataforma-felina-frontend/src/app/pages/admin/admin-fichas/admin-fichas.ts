@@ -17,6 +17,8 @@ export class AdminFichasComponent implements OnInit {
   gatos: any[] = [];
   gatoEditando: any = null;
   gatoParaBorrar: any = null;
+  subiendoFoto = false;
+  errorSubida: string | null = null;
 
   ngOnInit() {
     this.cargarGatos();
@@ -81,5 +83,29 @@ export class AdminFichasComponent implements OnInit {
         }
       });
     }
+  }
+
+  onFotoSeleccionada(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files || input.files.length === 0) return;
+    const file = input.files[0];
+
+    this.errorSubida = null;
+    this.subiendoFoto = true;
+    this.cdr.markForCheck();
+
+    this.fichaService.uploadFoto(file).subscribe({
+      next: (res) => {
+        this.gatoEditando.fotoUrl = res.fullUrl;
+        this.subiendoFoto = false;
+        input.value = '';
+        this.cdr.markForCheck();
+      },
+      error: (err) => {
+        this.errorSubida = err?.error?.error || 'No se pudo subir la imagen';
+        this.subiendoFoto = false;
+        this.cdr.markForCheck();
+      }
+    });
   }
 }

@@ -19,6 +19,10 @@ public class GatoService {
         return gatoRepository.findAll();
     }
 
+    public List<Gato> getDisponibles() {
+        return gatoRepository.findDisponibles();
+    }
+
     public Gato findOne(Long id){
         return gatoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Gato no encontrado"));
@@ -31,4 +35,8 @@ public class GatoService {
     public void delete(Long id){
         gatoRepository.deleteById(id);
     }
+
+    public List<Gato> getAdoptados() {
+    return gatoRepository.findAdoptados();
+}
 }

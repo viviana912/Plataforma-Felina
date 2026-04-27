@@ -7,7 +7,7 @@
         <p>"Que el sol de su vida sea un hogar"</p>
         <div class="hero-buttons">
           <a routerLink="/gatos" class="btn-primary">Adoptar</a>
-          <a routerLink="/adopcion" class="btn-secondary">¿Cómo ayudar?</a>
+          <a routerLink="/como-ayudar" class="btn-secondary">¿Cómo ayudar?</a>
         </div>
       </div>
     </div>
@@ -49,7 +49,6 @@
           de la comunidad y el ayuntamiento, edificamos nuestro primer refugio oficial. Donde antes crecía el silencio,
           hoy brotan ronroneos, juegos y nuevas oportunidades.
         </p>
-        <a routerLink="/sobre-nosotros" class="btn-text">Leer más sobre nosotros <i class="fa-solid fa-arrow-right"></i></a>
       </div>
       <div class="story-image">
         <img src="/assets/portadas/cuidadorGato.jpg" alt="Voluntarios trabajando" class="img-rounded">
@@ -88,6 +87,22 @@
         </div>
         <h3>Empatía Activa</h3>
         <p>Sentimos con ellos, actuamos por ellos. Transformamos el miedo en confianza y soledad en juegos.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="happy-endings" *ngIf="gatosAdoptados.length > 0">
+    <span class="subtitle">Historias con final feliz</span>
+    <h2>Ya están en su hogar</h2>
+    <div class="polaroid-grid">
+      <div *ngFor="let gato of gatosAdoptados" class="polaroid-item">
+        <div class="polaroid-card">
+          <img [src]="gato.fotoUrl" [alt]="gato.nombre">
+          <div class="polaroid-caption">
+            <p class="gato-name">{{ gato.nombre }}</p>
+            <span class="tag-adoptado">¡Adoptado! ❤️</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>

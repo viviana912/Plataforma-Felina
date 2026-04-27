@@ -1,0 +1,77 @@
+<div class="solicitud-container" *ngIf="gato">
+  <div class="back-link">
+    <a [routerLink]="['/gato', gato.id]"><i class="fa-solid fa-arrow-left"></i> Volver a la ficha</a>
+  </div>
+
+  <div class="gato-card">
+    <img [src]="gato.fotoUrl" [alt]="gato.nombre">
+    <div class="gato-info">
+      <span class="label">Estás adoptando a</span>
+      <h2>{{ gato.nombre }}</h2>
+      <div class="info-tags">
+        <span class="info-tag">{{ gato.raza }}</span>
+        <span class="info-tag">{{ gato.edad }} {{ gato.edad === 1 ? 'año' : 'años' }}</span>
+        <span class="info-tag">{{ gato.sexo }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-card">
+    <div class="form-header">
+      <h1>Solicitud de Adopción</h1>
+      <p>Cuéntanos un poco sobre ti para encontrar el mejor hogar para {{ gato.nombre }}</p>
+    </div>
+
+    <form (ngSubmit)="enviarSolicitud()" #solicitudForm="ngForm">
+      <div class="form-group">
+        <label for="experienciaPrevia">
+          <i class="fa-solid fa-paw"></i> ¿Tienes experiencia previa con animales?
+        </label>
+        <textarea id="experienciaPrevia"
+                  name="experienciaPrevia"
+                  [(ngModel)]="datos.experienciaPrevia"
+                  placeholder="Cuéntanos si has tenido gatos u otros animales antes..."
+                  rows="4"
+                  required
+                  minlength="10"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="motivoAdopcion">
+          <i class="fa-solid fa-heart"></i> ¿Por qué quieres adoptar a {{ gato.nombre }}?
+        </label>
+        <textarea id="motivoAdopcion"
+                  name="motivoAdopcion"
+                  [(ngModel)]="datos.motivoAdopcion"
+                  placeholder="Motivo de tu interés..."
+                  rows="4"
+                  required
+                  minlength="10"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="condicionesVivienda">
+          <i class="fa-solid fa-house"></i> Condiciones de la vivienda
+        </label>
+        <select id="condicionesVivienda"
+                name="condicionesVivienda"
+                [(ngModel)]="datos.condicionesVivienda"
+                required>
+          <option value="">Selecciona una opción</option>
+          <option value="Piso">Piso</option>
+          <option value="Casa">Casa con jardín</option>
+          <option value="Otro">Otro</option>
+        </select>
+      </div>
+
+      <p class="error-msg" *ngIf="errorMsg">{{ errorMsg }}</p>
+
+      <button type="submit"
+              class="btn-submit"
+              [disabled]="solicitudForm.invalid || enviando">
+        <i class="fa-solid fa-paper-plane"></i>
+        {{ enviando ? 'Enviando...' : 'Enviar Solicitud' }}
+      </button>
+    </form>
+  </div>
+</div>

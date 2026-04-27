@@ -1,47 +1,10 @@
-:root {
-
-  --color-principal-malva: #9A8C98;
-
-  --color-cta-mostaza: #E9C46A;
-
-  --color-fondo-pagina: #F8F9FA;
-
-  --color-texto-berenjena: #4A4E69;
-
-  --color-fondo-tarjeta: #ffffff;
-
-  --color-detalle-tarjeta: #F4F1F4;
-
-}
-
-
-
-body {
-
-  background-color: var(--color-fondo-pagina);
-
-  color: var(--color-texto-berenjena);
-
-  margin: 0;
-
-  padding: 0;
-
-}
-
-
-
 .container {
-
   max-width: 1200px;
-
   margin: 0 auto;
-
   padding: 40px 20px;
-
 }
 
-
-/* --- DISEÑO PARA EL HEADER (NUEVO) --- */
+/* --- DISEÑO PARA EL HEADER --- */
 
 .gatos-header {
   text-align: center;
@@ -90,224 +53,323 @@ body {
   margin-top: 10px;
 }
 
-
-
 h2 {
-
-  color: #4A4E69;
-
+  color: var(--color-texto-berenjena);
   text-align: center;
-
   font-size: 2.5rem;
-
   margin-bottom: 40px;
-
   font-weight: 700;
-
   position: relative;
-
   display: inline-block;
-
   left: 50%;
-
   transform: translateX(-50%);
-
 }
-
-
 
 h2::after {
-
   content: '';
-
   display: block;
-
   width: 60px;
-
   height: 4px;
-
   background-color: var(--color-cta-mostaza);
-
   margin: 10px auto 0;
-
   border-radius: 2px;
-
 }
-
-
 
 .cards {
-
   display: grid;
-
   grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-
-  gap: 20px;
-
+  gap: 24px;
   padding: 20px 0;
-
 }
-
-
-
-.gato-foto-wrapper {
-
-  position: relative;
-
-  width: 100%;
-
-  height: 200px;
-
-  overflow: hidden;
-
-  border-radius: 8px;
-
-  margin-bottom: 15px;
-
-}
-
-
 
 .card {
-
-  background-color: #F2E9E4;
-
+  background-color: var(--color-fondo-tarjeta);
   border-radius: 16px;
-
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-
-  border: 1px solid #9A8C98;
-
+  box-shadow: var(--sombra-tarjeta);
+  border: 1px solid var(--color-principal-malva);
   overflow: hidden;
-
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   display: flex;
-
   flex-direction: column;
-
 }
-
-
-
-.gato-foto {
-
-  width: 100%;
-
-  height: 100%;
-
-  object-fit: cover;
-
-  transition: transform 0.3s ease;
-
-}
-
-
 
 .card:hover {
-
   transform: translateY(-8px);
-
-  box-shadow: 0 10px 25px rgba(74, 78, 105, 0.15);
-
-  border: 1px solid #E9C46A;
-
-  background-color: #ebcB8B;
-
+  box-shadow: var(--sombra-tarjeta-hover);
+  border-color: var(--color-cta-mostaza);
 }
 
+.gato-foto-wrapper {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+}
 
+.gato-foto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
 
-.card-body {
+.card:hover .gato-foto {
+  transform: scale(1.05);
+}
 
-  padding: 25px;
+/* Overlay con degradado y nombre sobre la foto */
+.foto-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 50px 20px 16px;
+  background: linear-gradient(to top, rgba(34, 34, 59, 0.88) 0%, rgba(34, 34, 59, 0) 100%);
+  color: white;
+  pointer-events: none;
+}
 
-  flex-grow: 1;
-
+.overlay-nombre {
+  margin: 0;
+  font-size: 1.7rem;
+  font-weight: 700;
   display: flex;
-
-  flex-direction: column;
-
-  background-color: var(--color-fondo-tarjeta);
-
-  margin: 10px;
-
-  border-radius: 12px;
-
+  align-items: center;
+  gap: 10px;
+  line-height: 1.1;
 }
 
-
-
-.card h3 {
-
-  color: #4A4E69;
-
-  font-size: 1.8rem;
-
-  margin: 0 0 15px 0;
-
+.overlay-sexo {
+  font-size: 1.4rem;
   font-weight: 600;
-
 }
 
+.sexo-macho { color: #6FA8DC; }
+.sexo-hembra { color: #EBC8BB; }
 
+.overlay-edad {
+  margin: 4px 0 0 0;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
 
-.card p {
+/* Badges sobre la foto */
+.badge {
+  position: absolute;
+  top: 14px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 6px rgba(74, 78, 105, 0.25);
+  z-index: 2;
+}
 
-  color: #9A8C98;
+.badge-urgente {
+  left: 14px;
+  background-color: var(--color-peligro);
+  color: white;
+}
 
-  font-size: 1rem;
+.badge-vacunado {
+  right: 14px;
+  background-color: var(--color-exito);
+  color: white;
+}
 
-  margin: 8px 0;
+/* Cuerpo de la card (debajo de la foto) */
+.card-body {
+  padding: 18px 22px 14px;
+  flex-grow: 1;
+}
 
+.card-body .gato-dato {
+  color: var(--color-principal-malva);
+  font-size: 0.95rem;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   line-height: 1.5;
-
 }
 
-
-
-.card p strong {
-
-  color: #4A4E69;
-
+.card-body .gato-dato i {
+  color: var(--color-cta-mostaza);
+  width: 18px;
+  text-align: center;
 }
-
-
 
 .card-button {
-
-  background-color: #E9C46A;
-
-  color: #4A4E69;
-
+  background-color: var(--color-cta-mostaza);
+  color: var(--color-texto-berenjena);
   border: none;
-
   border-radius: 8px;
-
-  padding: 15px 20px;
-
-  font-size: 1.1rem;
-
+  padding: 14px 20px;
+  font-size: 1.05rem;
   font-weight: 700;
-
   cursor: pointer;
-
-  transition: background-color 0.3s ease, transform 0.2s ease;
-
-  margin: 0 20px 20px 20px;
-
-  width: calc(100% - 40px);
-
+  transition: background-color 0.3s ease;
+  margin: 0 16px 16px;
+  width: calc(100% - 32px);
 }
 
-
-
 .card-button:hover {
+  background-color: var(--color-cta-mostaza-hover);
+}
 
-  background-color: #9A8C98;
+/* Banner de invitación a registrarse */
+.banner-registro {
+  margin: 50px auto 20px;
+  max-width: 720px;
+  padding: 22px 30px;
+  background-color: var(--color-fondo-crema);
+  border: 1px dashed var(--color-principal-malva);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  color: var(--color-texto-berenjena);
+}
 
-  color: #ebcB8B;
+.banner-registro i {
+  font-size: 1.8rem;
+  color: var(--color-cta-mostaza);
+  flex-shrink: 0;
+}
 
-  border: 1px solid #4A4E69;
+.banner-registro p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
 
+.banner-registro a {
+  color: var(--color-cta-mostaza);
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 2px solid var(--color-cta-mostaza);
+}
+
+.banner-registro a:hover {
+  color: var(--color-cta-mostaza-hover);
+  border-color: var(--color-cta-mostaza-hover);
+}
+
+/* --- FILTROS --- */
+.filtros-container {
+  background-color: var(--color-fondo-tarjeta);
+  border: 1px solid var(--color-fondo-crema);
+  border-radius: 14px;
+  padding: 22px 26px;
+  margin: 20px 0 30px;
+  box-shadow: var(--sombra-suave);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.filtros-grupo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.filtros-label {
+  color: var(--color-texto-berenjena);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  min-width: 56px;
+}
+
+.filtros-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pill {
+  background-color: transparent;
+  border: 1.5px solid var(--color-principal-malva);
+  color: var(--color-principal-malva);
+  padding: 7px 16px;
+  border-radius: 20px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pill:hover {
+  border-color: var(--color-cta-mostaza);
+  color: var(--color-texto-berenjena);
+}
+
+.pill.active {
+  background-color: var(--color-cta-mostaza);
+  border-color: var(--color-cta-mostaza);
+  color: var(--color-texto-berenjena);
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(233, 196, 106, 0.4);
+}
+
+.pill-urgente {
+  border-color: var(--color-peligro);
+  color: var(--color-peligro);
+}
+
+.pill-urgente:hover {
+  border-color: var(--color-peligro);
+  color: white;
+  background-color: var(--color-peligro);
+}
+
+.pill-urgente.active {
+  background-color: var(--color-peligro);
+  border-color: var(--color-peligro);
+  color: white;
+  box-shadow: 0 2px 6px rgba(246, 67, 67, 0.4);
+}
+
+.filtros-resumen {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--color-fondo-crema);
+  font-size: 0.9rem;
+  color: var(--color-principal-malva);
+}
+
+.filtros-resumen strong {
+  color: var(--color-texto-berenjena);
+}
+
+.btn-reset {
+  background: none;
+  border: none;
+  color: var(--color-cta-mostaza);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.btn-reset:hover {
+  background-color: var(--color-fondo-crema);
 }

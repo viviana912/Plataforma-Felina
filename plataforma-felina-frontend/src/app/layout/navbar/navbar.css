@@ -2,11 +2,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #F2E9E4;
+  background-color: var(--color-fondo-crema);
   padding: 0.5rem 2rem;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 12px rgba(74, 78, 105, 0.12);
   min-height: 80px;
-  border-bottom: 2px solid #4A4E69;
+  border-bottom: 2px solid var(--color-cta-mostaza);
 }
 
 .navbar-logo {
@@ -36,14 +36,14 @@
 }
 
 .navbar-links a {
-  color: #4A4E69;
+  color: var(--color-texto-berenjena);
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s;
 }
 
 .navbar-links a:hover {
-  color: #9A8C98;
+  color: var(--color-principal-malva);
 }
 
 /* --- SECCIÓN DE USUARIO Y AVATAR --- */
@@ -52,11 +52,10 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  background: rgba(154, 140, 152, 0.1); /* Tu color suave */
+  background: rgba(154, 140, 152, 0.1);
   padding: 5px 12px;
   border-radius: 50px;
   transition: background 0.3s;
-  /* Forzamos que no haya bordes ni decoraciones que creen la rayita */
   border: none !important;
   text-decoration: none !important;
 }
@@ -69,12 +68,11 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  text-decoration: none !important; /* Eliminamos subrayado del enlace */
+  text-decoration: none !important;
   color: inherit;
-  border: none !important; /* Eliminamos posibles bordes del enlace */
+  border: none !important;
 }
 
-/* Forzamos que no haya rayitas activas de routerLink */
 .user-profile-link.active,
 .user-profile-link:active,
 .user-profile-link:focus {
@@ -88,25 +86,23 @@
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #EBCB8B; /* Tu mostaza */
+  border: 2px solid var(--color-mostaza-suave);
   background-color: white;
-  /* Aseguramos que la imagen no tenga márgenes extraños */
   margin: 0 !important;
   display: block;
 }
 
 .username {
-  color: #4A4E69;
+  color: var(--color-texto-berenjena);
   font-weight: 600;
   font-size: 0.95rem;
-  /* Evitamos que el nombre se subraye */
   text-decoration: none !important;
 }
 /* --- BOTONES --- */
 
 .btn-login {
-  background-color: #EBCB8B;
-  color: #4A4E69;
+  background-color: var(--color-cta-mostaza);
+  color: var(--color-texto-berenjena);
   padding: 8px 18px;
   border-radius: 8px;
   text-decoration: none;
@@ -115,14 +111,14 @@
 }
 
 .btn-login:hover {
-  background-color: #d6b572;
+  background-color: var(--color-cta-mostaza-hover);
 }
 
 .btn-logout {
   background-color: transparent;
-  border: 1px solid #9A8C98;
-  color: #9A8C98;
-  padding: 6px 12px; /* Un poco más pequeño para balancear el avatar */
+  border: 1px solid var(--color-principal-malva);
+  color: var(--color-principal-malva);
+  padding: 6px 12px;
   border-radius: 8px;
   cursor: pointer;
   font-size: 0.85rem;
@@ -130,16 +126,17 @@
 }
 
 .btn-logout:hover {
-  background-color: #4A4E69;
+  background-color: var(--color-texto-berenjena);
   color: white;
-  border-color: #4A4E69;
+  border-color: var(--color-texto-berenjena);
 }
 
 /* Enlace especial para el panel admin */
 .link-admin {
-  background-color: #4A4E69;
+  background-color: var(--color-texto-berenjena);
   color: white !important;
   padding: 5px 12px;
   border-radius: 5px;
   font-size: 0.85rem;
+  font-weight: 600;
 }
