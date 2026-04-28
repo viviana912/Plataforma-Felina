@@ -65,11 +65,13 @@ export class ApadrinarComponent implements OnInit {
       next: () => {
         this.exito = true;
         this.enviando = false;
+        this.cdr.markForCheck();
       },
       error: (err) => {
         console.error(err);
         this.errorMsg = err?.error?.message || 'No se pudo registrar el apadrinamiento.';
         this.enviando = false;
+        this.cdr.markForCheck();
       }
     });
   }

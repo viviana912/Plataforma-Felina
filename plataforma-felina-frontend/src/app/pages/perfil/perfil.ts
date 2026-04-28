@@ -143,6 +143,7 @@ export class PerfilComponent implements OnInit {
       error: (err) => {
         console.error(err);
         alert('No se pudo cancelar el apadrinamiento.');
+        this.cdr.markForCheck();
       }
     });
   }

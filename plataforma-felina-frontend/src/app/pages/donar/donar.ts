@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -17,6 +17,7 @@ export class DonarComponent {
   authService = inject(AuthService);
   private donacionService = inject(DonacionService);
   private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
 
   importesRapidos = [5, 10, 25, 50];
   importeSeleccionado: number | null = 10;
@@ -63,11 +64,13 @@ export class DonarComponent {
       next: () => {
         this.exito = true;
         this.enviando = false;
+        this.cdr.markForCheck();
       },
       error: (err) => {
         console.error(err);
         this.errorMsg = 'No se pudo procesar la donación. Inténtalo de nuevo.';
         this.enviando = false;
+        this.cdr.markForCheck();
       }
     });
   }
