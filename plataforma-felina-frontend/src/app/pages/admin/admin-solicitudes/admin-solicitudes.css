@@ -158,3 +158,65 @@
   color: var(--color-principal-malva);
   font-style: italic;
 }
+
+/* ============================================================
+   RESPONSIVE — TABLET / MÓVIL (<= 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+  .admin-panel-content {
+    padding: 20px 14px;
+  }
+
+  .header-seccion h1 {
+    font-size: 1.6rem;
+  }
+
+  .header-seccion p {
+    font-size: 0.95rem;
+  }
+
+  .tabla-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tabla-colabora {
+    min-width: 720px;
+  }
+
+  .tabla-colabora th,
+  .tabla-colabora td {
+    padding: 10px 8px;
+    font-size: 0.85rem;
+  }
+
+  .desc-tarea {
+    max-width: 200px;
+    font-size: 0.85rem;
+  }
+
+  .modal-card {
+    padding: 24px;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .modal-actions button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-seccion h1 {
+    font-size: 1.4rem;
+  }
+
+  .user-avatar-circle {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
+}

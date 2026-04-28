@@ -44,4 +44,49 @@
   flex: 1;
   padding: 0;
   background-color: var(--color-fondo-pagina);
+  min-width: 0; /* permite que el contenido interno (tablas) shrinque */
+}
+
+/* ============================================================
+   RESPONSIVE — TABLET / MÓVIL (<= 768px)
+   La sidebar lateral pasa a ser una barra horizontal scrollable arriba
+   ============================================================ */
+@media (max-width: 768px) {
+  .admin-layout {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .sidebar {
+    width: 100%;
+    padding-top: 0;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .sidebar-header {
+    display: none;
+  }
+
+  .sidebar-nav {
+    margin-top: 0;
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  .sidebar-nav a {
+    padding: 14px 18px;
+    white-space: nowrap;
+    font-size: 0.9rem;
+    border-bottom: 3px solid transparent;
+    flex-shrink: 0;
+  }
+
+  .active-link {
+    border-left: 0;
+    border-bottom: 3px solid var(--color-rosa-suave);
+  }
 }

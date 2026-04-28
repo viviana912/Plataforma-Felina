@@ -389,3 +389,90 @@
   background-color: #fecaca;
   color: #b91c1c;
 }
+
+/* ============================================================
+   RESPONSIVE — TABLET / MÓVIL (<= 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+  .admin-panel-content {
+    padding: 20px 14px;
+  }
+
+  .header-seccion {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .header-seccion h1 {
+    font-size: 1.4rem;
+    text-align: center;
+  }
+
+  .btn-nuevo-michi {
+    width: 100%;
+    margin-left: 0;
+    padding: 12px;
+  }
+
+  /* Tabla con scroll horizontal */
+  .tabla-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tabla-admin {
+    min-width: 720px;
+  }
+
+  .tabla-admin th,
+  .tabla-admin td {
+    padding: 10px 8px;
+    font-size: 0.85rem;
+  }
+
+  .img-mini-thumb {
+    width: 40px;
+    height: 40px;
+  }
+
+  .acciones-wrapper {
+    flex-direction: column;
+    gap: 6px;
+    align-items: stretch;
+  }
+
+  /* Drawer a pantalla completa en móvil */
+  .edit-drawer {
+    width: 100%;
+    right: -100%;
+  }
+
+  .input-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .drawer-header,
+  .drawer-body,
+  .drawer-footer {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-seccion h1 {
+    font-size: 1.2rem;
+  }
+
+  .btn-action {
+    padding: 5px 8px;
+    font-size: 0.7rem;
+  }
+
+  .badge-estado {
+    padding: 4px 8px;
+    font-size: 0.65rem;
+  }
+}

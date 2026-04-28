@@ -227,3 +227,65 @@
 .field select {
   cursor: pointer;
 }
+
+/* ============================================================
+   RESPONSIVE — TABLET / MÓVIL (<= 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+  .admin-panel-content {
+    padding: 20px 14px;
+  }
+
+  .header-seccion h1 {
+    font-size: 1.6rem;
+  }
+
+  .header-actions {
+    margin-bottom: 15px;
+  }
+
+  .btn-crear-tarea {
+    width: 100%;
+    margin-left: 0;
+    padding: 12px;
+  }
+
+  .tabla-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tabla-colabora {
+    min-width: 720px;
+  }
+
+  .tabla-colabora th,
+  .tabla-colabora td {
+    padding: 10px 8px;
+    font-size: 0.85rem;
+  }
+
+  .modal-card {
+    padding: 24px;
+    width: 90%;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .modal-actions button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-seccion h1 {
+    font-size: 1.4rem;
+  }
+
+  .select-inline-badge {
+    font-size: 0.7rem;
+  }
+}
