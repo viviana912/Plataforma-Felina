@@ -46,7 +46,23 @@ export class GatoDetalleComponent implements OnInit {
       this.router.navigate(['/login']);
       return;
     }
-    const ruta = this.gato?.estado === 'APADRINABLE' ? '/apadrinar' : '/adoptar';
+    let ruta = '/adoptar';
+    if (this.gato?.estado === 'APADRINABLE') ruta = '/apadrinar';
+    else if (this.gato?.estado === 'ACOGIBLE') ruta = '/acoger';
     this.router.navigate([ruta, this.gato.id]);
+  }
+
+  get textoBoton(): string {
+    if (!this.gato) return '';
+    if (this.gato.estado === 'APADRINABLE') return `Apadrinar a ${this.gato.nombre}`;
+    if (this.gato.estado === 'ACOGIBLE') return 'Ofrecerme como casa de acogida';
+    return 'Presentar solicitud de adopción';
+  }
+
+  get textoBotonLogin(): string {
+    if (!this.gato) return 'Iniciar sesión';
+    if (this.gato.estado === 'APADRINABLE') return 'Iniciar sesión para apadrinar';
+    if (this.gato.estado === 'ACOGIBLE') return 'Iniciar sesión para acoger';
+    return 'Iniciar sesión para adoptar';
   }
 }

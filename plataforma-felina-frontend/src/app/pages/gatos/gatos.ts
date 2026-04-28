@@ -16,7 +16,7 @@ export class GatosComponent implements OnInit {
 
   filtroSexo: 'todos' | 'Macho' | 'Hembra' = 'todos';
   filtroEdad: 'todos' | 'cachorro' | 'joven' | 'adulto' = 'todos';
-  filtroTipo: 'todos' | 'ADOPTABLE' | 'APADRINABLE' = 'todos';
+  filtroTipo: 'todos' | 'ADOPTABLE' | 'APADRINABLE' | 'ACOGIBLE' = 'todos';
   filtroUrgente = false;
 
   private platformId = inject(PLATFORM_ID);

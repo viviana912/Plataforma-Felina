@@ -37,6 +37,11 @@ export const routes: Routes = [
     component: SolicitudAdopcionComponent,
     canActivate: [authGuard]
   },
+  {
+    path: 'acoger/:gatoId',
+    component: SolicitudAdopcionComponent,
+    canActivate: [authGuard]
+  },
   { path: 'donar', component: DonarComponent },
   {
     path: 'apadrinar/:gatoId',

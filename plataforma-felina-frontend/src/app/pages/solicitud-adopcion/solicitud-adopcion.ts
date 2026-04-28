@@ -24,7 +24,7 @@ export class SolicitudAdopcionComponent implements OnInit {
   gato: any = null;
   errorMsg = '';
   enviando = false;
-  tipoSolicitud: 'ADOPCION' | 'APADRINAMIENTO' = 'ADOPCION';
+  tipoSolicitud: 'ADOPCION' | 'APADRINAMIENTO' | 'ACOGIDA' = 'ADOPCION';
 
   datos = {
     experienciaPrevia: '',
@@ -36,13 +36,56 @@ export class SolicitudAdopcionComponent implements OnInit {
     return this.tipoSolicitud === 'APADRINAMIENTO';
   }
 
+  get esAcogida(): boolean {
+    return this.tipoSolicitud === 'ACOGIDA';
+  }
+
+  get verbo(): string {
+    if (this.tipoSolicitud === 'APADRINAMIENTO') return 'apadrinar';
+    if (this.tipoSolicitud === 'ACOGIDA') return 'acoger';
+    return 'adoptar';
+  }
+
+  get sustantivo(): string {
+    if (this.tipoSolicitud === 'APADRINAMIENTO') return 'Apadrinamiento';
+    if (this.tipoSolicitud === 'ACOGIDA') return 'Acogida';
+    return 'Adopción';
+  }
+
+  get encabezadoAccion(): string {
+    if (this.tipoSolicitud === 'APADRINAMIENTO') return 'Vas a apadrinar a';
+    if (this.tipoSolicitud === 'ACOGIDA') return 'Te ofreces a acoger a';
+    return 'Estás adoptando a';
+  }
+
+  get textoIntroduccion(): string {
+    if (!this.gato) return '';
+    if (this.tipoSolicitud === 'APADRINAMIENTO') {
+      return `Cuéntanos por qué quieres apadrinar a ${this.gato.nombre} y apoyarle en el refugio`;
+    }
+    if (this.tipoSolicitud === 'ACOGIDA') {
+      return `Cuéntanos por qué quieres acoger temporalmente a ${this.gato.nombre} en tu casa`;
+    }
+    return `Cuéntanos un poco sobre ti para encontrar el mejor hogar para ${this.gato.nombre}`;
+  }
+
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('gatoId');
+    const segmento = this.route.snapshot.url[0]?.path;
+
+    if (segmento === 'acoger') {
+      this.tipoSolicitud = 'ACOGIDA';
+    }
+
     if (id) {
       this.gatoService.getGatoById(id).subscribe({
         next: (data) => {
           this.gato = data;
-          this.tipoSolicitud = data?.estado === 'APADRINABLE' ? 'APADRINAMIENTO' : 'ADOPCION';
+          if (segmento !== 'acoger') {
+            if (data?.estado === 'APADRINABLE') this.tipoSolicitud = 'APADRINAMIENTO';
+            else if (data?.estado === 'ACOGIBLE') this.tipoSolicitud = 'ACOGIDA';
+            else this.tipoSolicitud = 'ADOPCION';
+          }
           this.cdr.markForCheck();
         },
         error: (err) => console.error('Error al cargar el gato:', err)
