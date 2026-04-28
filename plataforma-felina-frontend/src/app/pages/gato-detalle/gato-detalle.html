@@ -29,14 +29,14 @@
         <div class="dato"><strong>Carácter:</strong> {{ gato.caracter }}</div>
         
         <button class="btn-solicitar-grande" (click)="abrirFormulario()">
-          Presentar solicitud de adopción
+          Presentar solicitud de {{ gato.estado === 'APADRINABLE' ? 'apadrinamiento' : 'adopción' }}
         </button>
       </div>
 
       <ng-template #avisoRegistro>
         <div class="banner-privado">
           <p><i class="fa-solid fa-lock"></i> Inicia sesión o regístrate para ver el historial de salud y presentar una solicitud.</p>
-          <button class="btn-solicitar-grande" routerLink="/login">Iniciar sesión para adoptar</button>
+          <button class="btn-solicitar-grande" routerLink="/login">Iniciar sesión para {{ gato.estado === 'APADRINABLE' ? 'apadrinar' : 'adoptar' }}</button>
         </div>
       </ng-template>
     </div>

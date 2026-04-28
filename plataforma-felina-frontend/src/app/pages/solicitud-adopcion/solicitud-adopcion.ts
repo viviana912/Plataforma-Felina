@@ -24,6 +24,7 @@ export class SolicitudAdopcionComponent implements OnInit {
   gato: any = null;
   errorMsg = '';
   enviando = false;
+  tipoSolicitud: 'ADOPCION' | 'APADRINAMIENTO' = 'ADOPCION';
 
   datos = {
     experienciaPrevia: '',
@@ -31,12 +32,17 @@ export class SolicitudAdopcionComponent implements OnInit {
     condicionesVivienda: ''
   };
 
+  get esApadrinamiento(): boolean {
+    return this.tipoSolicitud === 'APADRINAMIENTO';
+  }
+
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('gatoId');
     if (id) {
       this.gatoService.getGatoById(id).subscribe({
         next: (data) => {
           this.gato = data;
+          this.tipoSolicitud = data?.estado === 'APADRINABLE' ? 'APADRINAMIENTO' : 'ADOPCION';
           this.cdr.markForCheck();
         },
         error: (err) => console.error('Error al cargar el gato:', err)
@@ -57,7 +63,7 @@ export class SolicitudAdopcionComponent implements OnInit {
         usuarioId: usuarioId,
         gatoId: this.gato.id
       },
-      tipoSolicitud: 'ADOPCION',
+      tipoSolicitud: this.tipoSolicitud,
       estado: 'PENDIENTE',
       experienciaPrevia: this.datos.experienciaPrevia,
       motivoAdopcion: this.datos.motivoAdopcion,

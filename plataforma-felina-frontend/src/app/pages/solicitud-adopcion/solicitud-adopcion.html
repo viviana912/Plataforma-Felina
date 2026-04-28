@@ -6,7 +6,7 @@
   <div class="gato-card">
     <img [src]="gato.fotoUrl" [alt]="gato.nombre">
     <div class="gato-info">
-      <span class="label">Estás adoptando a</span>
+      <span class="label">{{ esApadrinamiento ? 'Vas a apadrinar a' : 'Estás adoptando a' }}</span>
       <h2>{{ gato.nombre }}</h2>
       <div class="info-tags">
         <span class="info-tag">{{ gato.raza }}</span>
@@ -18,8 +18,9 @@
 
   <div class="form-card">
     <div class="form-header">
-      <h1>Solicitud de Adopción</h1>
-      <p>Cuéntanos un poco sobre ti para encontrar el mejor hogar para {{ gato.nombre }}</p>
+      <h1>Solicitud de {{ esApadrinamiento ? 'Apadrinamiento' : 'Adopción' }}</h1>
+      <p *ngIf="!esApadrinamiento">Cuéntanos un poco sobre ti para encontrar el mejor hogar para {{ gato.nombre }}</p>
+      <p *ngIf="esApadrinamiento">Cuéntanos por qué quieres apadrinar a {{ gato.nombre }} y apoyarle en el refugio</p>
     </div>
 
     <form (ngSubmit)="enviarSolicitud()" #solicitudForm="ngForm">
@@ -38,7 +39,7 @@
 
       <div class="form-group">
         <label for="motivoAdopcion">
-          <i class="fa-solid fa-heart"></i> ¿Por qué quieres adoptar a {{ gato.nombre }}?
+          <i class="fa-solid fa-heart"></i> ¿Por qué quieres {{ esApadrinamiento ? 'apadrinar' : 'adoptar' }} a {{ gato.nombre }}?
         </label>
         <textarea id="motivoAdopcion"
                   name="motivoAdopcion"
