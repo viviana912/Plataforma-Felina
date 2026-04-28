@@ -42,10 +42,11 @@ export class GatoDetalleComponent implements OnInit {
   }
 
   abrirFormulario() {
-    if (this.isLoggedIn) {
-      this.router.navigate(['/adoptar', this.gato.id]);
-    } else {
+    if (!this.isLoggedIn) {
       this.router.navigate(['/login']);
+      return;
     }
+    const ruta = this.gato?.estado === 'APADRINABLE' ? '/apadrinar' : '/adoptar';
+    this.router.navigate([ruta, this.gato.id]);
   }
 }

@@ -328,3 +328,246 @@
 .avatar-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px; }
 .avatar-gallery img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; cursor: pointer; transition: 0.2s; }
 .avatar-gallery img:hover { transform: scale(1.05); border: 3px solid var(--color-mostaza-suave); }
+
+/* ============================================================
+   TAB MIS PAGOS (donaciones + apadrinamientos)
+   ============================================================ */
+.btn-link-cta {
+  display: inline-block;
+  margin-top: 14px;
+  background: var(--color-cta-mostaza);
+  color: var(--color-texto-berenjena);
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.btn-link-cta:hover {
+  background: var(--color-cta-mostaza-hover);
+}
+
+.pagos-section {
+  margin-bottom: 35px;
+}
+
+.pagos-section h3 {
+  color: var(--color-texto-berenjena);
+  font-size: 1.15rem;
+  margin: 0 0 18px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pagos-section h3 i {
+  color: var(--color-cta-mostaza);
+}
+
+/* Apadrinamientos */
+.apadrinamientos-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.apadrinamiento-card {
+  background: var(--color-fondo-tarjeta);
+  border: 1px solid var(--color-fondo-crema);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: var(--sombra-suave);
+}
+
+.apadrinamiento-header {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.apadrinamiento-foto {
+  width: 80px;
+  height: 80px;
+  border-radius: 14px;
+  object-fit: cover;
+  border: 2px solid var(--color-cta-mostaza);
+  flex-shrink: 0;
+}
+
+.apadrinamiento-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.apadrinamiento-info h4 {
+  margin: 0 0 4px 0;
+  color: var(--color-texto-berenjena);
+  font-size: 1.15rem;
+}
+
+.apadrinamiento-info .importe {
+  color: var(--color-cta-mostaza);
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.apadrinamiento-info .meta {
+  color: var(--color-principal-malva);
+  font-size: 0.85rem;
+  margin: 4px 0 0 0;
+}
+
+.apadrinamiento-info .proximo-cobro {
+  background: var(--color-info-bg);
+  color: var(--color-info-text);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  margin: 8px 0 0 0;
+  display: inline-block;
+}
+
+.btn-cancelar {
+  background: transparent;
+  color: var(--color-peligro);
+  border: 1px solid var(--color-peligro-bg);
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.btn-cancelar:hover {
+  background: var(--color-peligro-bg);
+}
+
+.historial-pagos {
+  margin-top: 18px;
+  border-top: 1px dashed #ddd;
+  padding-top: 14px;
+}
+
+.historial-pagos h5 {
+  color: var(--color-principal-malva);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 10px 0;
+}
+
+.historial-pagos ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.historial-pagos li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: var(--color-fondo-pagina);
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.historial-pagos li i {
+  color: var(--color-exito);
+  margin-right: 6px;
+}
+
+.pago-importe {
+  font-weight: 700;
+  color: var(--color-texto-berenjena);
+}
+
+/* Donaciones */
+.donaciones-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 15px;
+}
+
+.donacion-card {
+  background: var(--color-fondo-tarjeta);
+  border: 1px solid var(--color-fondo-crema);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  box-shadow: var(--sombra-suave);
+}
+
+.donacion-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--color-fondo-crema);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-peligro);
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.donacion-info {
+  flex: 1;
+}
+
+.donacion-info .cantidad {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-cta-mostaza);
+  margin: 0;
+}
+
+.donacion-info .meta {
+  color: var(--color-principal-malva);
+  font-size: 0.82rem;
+  margin: 4px 0;
+}
+
+.donacion-info .badge-anonima {
+  background: var(--color-fondo-crema);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.donacion-info .mensaje {
+  color: var(--color-texto-berenjena);
+  font-size: 0.9rem;
+  font-style: italic;
+  margin: 6px 0 0 0;
+  line-height: 1.4;
+}
+
+@media (max-width: 600px) {
+  .apadrinamiento-header {
+    flex-wrap: wrap;
+  }
+
+  .apadrinamiento-foto {
+    width: 60px;
+    height: 60px;
+  }
+
+  .btn-cancelar {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .donaciones-list {
+    grid-template-columns: 1fr;
+  }
+}

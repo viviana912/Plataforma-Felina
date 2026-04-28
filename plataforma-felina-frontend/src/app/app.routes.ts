@@ -15,6 +15,8 @@ import {PerfilComponent} from './pages/perfil/perfil';
 import {ComoAyudar} from './pages/como-ayudar/como-ayudar';
 import {GatoDetalleComponent} from './pages/gato-detalle/gato-detalle';
 import {SolicitudAdopcionComponent} from './pages/solicitud-adopcion/solicitud-adopcion';
+import {DonarComponent} from './pages/donar/donar';
+import {ApadrinarComponent} from './pages/apadrinar/apadrinar';
 import {adminGuard, authGuard} from './auth.guard';
 
 
@@ -33,6 +35,12 @@ export const routes: Routes = [
   {
     path: 'adoptar/:gatoId',
     component: SolicitudAdopcionComponent,
+    canActivate: [authGuard]
+  },
+  { path: 'donar', component: DonarComponent },
+  {
+    path: 'apadrinar/:gatoId',
+    component: ApadrinarComponent,
     canActivate: [authGuard]
   },
 

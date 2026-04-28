@@ -1,0 +1,161 @@
+.tarjeta-pago {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 100%;
+}
+
+.tarjeta-visual {
+  background: linear-gradient(135deg, var(--color-texto-berenjena) 0%, var(--color-principal-malva) 100%);
+  color: white;
+  border-radius: 18px;
+  padding: 25px;
+  box-shadow: 0 10px 25px rgba(74, 78, 105, 0.25);
+  position: relative;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: 'Courier New', monospace;
+}
+
+.tarjeta-chip {
+  font-size: 2rem;
+  color: var(--color-cta-mostaza);
+}
+
+.tarjeta-numero {
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  font-weight: 600;
+  word-break: break-all;
+}
+
+.tarjeta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  font-size: 0.85rem;
+}
+
+.tarjeta-row small {
+  display: block;
+  opacity: 0.7;
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+}
+
+.tarjeta-titular span,
+.tarjeta-exp span {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.tarjeta-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-texto-berenjena);
+  margin-bottom: 6px;
+}
+
+.form-group label i {
+  margin-right: 6px;
+  color: var(--color-principal-malva);
+}
+
+.form-group input {
+  padding: 12px 14px;
+  border: 1px solid #e0d8de;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: white;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--color-cta-mostaza);
+  box-shadow: 0 0 0 3px rgba(233, 196, 106, 0.2);
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.error-msg {
+  color: var(--color-peligro);
+  background: var(--color-peligro-bg);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.btn-pagar {
+  background: var(--color-texto-berenjena);
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-pagar:hover:not(:disabled) {
+  background: var(--color-cta-mostaza);
+  color: var(--color-texto-berenjena);
+  transform: translateY(-1px);
+}
+
+.btn-pagar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.aviso-mock {
+  background: var(--color-info-bg);
+  color: var(--color-info-text);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin: 0;
+  text-align: center;
+}
+
+.aviso-mock code {
+  background: white;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+}
+
+@media (max-width: 480px) {
+  .form-row {
+    flex-direction: column;
+  }
+
+  .tarjeta-numero {
+    font-size: 1.1rem;
+  }
+
+  .tarjeta-visual {
+    padding: 18px;
+  }
+}

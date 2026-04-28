@@ -1,0 +1,190 @@
+.apadrinar-container {
+  max-width: 720px;
+  margin: 40px auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.back-link a {
+  color: var(--color-principal-malva);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.back-link a:hover {
+  color: var(--color-texto-berenjena);
+}
+
+.apadrinar-header {
+  background: var(--color-fondo-tarjeta);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: var(--sombra-tarjeta);
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.apadrinar-header img {
+  width: 110px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 3px solid var(--color-cta-mostaza);
+  flex-shrink: 0;
+}
+
+.apadrinar-header .label {
+  display: block;
+  color: var(--color-cta-mostaza);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+}
+
+.apadrinar-header h1 {
+  color: var(--color-texto-berenjena);
+  margin: 4px 0 8px 0;
+  font-size: 2rem;
+}
+
+.apadrinar-header p {
+  color: var(--color-principal-malva);
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.apadrinar-card {
+  background: var(--color-fondo-tarjeta);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: var(--sombra-tarjeta);
+}
+
+.apadrinar-card h2 {
+  color: var(--color-texto-berenjena);
+  font-size: 1.3rem;
+  margin: 0 0 18px 0;
+}
+
+.input-eur.grande {
+  display: flex;
+  align-items: baseline;
+  background: var(--color-fondo-crema);
+  border-radius: 14px;
+  padding: 18px 22px;
+  gap: 10px;
+}
+
+.input-eur.grande input {
+  background: transparent;
+  border: none;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--color-texto-berenjena);
+  width: 100%;
+  outline: none;
+}
+
+.input-eur.grande input::-webkit-outer-spin-button,
+.input-eur.grande input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input-eur.grande span {
+  color: var(--color-principal-malva);
+  font-size: 1.1rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.hint {
+  color: var(--color-principal-malva);
+  font-size: 0.85rem;
+  margin: 10px 0 0 0;
+}
+
+.error-msg {
+  color: var(--color-peligro);
+  background: var(--color-peligro-bg);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin: 0 0 15px 0;
+}
+
+.exito-card {
+  background: var(--color-fondo-tarjeta);
+  border-radius: 20px;
+  padding: 50px 30px;
+  box-shadow: var(--sombra-tarjeta);
+  text-align: center;
+}
+
+.exito-icon {
+  font-size: 4rem;
+  color: var(--color-exito);
+  margin-bottom: 15px;
+}
+
+.exito-card h1 {
+  color: var(--color-texto-berenjena);
+  margin-bottom: 12px;
+}
+
+.exito-card p {
+  color: var(--color-principal-malva);
+  font-size: 1.1rem;
+  margin: 0 0 8px 0;
+}
+
+.exito-card p strong {
+  color: var(--color-cta-mostaza);
+}
+
+.exito-sub {
+  font-size: 0.95rem !important;
+}
+
+.exito-actions {
+  margin-top: 30px;
+}
+
+.btn-primary {
+  background: var(--color-cta-mostaza);
+  color: var(--color-texto-berenjena);
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.btn-primary:hover {
+  background: var(--color-cta-mostaza-hover);
+}
+
+@media (max-width: 600px) {
+  .apadrinar-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .apadrinar-header img {
+    width: 130px;
+    height: 130px;
+  }
+
+  .apadrinar-card {
+    padding: 22px;
+  }
+
+  .input-eur.grande input {
+    font-size: 1.8rem;
+  }
+}

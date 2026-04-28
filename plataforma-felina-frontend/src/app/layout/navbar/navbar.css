@@ -144,6 +144,28 @@
   font-weight: 600;
 }
 
+/* Enlace destacado para donar */
+.link-donar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--color-cta-mostaza);
+  color: var(--color-texto-berenjena) !important;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+
+.link-donar:hover {
+  background-color: var(--color-cta-mostaza-hover);
+  transform: translateY(-1px);
+}
+
+.link-donar i {
+  color: var(--color-peligro);
+}
+
 /* --- BOTÓN HAMBURGUESA (oculto en desktop) --- */
 .hamburger {
   display: none;

@@ -1,0 +1,59 @@
+<div class="apadrinar-container" *ngIf="gato">
+
+  <ng-container *ngIf="!exito">
+    <div class="back-link">
+      <a [routerLink]="['/gato', gato.id]">
+        <i class="fa-solid fa-arrow-left"></i> Volver a la ficha
+      </a>
+    </div>
+
+    <div class="apadrinar-header">
+      <img [src]="gato.fotoUrl" [alt]="gato.nombre">
+      <div>
+        <span class="label">Vas a apadrinar a</span>
+        <h1>{{ gato.nombre }}</h1>
+        <p>Tu aportación mensual ayudará a cubrir su comida, veterinario y cuidados.</p>
+      </div>
+    </div>
+
+    <div class="apadrinar-card">
+      <h2>Importe mensual</h2>
+      <div class="input-eur grande">
+        <input type="number"
+               name="importeMensual"
+               min="1"
+               step="1"
+               [(ngModel)]="importeMensual"
+               placeholder="5">
+        <span>€ / mes</span>
+      </div>
+      <p class="hint">Mínimo 1 € al mes. Puedes cancelar cuando quieras desde tu perfil.</p>
+    </div>
+
+    <div class="apadrinar-card">
+      <h2>Datos de pago</h2>
+
+      <p class="error-msg" *ngIf="!importeValido">
+        El importe mínimo es 1 € al mes.
+      </p>
+      <p class="error-msg" *ngIf="errorMsg">{{ errorMsg }}</p>
+
+      <app-tarjeta-pago
+        [ctaLabel]="'Apadrinar por ' + (importeMensual || 0) + ' €/mes'"
+        [disabled]="!importeValido || enviando"
+        (confirmado)="onPagoConfirmado($event)">
+      </app-tarjeta-pago>
+    </div>
+  </ng-container>
+
+  <div class="exito-card" *ngIf="exito">
+    <div class="exito-icon"><i class="fa-solid fa-circle-check"></i></div>
+    <h1>¡Bienvenido a la familia de {{ gato.nombre }}!</h1>
+    <p>Hemos registrado tu apadrinamiento de <strong>{{ importeMensual }} € / mes</strong>.</p>
+    <p class="exito-sub">El primer pago ya se ha procesado. El próximo será dentro de un mes.</p>
+    <div class="exito-actions">
+      <button class="btn-primary" (click)="irAPerfil()">Ir a mi perfil</button>
+    </div>
+  </div>
+
+</div>

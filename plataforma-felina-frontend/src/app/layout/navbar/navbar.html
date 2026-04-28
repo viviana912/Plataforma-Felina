@@ -20,6 +20,9 @@
       <a routerLink="/gatos" (click)="closeMenu()">Gatos</a>
       <a routerLink="/como-ayudar" (click)="closeMenu()">¿Cómo ayudar?</a>
       <a routerLink="/colabora" (click)="closeMenu()">Colabora</a>
+      <a routerLink="/donar" class="link-donar" (click)="closeMenu()">
+        <i class="fa-solid fa-heart-pulse"></i> Donar
+      </a>
 
       <a *ngIf="authService.user()?.rol?.nombre === 'ADMIN'"
          routerLink="/admin/panel"

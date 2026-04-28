@@ -4,9 +4,12 @@ import { AuthService } from '../../services/auth.service';
 import { UsuarioService, Insignias } from '../../services/usuario';
 import { GatoService } from '../../services/gato';
 import { SolicitudService } from '../../services/solicitud';
-import { Router } from '@angular/router';
+import { DonacionService, Donacion } from '../../services/donacion';
+import { ApadrinamientoService, Apadrinamiento, PagoApadrinamiento } from '../../services/apadrinamiento';
+import { Router, RouterLink } from '@angular/router';
+import { forkJoin } from 'rxjs';
 
-type TabPerfil = 'solicitudes' | 'familia';
+type TabPerfil = 'solicitudes' | 'familia' | 'pagos';
 
 interface InsigniaDef {
   clave: keyof Insignias;
@@ -18,7 +21,7 @@ interface InsigniaDef {
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './perfil.html',
   styleUrls: ['./perfil.css']
 })
@@ -27,14 +30,20 @@ export class PerfilComponent implements OnInit {
   usuarioService = inject(UsuarioService);
   gatoService = inject(GatoService);
   solicitudService = inject(SolicitudService);
+  donacionService = inject(DonacionService);
+  apadrinamientoService = inject(ApadrinamientoService);
   router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
 
   fotosGatos: string[] = [];
   avatarSeleccionadoUrl: string | null = null;
-  mostrarModal: boolean = false; // 👈 Control del modal
+  mostrarModal: boolean = false;
 
   solicitudesUsuario: any[] = [];
+  donaciones: Donacion[] = [];
+  apadrinamientos: Apadrinamiento[] = [];
+  pagosApadrinamiento: PagoApadrinamiento[] = [];
+
   activeTab: TabPerfil = 'solicitudes';
 
   insignias: Insignias = { familia: false, donante: false, veterano: false };
@@ -49,6 +58,7 @@ export class PerfilComponent implements OnInit {
     this.cargarSolicitudes();
     this.cargarInsignias();
     this.avatarSeleccionadoUrl = this.authService.user()?.fotoUrl || null;
+    this.cargarPagosUsuario();
   }
 
   cargarInsignias() {
@@ -79,12 +89,62 @@ export class PerfilComponent implements OnInit {
     });
   }
 
+  cargarPagosUsuario() {
+    const user = this.authService.user();
+    if (!user) return;
+
+    this.apadrinamientoService.procesarCobros(user.id).subscribe({
+      next: () => {
+        forkJoin({
+          donaciones: this.donacionService.getByUsuario(user.id),
+          apadrinamientos: this.apadrinamientoService.getByUsuario(user.id),
+          pagos: this.apadrinamientoService.getPagos(user.id)
+        }).subscribe({
+          next: ({ donaciones, apadrinamientos, pagos }) => {
+            this.donaciones = donaciones;
+            this.apadrinamientos = apadrinamientos;
+            this.pagosApadrinamiento = pagos;
+            this.cdr.markForCheck();
+          },
+          error: (err) => console.error('Error cargando pagos', err)
+        });
+      },
+      error: (err) => console.error('Error procesando cobros', err)
+    });
+  }
+
   get solicitudesPendientes(): any[] {
     return this.solicitudesUsuario.filter(s => (s.estado || '').toUpperCase() !== 'APROBADA');
   }
 
   get familiaFelina(): any[] {
     return this.solicitudesUsuario.filter(s => (s.estado || '').toUpperCase() === 'APROBADA');
+  }
+
+  get apadrinamientosActivos(): Apadrinamiento[] {
+    return this.apadrinamientos.filter(a => a.estado === 'ACTIVO');
+  }
+
+  pagosDeApadrinamiento(apadrinamientoId: number | undefined): PagoApadrinamiento[] {
+    if (!apadrinamientoId) return [];
+    return this.pagosApadrinamiento.filter(p => p.apadrinamiento?.id === apadrinamientoId);
+  }
+
+  cancelarApadrinamiento(a: Apadrinamiento) {
+    if (!a.id) return;
+    const ok = confirm(`¿Seguro que quieres cancelar el apadrinamiento de ${a.gato?.nombre || 'este gato'}? No se cobrarán más mensualidades.`);
+    if (!ok) return;
+    this.apadrinamientoService.cancelar(a.id).subscribe({
+      next: (cancelado) => {
+        const idx = this.apadrinamientos.findIndex(x => x.id === cancelado.id);
+        if (idx >= 0) this.apadrinamientos[idx] = cancelado;
+        this.cdr.markForCheck();
+      },
+      error: (err) => {
+        console.error(err);
+        alert('No se pudo cancelar el apadrinamiento.');
+      }
+    });
   }
 
   etiquetaTipo(tipo: string | null | undefined): string {
@@ -118,7 +178,7 @@ export class PerfilComponent implements OnInit {
         next: () => {
           const userActualizado = { ...user, fotoUrl: url };
           this.authService.setSession({ usuario: userActualizado, token: this.authService.getToken() });
-          this.mostrarModal = false; // 👈 Cerramos el modal al elegir
+          this.mostrarModal = false;
         },
         error: (err) => {
           console.error('Error al actualizar foto', err);

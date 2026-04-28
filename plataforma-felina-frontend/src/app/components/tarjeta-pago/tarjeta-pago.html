@@ -1,0 +1,86 @@
+<div class="tarjeta-pago">
+  <div class="tarjeta-visual">
+    <div class="tarjeta-chip"><i class="fa-solid fa-microchip"></i></div>
+    <div class="tarjeta-numero">{{ numero || '#### #### #### ####' }}</div>
+    <div class="tarjeta-row">
+      <div class="tarjeta-titular">
+        <small>TITULAR</small>
+        <span>{{ titular || 'NOMBRE APELLIDO' }}</span>
+      </div>
+      <div class="tarjeta-exp">
+        <small>EXP</small>
+        <span>{{ exp || 'MM/YY' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <form (ngSubmit)="onSubmit()" #pagoForm="ngForm" class="tarjeta-form">
+    <div class="form-group">
+      <label for="titular">
+        <i class="fa-solid fa-user"></i> Titular
+      </label>
+      <input id="titular" name="titular"
+             type="text"
+             [(ngModel)]="titular"
+             placeholder="Como aparece en la tarjeta"
+             autocomplete="cc-name"
+             required>
+    </div>
+
+    <div class="form-group">
+      <label for="numero">
+        <i class="fa-solid fa-credit-card"></i> Número de tarjeta
+      </label>
+      <input id="numero" name="numero"
+             type="text"
+             [ngModel]="numero"
+             (ngModelChange)="onNumeroInput($event)"
+             placeholder="4242 4242 4242 4242"
+             autocomplete="cc-number"
+             inputmode="numeric"
+             required>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="exp">
+          <i class="fa-solid fa-calendar"></i> Expiración
+        </label>
+        <input id="exp" name="exp"
+               type="text"
+               [ngModel]="exp"
+               (ngModelChange)="onExpInput($event)"
+               placeholder="MM/YY"
+               autocomplete="cc-exp"
+               inputmode="numeric"
+               maxlength="5"
+               required>
+      </div>
+
+      <div class="form-group">
+        <label for="cvv">
+          <i class="fa-solid fa-lock"></i> CVV
+        </label>
+        <input id="cvv" name="cvv"
+               type="text"
+               [(ngModel)]="cvv"
+               placeholder="123"
+               autocomplete="cc-csc"
+               inputmode="numeric"
+               maxlength="4"
+               required>
+      </div>
+    </div>
+
+    <p class="error-msg" *ngIf="errorMsg">{{ errorMsg }}</p>
+
+    <button type="submit" class="btn-pagar" [disabled]="disabled">
+      <i class="fa-solid fa-paper-plane"></i> {{ ctaLabel }}
+    </button>
+
+    <p class="aviso-mock">
+      <i class="fa-solid fa-circle-info"></i>
+      Pasarela de pago simulada. No se realizará ningún cargo real. Tarjeta de prueba: <code>4242 4242 4242 4242</code>.
+    </p>
+  </form>
+</div>

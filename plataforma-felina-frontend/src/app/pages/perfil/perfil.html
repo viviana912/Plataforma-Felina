@@ -59,6 +59,9 @@
           <button class="tab-btn" [class.active]="activeTab === 'familia'" (click)="seleccionarTab('familia')">
             <i class="fa-solid fa-heart"></i> Mi familia felina
           </button>
+          <button class="tab-btn" [class.active]="activeTab === 'pagos'" (click)="seleccionarTab('pagos')">
+            <i class="fa-solid fa-wallet"></i> Mis pagos
+          </button>
         </div>
 
         <div class="tab-content" *ngIf="activeTab === 'solicitudes'">
@@ -98,6 +101,67 @@
               <div class="solicitud-info">
                 <h4>{{ s.gato?.nombre || 'Gato' }}</h4>
                 <p class="fecha" *ngIf="s.fechaSolicitud">Desde {{ s.fechaSolicitud | date:'dd/MM/yyyy' }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content" *ngIf="activeTab === 'pagos'">
+          <div *ngIf="donaciones.length === 0 && apadrinamientos.length === 0" class="empty-state">
+            <i class="fa-solid fa-wallet empty-icon"></i>
+            <p>Aún no has realizado donaciones ni apadrinamientos.</p>
+            <a routerLink="/donar" class="btn-link-cta">Hacer mi primera donación</a>
+          </div>
+
+          <div *ngIf="apadrinamientosActivos.length > 0" class="pagos-section">
+            <h3><i class="fa-solid fa-hand-holding-heart"></i> Apadrinamientos activos</h3>
+            <div class="apadrinamientos-list">
+              <div *ngFor="let a of apadrinamientosActivos" class="apadrinamiento-card">
+                <div class="apadrinamiento-header">
+                  <img [src]="a.gato?.fotoUrl || 'assets/default-avatar.png'" [alt]="a.gato?.nombre" class="apadrinamiento-foto">
+                  <div class="apadrinamiento-info">
+                    <h4>{{ a.gato?.nombre || 'Gato' }}</h4>
+                    <p class="importe">{{ a.importeMensual }} € / mes</p>
+                    <p class="meta">
+                      <span>Desde {{ a.fechaInicio | date:'dd/MM/yyyy' }}</span>
+                      <span *ngIf="a.tarjetaUltimos4"> · **** {{ a.tarjetaUltimos4 }}</span>
+                    </p>
+                    <p class="proximo-cobro" *ngIf="a.proximoCobro">
+                      <i class="fa-regular fa-calendar"></i>
+                      Próximo cobro: <strong>{{ a.proximoCobro | date:'dd/MM/yyyy' }}</strong>
+                    </p>
+                  </div>
+                  <button class="btn-cancelar" (click)="cancelarApadrinamiento(a)" title="Cancelar apadrinamiento">
+                    <i class="fa-solid fa-xmark"></i> Cancelar
+                  </button>
+                </div>
+                <div class="historial-pagos" *ngIf="pagosDeApadrinamiento(a.id).length > 0">
+                  <h5>Historial de cobros</h5>
+                  <ul>
+                    <li *ngFor="let p of pagosDeApadrinamiento(a.id)">
+                      <span><i class="fa-solid fa-check"></i> {{ p.fechaCobro | date:'dd/MM/yyyy' }}</span>
+                      <span class="pago-importe">{{ p.importe }} €</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="donaciones.length > 0" class="pagos-section">
+            <h3><i class="fa-solid fa-heart-pulse"></i> Mis donaciones</h3>
+            <div class="donaciones-list">
+              <div *ngFor="let d of donaciones" class="donacion-card">
+                <div class="donacion-icon"><i class="fa-solid fa-heart"></i></div>
+                <div class="donacion-info">
+                  <p class="cantidad">{{ d.cantidad }} €</p>
+                  <p class="meta">
+                    <span>{{ d.fechaDonacion | date:'dd/MM/yyyy' }}</span>
+                    <span *ngIf="d.tarjetaUltimos4"> · **** {{ d.tarjetaUltimos4 }}</span>
+                    <span *ngIf="d.anonima" class="badge-anonima"> · Anónima</span>
+                  </p>
+                  <p class="mensaje" *ngIf="d.mensaje">"{{ d.mensaje }}"</p>
+                </div>
               </div>
             </div>
           </div>
