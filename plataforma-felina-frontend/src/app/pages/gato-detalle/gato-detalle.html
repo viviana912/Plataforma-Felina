@@ -29,7 +29,7 @@
         <div class="dato"><strong>Carácter:</strong> {{ gato.caracter }}</div>
         
         <button class="btn-solicitar-grande" (click)="abrirFormulario()">
-          Presentar solicitud de {{ gato.estado === 'APADRINABLE' ? 'apadrinamiento' : 'adopción' }}
+          {{ gato.estado === 'APADRINABLE' ? 'Apadrinar a ' + gato.nombre : 'Presentar solicitud de adopción' }}
         </button>
       </div>
 

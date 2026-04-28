@@ -73,6 +73,7 @@
 
   <div class="exito-card" *ngIf="exito">
     <div class="exito-icon"><i class="fa-solid fa-circle-check"></i></div>
+    <span class="badge-confirmado">Pago realizado correctamente</span>
     <h1>¡Gracias de corazón!</h1>
     <p>Tu donación de <strong>{{ importeFinal }} €</strong> nos ayuda a seguir cuidando de los gatos.</p>
     <p *ngIf="authService.isLoggedIn()" class="exito-sub">
