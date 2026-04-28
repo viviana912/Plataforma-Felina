@@ -22,6 +22,11 @@ public class DonacionController {
         return donacionService.getAllDonacion();
     }
 
+    @GetMapping("/usuario/{usuarioId}")
+    public List<Donacion> getByUsuario(@PathVariable Long usuarioId) {
+        return donacionService.getByUsuario(usuarioId);
+    }
+
     @PostMapping
     public Donacion create(@RequestBody Donacion donacion) {
         return donacionService.save(donacion);

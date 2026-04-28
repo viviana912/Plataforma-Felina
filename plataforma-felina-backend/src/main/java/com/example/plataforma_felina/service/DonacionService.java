@@ -1,9 +1,7 @@
 package com.example.plataforma_felina.service;
 
 import com.example.plataforma_felina.domain.Donacion;
-import com.example.plataforma_felina.domain.Gato;
 import com.example.plataforma_felina.repository.DonacionRepository;
-import com.example.plataforma_felina.repository.GatoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +26,10 @@ public class DonacionService {
 
     public Donacion save(Donacion donacion){
         return donacionRepository.save(donacion);
+    }
+
+    public List<Donacion> getByUsuario(Long usuarioId) {
+        return donacionRepository.findByUsuarioIdOrderByFechaDonacionDesc(usuarioId);
     }
 
     public void delete(Long id){

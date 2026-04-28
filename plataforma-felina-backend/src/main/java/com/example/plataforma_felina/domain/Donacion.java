@@ -25,7 +25,22 @@ public class Donacion {
 
     private BigDecimal cantidad;
 
+    @Column(columnDefinition = "TEXT")
+    private String mensaje;
+
+    @Column(name = "tarjeta_ultimos4", length = 4)
+    private String tarjetaUltimos4;
+
+    private boolean anonima;
+
     @ManyToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.fechaDonacion == null) {
+            this.fechaDonacion = LocalDate.now();
+        }
+    }
 }
