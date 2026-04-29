@@ -1,10 +1,8 @@
 package com.example.plataforma_felina.service;
 
 import com.example.plataforma_felina.domain.Apadrinamiento;
-import com.example.plataforma_felina.domain.Gato;
 import com.example.plataforma_felina.domain.PagoApadrinamiento;
 import com.example.plataforma_felina.repository.ApadrinamientoRepository;
-import com.example.plataforma_felina.repository.GatoRepository;
 import com.example.plataforma_felina.repository.PagoApadrinamientoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,14 +18,11 @@ public class ApadrinamientoService {
 
     private final ApadrinamientoRepository apadrinamientoRepository;
     private final PagoApadrinamientoRepository pagoRepository;
-    private final GatoRepository gatoRepository;
 
     public ApadrinamientoService(ApadrinamientoRepository apadrinamientoRepository,
-                                  PagoApadrinamientoRepository pagoRepository,
-                                  GatoRepository gatoRepository) {
+                                  PagoApadrinamientoRepository pagoRepository) {
         this.apadrinamientoRepository = apadrinamientoRepository;
         this.pagoRepository = pagoRepository;
-        this.gatoRepository = gatoRepository;
     }
 
     @Transactional
@@ -53,11 +48,6 @@ public class ApadrinamientoService {
                 .fechaCobro(hoy)
                 .build();
         pagoRepository.save(primerPago);
-
-        Gato gato = gatoRepository.findById(creado.getGato().getId())
-                .orElseThrow(() -> new RuntimeException("Gato no encontrado"));
-        gato.setEstado("APADRINADO");
-        gatoRepository.save(gato);
 
         return creado;
     }
@@ -85,14 +75,7 @@ public class ApadrinamientoService {
         Apadrinamiento a = apadrinamientoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Apadrinamiento no encontrado"));
         a.setEstado("CANCELADO");
-        apadrinamientoRepository.save(a);
-
-        Gato gato = a.getGato();
-        if (gato != null && "APADRINADO".equals(gato.getEstado())) {
-            gato.setEstado("APADRINABLE");
-            gatoRepository.save(gato);
-        }
-        return a;
+        return apadrinamientoRepository.save(a);
     }
 
     @Transactional

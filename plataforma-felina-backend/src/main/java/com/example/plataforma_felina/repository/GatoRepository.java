@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface GatoRepository extends JpaRepository<Gato, Long> {
 
-    @Query("SELECT g FROM Gato g WHERE g.estado IS NULL OR g.estado <> 'ADOPTADO' ORDER BY g.urgente DESC, g.id ASC")
+    @Query("SELECT g FROM Gato g WHERE g.estado IS NULL OR g.estado IN ('ADOPTABLE', 'APADRINABLE', 'ACOGIBLE') ORDER BY g.urgente DESC, g.id ASC")
     List<Gato> findDisponibles();
 
     @Query("SELECT g FROM Gato g WHERE g.estado = 'ADOPTADO' ORDER BY g.id DESC")
