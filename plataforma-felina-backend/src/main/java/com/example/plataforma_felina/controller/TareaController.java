@@ -32,6 +32,11 @@ public class TareaController {
         return tareaService.save(tarea);
     }
 
+    @PutMapping("/{id}")
+    public Tarea update(@PathVariable Long id, @RequestBody Tarea tarea) {
+        return tareaService.update(id, tarea);
+    }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         tareaService.delete(id);

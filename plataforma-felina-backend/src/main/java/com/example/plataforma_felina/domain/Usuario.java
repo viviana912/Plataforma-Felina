@@ -32,6 +32,9 @@ public class Usuario {
     private String telefono;
     private String fotoUrl;
 
+    @Column(name = "codigo_postal", length = 10)
+    private String codigoPostal;
+
     @Column(name = "fecha_registro")
     private LocalDateTime fechaRegistro;
 

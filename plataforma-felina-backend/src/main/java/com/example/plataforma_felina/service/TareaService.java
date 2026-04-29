@@ -28,6 +28,17 @@ public class TareaService {
         return tareaRepository.save(tarea);
     }
 
+    public Tarea update(Long id, Tarea datos){
+        Tarea existente = findOne(id);
+        existente.setTitulo(datos.getTitulo());
+        existente.setDescripcion(datos.getDescripcion());
+        existente.setEstado(datos.getEstado());
+        existente.setUrgencia(datos.getUrgencia());
+        existente.setTipo(datos.getTipo());
+        existente.setCodigoPostal(datos.getCodigoPostal());
+        return tareaRepository.save(existente);
+    }
+
     public void delete(Long id){
         tareaRepository.deleteById(id);
     }

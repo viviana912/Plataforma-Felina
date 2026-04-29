@@ -76,4 +76,9 @@ public class UsuarioController {
         usuarioService.actualizarFotoUsuario(id, nuevaFotoUrl);
         // 👆 Nota: Deberás añadir este método 'actualizarFotoUsuario' en tu UsuarioService.java
     }
+
+    @PatchMapping("/{id}/perfil")
+    public UsuarioDTO actualizarPerfil(@PathVariable Long id, @RequestBody java.util.Map<String, String> payload) {
+        return usuarioService.actualizarPerfil(id, payload);
+    }
 }

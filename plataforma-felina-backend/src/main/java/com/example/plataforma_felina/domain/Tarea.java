@@ -24,6 +24,12 @@ public class Tarea {
     private String estado;
     private String urgencia;
 
+    @Column(name = "tipo")
+    private String tipo;
+
+    @Column(name = "codigo_postal", length = 10)
+    private String codigoPostal;
+
     @OneToMany(mappedBy = "tarea")
     @JsonIgnore
     private List<SolicitudTarea> solicitudes;

@@ -15,5 +15,6 @@ public class UsuarioDTO {
     private String email;
     private String telefono;
     private String fotoUrl;
+    private String codigoPostal;
     private com.example.plataforma_felina.domain.Rol rol;
 }

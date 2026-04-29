@@ -110,7 +110,25 @@ public class UsuarioService {
                 .telefono(usuario.getTelefono())
                 .rol(usuario.getRol())
                 .fotoUrl(usuario.getFotoUrl())
+                .codigoPostal(usuario.getCodigoPostal())
                 .build();
+    }
+
+    public UsuarioDTO actualizarPerfil(Long id, java.util.Map<String, String> datos) {
+        Usuario usuario = findOne(id);
+        if (datos.containsKey("nombre") && datos.get("nombre") != null) {
+            usuario.setNombre(datos.get("nombre"));
+        }
+        if (datos.containsKey("apellido") && datos.get("apellido") != null) {
+            usuario.setApellido(datos.get("apellido"));
+        }
+        if (datos.containsKey("telefono")) {
+            usuario.setTelefono(datos.get("telefono"));
+        }
+        if (datos.containsKey("codigoPostal")) {
+            usuario.setCodigoPostal(datos.get("codigoPostal"));
+        }
+        return toDTO(usuarioRepository.save(usuario));
     }
 
     public void cambiarRolUsuario(Long id, Long nuevoRolId) {

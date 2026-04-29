@@ -12,6 +12,8 @@ public interface ApadrinamientoRepository extends JpaRepository<Apadrinamiento, 
 
     List<Apadrinamiento> findByUsuarioIdOrderByFechaInicioDesc(Long usuarioId);
 
+    List<Apadrinamiento> findByUsuarioIdAndEstado(Long usuarioId, String estado);
+
     List<Apadrinamiento> findByUsuarioIdAndEstadoAndProximoCobroLessThanEqual(
             Long usuarioId, String estado, LocalDate fecha);
 }
