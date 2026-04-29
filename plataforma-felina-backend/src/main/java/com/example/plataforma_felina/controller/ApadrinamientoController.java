@@ -4,6 +4,7 @@ import com.example.plataforma_felina.domain.Apadrinamiento;
 import com.example.plataforma_felina.service.ApadrinamientoService;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +32,11 @@ public class ApadrinamientoController {
     @PutMapping("/{id}/cancelar")
     public Apadrinamiento cancelar(@PathVariable Long id) {
         return apadrinamientoService.cancelar(id);
+    }
+
+    @PutMapping("/{id}/importe")
+    public Apadrinamiento actualizarImporte(@PathVariable Long id, @RequestBody Map<String, BigDecimal> body) {
+        return apadrinamientoService.actualizarImporte(id, body.get("importeMensual"));
     }
 
     @PostMapping("/usuario/{usuarioId}/procesar-cobros")

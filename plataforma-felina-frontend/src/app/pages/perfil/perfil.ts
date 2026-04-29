@@ -1,11 +1,13 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { UsuarioService, Insignias } from '../../services/usuario';
 import { GatoService } from '../../services/gato';
 import { SolicitudService } from '../../services/solicitud';
 import { DonacionService, Donacion } from '../../services/donacion';
 import { ApadrinamientoService, Apadrinamiento, PagoApadrinamiento } from '../../services/apadrinamiento';
+import { TarjetaInsigniaComponent } from '../../components/tarjeta-insignia/tarjeta-insignia';
 import { Router, RouterLink } from '@angular/router';
 import { forkJoin } from 'rxjs';
 
@@ -21,7 +23,7 @@ interface InsigniaDef {
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, TarjetaInsigniaComponent],
   templateUrl: './perfil.html',
   styleUrls: ['./perfil.css']
 })
@@ -45,6 +47,13 @@ export class PerfilComponent implements OnInit {
   pagosApadrinamiento: PagoApadrinamiento[] = [];
 
   activeTab: TabPerfil = 'solicitudes';
+
+  apadrinamientoEditando: Apadrinamiento | null = null;
+  nuevoImporte: number | null = null;
+  guardandoImporte = false;
+  errorImporte: string | null = null;
+
+  insigniaSeleccionada: InsigniaDef | null = null;
 
   insignias: Insignias = { familia: false, donante: false, veterano: false };
   readonly insigniasCatalogo: InsigniaDef[] = [
@@ -75,6 +84,15 @@ export class PerfilComponent implements OnInit {
 
   desbloqueada(clave: keyof Insignias): boolean {
     return !!this.insignias[clave];
+  }
+
+  abrirTarjetaInsignia(ins: InsigniaDef) {
+    if (!this.desbloqueada(ins.clave)) return;
+    this.insigniaSeleccionada = ins;
+  }
+
+  cerrarTarjetaInsignia() {
+    this.insigniaSeleccionada = null;
   }
 
   cargarSolicitudes() {
@@ -128,6 +146,47 @@ export class PerfilComponent implements OnInit {
   pagosDeApadrinamiento(apadrinamientoId: number | undefined): PagoApadrinamiento[] {
     if (!apadrinamientoId) return [];
     return this.pagosApadrinamiento.filter(p => p.apadrinamiento?.id === apadrinamientoId);
+  }
+
+  abrirEditorImporte(a: Apadrinamiento) {
+    this.apadrinamientoEditando = a;
+    this.nuevoImporte = a.importeMensual;
+    this.errorImporte = null;
+  }
+
+  cerrarEditorImporte() {
+    this.apadrinamientoEditando = null;
+    this.nuevoImporte = null;
+    this.errorImporte = null;
+  }
+
+  guardarNuevoImporte() {
+    if (!this.apadrinamientoEditando?.id) return;
+    if (this.nuevoImporte == null || this.nuevoImporte < 1) {
+      this.errorImporte = 'El importe mínimo es 1 €.';
+      return;
+    }
+    if (this.nuevoImporte === this.apadrinamientoEditando.importeMensual) {
+      this.cerrarEditorImporte();
+      return;
+    }
+    this.guardandoImporte = true;
+    this.errorImporte = null;
+    this.apadrinamientoService.actualizarImporte(this.apadrinamientoEditando.id, this.nuevoImporte).subscribe({
+      next: (actualizado) => {
+        const idx = this.apadrinamientos.findIndex(x => x.id === actualizado.id);
+        if (idx >= 0) this.apadrinamientos[idx] = actualizado;
+        this.guardandoImporte = false;
+        this.cerrarEditorImporte();
+        this.cdr.markForCheck();
+      },
+      error: (err) => {
+        console.error(err);
+        this.errorImporte = 'No se pudo actualizar el importe.';
+        this.guardandoImporte = false;
+        this.cdr.markForCheck();
+      }
+    });
   }
 
   cancelarApadrinamiento(a: Apadrinamiento) {

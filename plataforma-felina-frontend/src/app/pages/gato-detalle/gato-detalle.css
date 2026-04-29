@@ -144,3 +144,50 @@
     padding: 4px 12px;
   }
 }
+
+.atributos-bloque {
+  margin: 18px 0;
+}
+
+.atributos-bloque h4 {
+  margin: 14px 0 8px;
+  font-size: 0.95rem;
+  color: var(--color-texto-berenjena, #3a2a4d);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.atributos-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 6px 14px;
+}
+
+.atributos-lista li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.92rem;
+  padding: 4px 0;
+}
+
+.atributos-lista li i {
+  width: 18px;
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+.atributo-si i {
+  color: #2f7a4d;
+}
+
+.atributo-no {
+  color: #999;
+}
+
+.atributo-no i {
+  color: #ccc;
+}

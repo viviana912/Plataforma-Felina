@@ -50,7 +50,14 @@ export class AdminFichasComponent implements OnInit {
       notas: '',
       estado: 'ADOPTABLE',
       urgente: false,
-      fotoUrl: ''
+      fotoUrl: '',
+      vacunado: false,
+      castrado: false,
+      desparasitado: false,
+      microchip: false,
+      aptoNinos: false,
+      aptoOtrosGatos: false,
+      aptoPerros: false
     };
   }
 

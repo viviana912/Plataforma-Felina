@@ -27,7 +27,45 @@
         <div class="dato"><strong>Color:</strong> {{ gato.color }}</div>
         <div class="dato"><strong>Salud y Vacunas:</strong> {{ gato.vacunas }}</div>
         <div class="dato"><strong>Carácter:</strong> {{ gato.caracter }}</div>
-        
+
+        <div class="atributos-bloque">
+          <h4>Salud</h4>
+          <ul class="atributos-lista">
+            <li [class.atributo-si]="gato.vacunado" [class.atributo-no]="!gato.vacunado">
+              <i class="fa-solid" [class.fa-check]="gato.vacunado" [class.fa-xmark]="!gato.vacunado"></i>
+              Vacunado
+            </li>
+            <li [class.atributo-si]="gato.castrado" [class.atributo-no]="!gato.castrado">
+              <i class="fa-solid" [class.fa-check]="gato.castrado" [class.fa-xmark]="!gato.castrado"></i>
+              Castrado
+            </li>
+            <li [class.atributo-si]="gato.desparasitado" [class.atributo-no]="!gato.desparasitado">
+              <i class="fa-solid" [class.fa-check]="gato.desparasitado" [class.fa-xmark]="!gato.desparasitado"></i>
+              Desparasitado
+            </li>
+            <li [class.atributo-si]="gato.microchip" [class.atributo-no]="!gato.microchip">
+              <i class="fa-solid" [class.fa-check]="gato.microchip" [class.fa-xmark]="!gato.microchip"></i>
+              Microchip
+            </li>
+          </ul>
+
+          <h4>Convivencia</h4>
+          <ul class="atributos-lista">
+            <li [class.atributo-si]="gato.aptoNinos" [class.atributo-no]="!gato.aptoNinos">
+              <i class="fa-solid" [class.fa-check]="gato.aptoNinos" [class.fa-xmark]="!gato.aptoNinos"></i>
+              Apto para niños
+            </li>
+            <li [class.atributo-si]="gato.aptoOtrosGatos" [class.atributo-no]="!gato.aptoOtrosGatos">
+              <i class="fa-solid" [class.fa-check]="gato.aptoOtrosGatos" [class.fa-xmark]="!gato.aptoOtrosGatos"></i>
+              Apto con otros gatos
+            </li>
+            <li [class.atributo-si]="gato.aptoPerros" [class.atributo-no]="!gato.aptoPerros">
+              <i class="fa-solid" [class.fa-check]="gato.aptoPerros" [class.fa-xmark]="!gato.aptoPerros"></i>
+              Apto con perros
+            </li>
+          </ul>
+        </div>
+
         <button class="btn-solicitar-grande" (click)="abrirFormulario()">
           {{ textoBoton }}
         </button>

@@ -19,6 +19,14 @@ export class GatosComponent implements OnInit {
   filtroTipo: 'todos' | 'ADOPTABLE' | 'APADRINABLE' | 'ACOGIBLE' = 'todos';
   filtroUrgente = false;
 
+  filtroVacunado = false;
+  filtroCastrado = false;
+  filtroDesparasitado = false;
+  filtroMicrochip = false;
+  filtroAptoNinos = false;
+  filtroAptoOtrosGatos = false;
+  filtroAptoPerros = false;
+
   private platformId = inject(PLATFORM_ID);
   private cdr = inject(ChangeDetectorRef);
   private gatoService = inject(GatoService);
@@ -56,6 +64,15 @@ export class GatosComponent implements OnInit {
     return sexo === 'Macho' ? '♂' : '♀';
   }
 
+  etiquetaEstado(estado: string | null): string {
+    switch (estado) {
+      case 'ADOPTABLE': return 'Adoptable';
+      case 'APADRINABLE': return 'Apadrinable';
+      case 'ACOGIBLE': return 'En acogida';
+      default: return '';
+    }
+  }
+
   get gatosFiltrados(): Gato[] {
     return this.gatos.filter(g => {
       if (this.filtroSexo !== 'todos' && g.sexo !== this.filtroSexo) return false;
@@ -67,6 +84,13 @@ export class GatosComponent implements OnInit {
         if (this.filtroEdad === 'joven' && (edad < 2 || edad >= 7)) return false;
         if (this.filtroEdad === 'adulto' && edad < 7) return false;
       }
+      if (this.filtroVacunado && !g.vacunado) return false;
+      if (this.filtroCastrado && !g.castrado) return false;
+      if (this.filtroDesparasitado && !g.desparasitado) return false;
+      if (this.filtroMicrochip && !g.microchip) return false;
+      if (this.filtroAptoNinos && !g.aptoNinos) return false;
+      if (this.filtroAptoOtrosGatos && !g.aptoOtrosGatos) return false;
+      if (this.filtroAptoPerros && !g.aptoPerros) return false;
       return true;
     });
   }
@@ -76,5 +100,12 @@ export class GatosComponent implements OnInit {
     this.filtroEdad = 'todos';
     this.filtroTipo = 'todos';
     this.filtroUrgente = false;
+    this.filtroVacunado = false;
+    this.filtroCastrado = false;
+    this.filtroDesparasitado = false;
+    this.filtroMicrochip = false;
+    this.filtroAptoNinos = false;
+    this.filtroAptoOtrosGatos = false;
+    this.filtroAptoPerros = false;
   }
 }

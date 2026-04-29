@@ -26,7 +26,9 @@
         <div *ngFor="let ins of insigniasCatalogo"
              class="insignia-slot"
              [class.locked]="!desbloqueada(ins.clave)"
-             [attr.title]="ins.titulo + ' — ' + ins.descripcion">
+             [class.clickable]="desbloqueada(ins.clave)"
+             (click)="abrirTarjetaInsignia(ins)"
+             [attr.title]="desbloqueada(ins.clave) ? ins.titulo + ' — Toca para compartir' : ins.titulo + ' — ' + ins.descripcion">
           <img [src]="ins.imagen" [alt]="ins.titulo" class="insignia-img">
           <span class="insignia-label">{{ ins.titulo }}</span>
         </div>
@@ -131,9 +133,14 @@
                       Próximo cobro: <strong>{{ a.proximoCobro | date:'dd/MM/yyyy' }}</strong>
                     </p>
                   </div>
-                  <button class="btn-cancelar" (click)="cancelarApadrinamiento(a)" title="Cancelar apadrinamiento">
-                    <i class="fa-solid fa-xmark"></i> Cancelar
-                  </button>
+                  <div class="apadrinamiento-acciones">
+                    <button class="btn-editar-importe" (click)="abrirEditorImporte(a)" title="Cambiar importe mensual">
+                      <i class="fa-solid fa-pen-to-square"></i> Cambiar importe
+                    </button>
+                    <button class="btn-cancelar" (click)="cancelarApadrinamiento(a)" title="Cancelar apadrinamiento">
+                      <i class="fa-solid fa-xmark"></i> Cancelar
+                    </button>
+                  </div>
                 </div>
                 <div class="historial-pagos" *ngIf="pagosDeApadrinamiento(a.id).length > 0">
                   <h5>Historial de cobros</h5>
@@ -180,6 +187,45 @@
         <div *ngFor="let url of fotosGatos" class="gallery-item" (click)="seleccionarAvatar(url)">
           <img [src]="url">
         </div>
+      </div>
+    </div>
+  </div>
+
+  <app-tarjeta-insignia
+    *ngIf="insigniaSeleccionada"
+    [insignia]="insigniaSeleccionada"
+    [usuario]="authService.user()"
+    (cerrar)="cerrarTarjetaInsignia()">
+  </app-tarjeta-insignia>
+
+  <div class="modal-overlay" *ngIf="apadrinamientoEditando">
+    <div class="modal-card modal-importe">
+      <div class="modal-header">
+        <h3>Cambiar importe mensual</h3>
+        <button class="btn-close" (click)="cerrarEditorImporte()" [disabled]="guardandoImporte">&times;</button>
+      </div>
+      <p class="modal-sub">
+        Apadrinamiento de <strong>{{ apadrinamientoEditando.gato?.nombre || 'tu gato' }}</strong>.
+        El nuevo importe se aplicará al próximo cobro.
+      </p>
+      <div class="importe-input-wrapper">
+        <input
+          type="number"
+          min="1"
+          step="0.01"
+          [(ngModel)]="nuevoImporte"
+          [disabled]="guardandoImporte"
+          class="importe-input"
+          placeholder="Importe mensual"
+        >
+        <span class="importe-sufijo">€ / mes</span>
+      </div>
+      <p *ngIf="errorImporte" class="error-importe">{{ errorImporte }}</p>
+      <div class="modal-actions">
+        <button class="btn-cancel" (click)="cerrarEditorImporte()" [disabled]="guardandoImporte">Cancelar</button>
+        <button class="btn-confirm" (click)="guardarNuevoImporte()" [disabled]="guardandoImporte">
+          {{ guardandoImporte ? 'Guardando...' : 'Guardar' }}
+        </button>
       </div>
     </div>
   </div>

@@ -48,6 +48,39 @@
     </div>
 
     <div class="filtros-grupo">
+      <span class="filtros-label">Salud</span>
+      <div class="filtros-pills">
+        <button class="pill" [class.active]="filtroVacunado" (click)="filtroVacunado = !filtroVacunado">
+          <i class="fa-solid fa-syringe"></i> Vacunado
+        </button>
+        <button class="pill" [class.active]="filtroCastrado" (click)="filtroCastrado = !filtroCastrado">
+          <i class="fa-solid fa-scissors"></i> Castrado
+        </button>
+        <button class="pill" [class.active]="filtroDesparasitado" (click)="filtroDesparasitado = !filtroDesparasitado">
+          <i class="fa-solid fa-shield-virus"></i> Desparasitado
+        </button>
+        <button class="pill" [class.active]="filtroMicrochip" (click)="filtroMicrochip = !filtroMicrochip">
+          <i class="fa-solid fa-microchip"></i> Microchip
+        </button>
+      </div>
+    </div>
+
+    <div class="filtros-grupo">
+      <span class="filtros-label">Convivencia</span>
+      <div class="filtros-pills">
+        <button class="pill" [class.active]="filtroAptoNinos" (click)="filtroAptoNinos = !filtroAptoNinos">
+          <i class="fa-solid fa-child"></i> Apto niños
+        </button>
+        <button class="pill" [class.active]="filtroAptoOtrosGatos" (click)="filtroAptoOtrosGatos = !filtroAptoOtrosGatos">
+          <i class="fa-solid fa-cat"></i> Apto otros gatos
+        </button>
+        <button class="pill" [class.active]="filtroAptoPerros" (click)="filtroAptoPerros = !filtroAptoPerros">
+          <i class="fa-solid fa-dog"></i> Apto perros
+        </button>
+      </div>
+    </div>
+
+    <div class="filtros-grupo">
       <button class="pill pill-urgente" [class.active]="filtroUrgente" (click)="filtroUrgente = !filtroUrgente">
         <i class="fa-solid fa-bolt"></i> Solo urgentes
       </button>
@@ -76,7 +109,7 @@
           <i class="fa-solid fa-bolt"></i> URGENTE
         </span>
 
-        <span *ngIf="authService.isLoggedIn() && gato.vacunas === 'Completas'" class="badge badge-vacunado">
+        <span *ngIf="authService.isLoggedIn() && gato.vacunado" class="badge badge-vacunado">
           <i class="fa-solid fa-syringe"></i> Vacunado
         </span>
 
@@ -92,6 +125,14 @@
       </div>
 
       <div class="card-body">
+        <span *ngIf="gato.estado" class="estado-chip" [ngClass]="'estado-chip-' + gato.estado.toLowerCase()">
+          <i class="fa-solid" [ngClass]="{
+            'fa-house-heart': gato.estado === 'ADOPTABLE',
+            'fa-hand-holding-heart': gato.estado === 'APADRINABLE',
+            'fa-shield-heart': gato.estado === 'ACOGIBLE'
+          }"></i>
+          {{ etiquetaEstado(gato.estado) }}
+        </span>
         <p class="gato-dato">
           <i class="fa-solid fa-cat"></i> {{ gato.raza }}
         </p>

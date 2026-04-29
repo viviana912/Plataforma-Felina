@@ -19,6 +19,13 @@ export interface Gato {
   estado: string | null;
   urgente: boolean; //
   fotoUrl: string;
+  vacunado?: boolean;
+  castrado?: boolean;
+  desparasitado?: boolean;
+  microchip?: boolean;
+  aptoNinos?: boolean;
+  aptoOtrosGatos?: boolean;
+  aptoPerros?: boolean;
 }
 
 @Injectable({ providedIn: 'root' })

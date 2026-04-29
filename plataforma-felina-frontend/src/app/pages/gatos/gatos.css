@@ -188,6 +188,38 @@ h2::after {
   flex-grow: 1;
 }
 
+.estado-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 10px;
+}
+
+.estado-chip i {
+  font-size: 0.85rem;
+}
+
+.estado-chip-adoptable {
+  background-color: #e7f5ec;
+  color: #2f7a4d;
+}
+
+.estado-chip-apadrinable {
+  background-color: #efe4f7;
+  color: #6c4a93;
+}
+
+.estado-chip-acogible {
+  background-color: #fdecd9;
+  color: #b56a1d;
+}
+
 .card-body .gato-dato {
   color: var(--color-principal-malva);
   font-size: 0.95rem;

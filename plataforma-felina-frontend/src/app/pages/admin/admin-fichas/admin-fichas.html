@@ -128,6 +128,46 @@
     </div>
 
     <div class="input-group">
+      <label>Salud</label>
+      <div class="checks-grid">
+        <label class="check-pill">
+          <input type="checkbox" [(ngModel)]="gatoEditando.vacunado">
+          <span><i class="fa-solid fa-syringe"></i> Vacunado</span>
+        </label>
+        <label class="check-pill">
+          <input type="checkbox" [(ngModel)]="gatoEditando.castrado">
+          <span><i class="fa-solid fa-scissors"></i> Castrado</span>
+        </label>
+        <label class="check-pill">
+          <input type="checkbox" [(ngModel)]="gatoEditando.desparasitado">
+          <span><i class="fa-solid fa-shield-virus"></i> Desparasitado</span>
+        </label>
+        <label class="check-pill">
+          <input type="checkbox" [(ngModel)]="gatoEditando.microchip">
+          <span><i class="fa-solid fa-microchip"></i> Microchip</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label>Convivencia</label>
+      <div class="checks-grid">
+        <label class="check-pill">
+          <input type="checkbox" [(ngModel)]="gatoEditando.aptoNinos">
+          <span><i class="fa-solid fa-child"></i> Apto niños</span>
+        </label>
+        <label class="check-pill">
+          <input type="checkbox" [(ngModel)]="gatoEditando.aptoOtrosGatos">
+          <span><i class="fa-solid fa-cat"></i> Apto otros gatos</span>
+        </label>
+        <label class="check-pill">
+          <input type="checkbox" [(ngModel)]="gatoEditando.aptoPerros">
+          <span><i class="fa-solid fa-dog"></i> Apto perros</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="input-group">
       <label>Caracter / Historia</label>
       <textarea [(ngModel)]="gatoEditando.caracter" rows="4"></textarea>
     </div>

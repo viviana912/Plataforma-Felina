@@ -40,6 +40,10 @@ export class ApadrinamientoService {
     return this.http.put<Apadrinamiento>(`${this.apiBase}/${id}/cancelar`, {});
   }
 
+  actualizarImporte(id: number, importeMensual: number): Observable<Apadrinamiento> {
+    return this.http.put<Apadrinamiento>(`${this.apiBase}/${id}/importe`, { importeMensual });
+  }
+
   procesarCobros(usuarioId: number): Observable<{ cobrosGenerados: number }> {
     return this.http.post<{ cobrosGenerados: number }>(
       `${this.apiBase}/usuario/${usuarioId}/procesar-cobros`,

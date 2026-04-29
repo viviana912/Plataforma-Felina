@@ -1,0 +1,45 @@
+<div class="overlay" (click)="cerrarModal()">
+  <div class="modal-wrapper" (click)="$event.stopPropagation()">
+    <button class="btn-close" (click)="cerrarModal()" [disabled]="generando" aria-label="Cerrar">
+      &times;
+    </button>
+
+    <div #tarjeta class="tarjeta-logro">
+      <div class="halo"></div>
+      <div class="header">
+        <span class="marca-superior">PLATAFORMA FELINA</span>
+        <span class="separador"></span>
+        <span class="titulo-pequeno">Insignia conseguida</span>
+      </div>
+
+      <img [src]="insignia.imagen" [alt]="insignia.titulo" class="insignia-imagen" crossorigin="anonymous">
+
+      <h2 class="titulo">{{ insignia.titulo }}</h2>
+
+      <p class="usuario" *ngIf="nombreCompleto">{{ nombreCompleto }}</p>
+
+      <p class="mensaje">"{{ mensaje }}"</p>
+
+      <div class="footer">
+        <span class="fecha" *ngIf="fechaDate">
+          {{ fechaDate | date:'dd MMM yyyy' }}
+        </span>
+        <span class="fecha" *ngIf="!fechaDate">Conseguida</span>
+        <span class="patita">🐾</span>
+      </div>
+    </div>
+
+    <div class="acciones">
+      <button class="btn-accion btn-descargar" (click)="descargar()" [disabled]="generando">
+        <i class="fa-solid fa-download"></i>
+        {{ generando ? 'Generando...' : 'Descargar' }}
+      </button>
+      <button *ngIf="puedeCompartirNativo()" class="btn-accion btn-compartir" (click)="compartir()" [disabled]="generando">
+        <i class="fa-solid fa-share-nodes"></i>
+        Compartir
+      </button>
+    </div>
+
+    <div class="toast" *ngIf="toast">{{ toast }}</div>
+  </div>
+</div>

@@ -67,6 +67,20 @@ public class ApadrinamientoService {
     }
 
     @Transactional
+    public Apadrinamiento actualizarImporte(Long id, BigDecimal nuevoImporte) {
+        if (nuevoImporte == null || nuevoImporte.compareTo(IMPORTE_MINIMO) < 0) {
+            throw new RuntimeException("El importe mensual mínimo es 1 €");
+        }
+        Apadrinamiento a = apadrinamientoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Apadrinamiento no encontrado"));
+        if (!"ACTIVO".equals(a.getEstado())) {
+            throw new RuntimeException("Solo se puede modificar un apadrinamiento activo");
+        }
+        a.setImporteMensual(nuevoImporte);
+        return apadrinamientoRepository.save(a);
+    }
+
+    @Transactional
     public Apadrinamiento cancelar(Long id) {
         Apadrinamiento a = apadrinamientoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Apadrinamiento no encontrado"));

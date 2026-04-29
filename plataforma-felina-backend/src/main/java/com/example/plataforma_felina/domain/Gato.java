@@ -43,4 +43,25 @@ public class Gato {
     @Column(name = "foto_url")
     private String fotoUrl;
 
+    @Column(name = "vacunado")
+    private Boolean vacunado;
+
+    @Column(name = "castrado")
+    private Boolean castrado;
+
+    @Column(name = "desparasitado")
+    private Boolean desparasitado;
+
+    @Column(name = "microchip")
+    private Boolean microchip;
+
+    @Column(name = "apto_ninos")
+    private Boolean aptoNinos;
+
+    @Column(name = "apto_otros_gatos")
+    private Boolean aptoOtrosGatos;
+
+    @Column(name = "apto_perros")
+    private Boolean aptoPerros;
+
 }
