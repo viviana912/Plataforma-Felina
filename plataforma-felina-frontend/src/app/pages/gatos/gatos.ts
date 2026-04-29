@@ -1,8 +1,10 @@
-import { Component, OnInit, inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { GatoService, Gato } from '../../services/gato';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { FavoritoService } from '../../services/favorito';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-gatos',
@@ -11,8 +13,10 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './gatos.html',
   styleUrls: ['./gatos.css']
 })
-export class GatosComponent implements OnInit {
+export class GatosComponent implements OnInit, OnDestroy {
   gatos: Gato[] = [];
+  idsFavoritos = new Set<number>();
+  private subFavoritos?: Subscription;
 
   filtroSexo: 'todos' | 'Macho' | 'Hembra' = 'todos';
   filtroEdad: 'todos' | 'cachorro' | 'joven' | 'adulto' = 'todos';
@@ -30,12 +34,43 @@ export class GatosComponent implements OnInit {
   private platformId = inject(PLATFORM_ID);
   private cdr = inject(ChangeDetectorRef);
   private gatoService = inject(GatoService);
+  private favoritoService = inject(FavoritoService);
   authService = inject(AuthService);
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.cargarGatos();
+      this.subFavoritos = this.favoritoService.idsFavoritos$.subscribe((ids) => {
+        this.idsFavoritos = ids;
+        this.cdr.markForCheck();
+      });
+      const user = this.authService.user();
+      if (user) {
+        this.favoritoService.cargarIds(user.id).subscribe();
+      }
     }
+  }
+
+  ngOnDestroy() {
+    this.subFavoritos?.unsubscribe();
+  }
+
+  esFavorito(gatoId: number): boolean {
+    return this.idsFavoritos.has(gatoId);
+  }
+
+  toggleFavorito(gato: Gato, event: MouseEvent) {
+    event.stopPropagation();
+    event.preventDefault();
+    const user = this.authService.user();
+    if (!user) return;
+    const obs = this.esFavorito(gato.id)
+      ? this.favoritoService.quitar(user.id, gato.id)
+      : this.favoritoService.agregar(user.id, gato.id);
+    obs.subscribe({
+      next: () => this.cdr.markForCheck(),
+      error: (err) => console.error('Error favorito', err)
+    });
   }
 
   cargarGatos() {

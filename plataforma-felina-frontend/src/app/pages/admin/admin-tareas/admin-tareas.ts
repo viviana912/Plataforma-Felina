@@ -27,7 +27,9 @@ export class AdminTareasComponent implements OnInit {
     titulo: '',
     descripcion: '',
     urgencia: 'Media',
-    estado: 'Pendiente'
+    estado: 'Pendiente',
+    tipo: 'VOLUNTARIADO',
+    codigoPostal: ''
   };
 
   ngOnInit() {
@@ -45,7 +47,7 @@ export class AdminTareasComponent implements OnInit {
   }
 
   abrirModalCrear() {
-    this.nuevaTarea = { titulo: '', descripcion: '', urgencia: 'Media', estado: 'Pendiente' };
+    this.nuevaTarea = { titulo: '', descripcion: '', urgencia: 'Media', estado: 'Pendiente', tipo: 'VOLUNTARIADO', codigoPostal: '' };
     this.mostrarModalCrear = true;
   }
 
@@ -75,7 +77,7 @@ export class AdminTareasComponent implements OnInit {
     let peticionesFinalizadas = 0;
 
     this.tareas.forEach(tarea => {
-      this.tareaService.createTarea(tarea).subscribe({
+      this.tareaService.updateTarea(tarea.id, tarea).subscribe({
         next: () => {
           peticionesFinalizadas++;
           if (peticionesFinalizadas === this.tareas.length) {

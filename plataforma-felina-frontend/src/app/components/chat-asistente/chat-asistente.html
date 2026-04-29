@@ -1,0 +1,58 @@
+<button *ngIf="!abierto" class="chat-fab" (click)="abrir()" aria-label="Abrir chat de Bigotín">
+  <i class="fa-solid fa-cat"></i>
+  <span class="chat-fab-badge">Bigotín</span>
+</button>
+
+<div class="chat-ventana" *ngIf="abierto">
+  <header class="chat-header">
+    <div class="chat-titulo">
+      <span class="chat-avatar"><i class="fa-solid fa-cat"></i></span>
+      <div>
+        <strong>Bigotín</strong>
+        <small>Asistente felino</small>
+      </div>
+    </div>
+    <div class="chat-acciones">
+      <button class="chat-icon-btn" (click)="reiniciar()" title="Reiniciar conversación">
+        <i class="fa-solid fa-rotate-left"></i>
+      </button>
+      <button class="chat-icon-btn" (click)="cerrar()" title="Cerrar">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+  </header>
+
+  <div class="chat-mensajes" #mensajesScroll>
+    <div *ngFor="let m of mensajes" class="burbuja-wrap" [class.burbuja-usuario-wrap]="m.rol === 'usuario'">
+      <div class="burbuja" [class.burbuja-asistente]="m.rol === 'asistente'" [class.burbuja-usuario]="m.rol === 'usuario'">
+        {{ m.texto }}
+      </div>
+    </div>
+
+    <div *ngIf="esperandoRespuesta" class="burbuja-wrap">
+      <div class="burbuja burbuja-asistente burbuja-typing">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-sugerencias" *ngIf="mostrarSugerencias && !esperandoRespuesta">
+    <button *ngFor="let s of sugerenciasVisibles" class="chip" (click)="enviarSugerencia(s)">
+      {{ s }}
+    </button>
+  </div>
+
+  <form class="chat-input-row" (ngSubmit)="enviar()">
+    <input
+      type="text"
+      [(ngModel)]="textoInput"
+      name="textoInput"
+      placeholder="Escribe a Bigotín..."
+      [disabled]="esperandoRespuesta"
+      (keydown.enter)="onEnter($event)"
+      autocomplete="off">
+    <button type="submit" [disabled]="!textoInput.trim() || esperandoRespuesta" class="btn-enviar" aria-label="Enviar">
+      <i class="fa-solid fa-paper-plane"></i>
+    </button>
+  </form>
+</div>

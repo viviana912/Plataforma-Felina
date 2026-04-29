@@ -165,3 +165,141 @@
   text-align: center;
   color: #999;
 }
+
+.banner-cp {
+  background: #fdf3d7;
+  border: 1px dashed #e9c46a;
+  color: #5a3e1b;
+  padding: 12px 18px;
+  border-radius: 10px;
+  margin: 15px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+}
+
+.banner-cp i {
+  color: #b88a1c;
+}
+
+.link-cp {
+  margin-left: auto;
+  color: #b88a1c;
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 2px solid #e9c46a;
+}
+
+.filtros {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.filtros-grupo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.filtros-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #4A4E69;
+}
+
+.tabs-tipo {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.tabs-tipo .tab {
+  background: white;
+  border: 1.5px solid #d6c5e8;
+  color: #6c4a93;
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.18s ease;
+}
+
+.tabs-tipo .tab:hover {
+  border-color: #e9c46a;
+  color: #4A4E69;
+}
+
+.tabs-tipo .tab.active {
+  background: #e9c46a;
+  border-color: #e9c46a;
+  color: #3a2a4d;
+}
+
+.badge-tipo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.badge-tipo.tipo-voluntariado {
+  background: #efe4f7;
+  color: #6c4a93;
+}
+
+.badge-tipo.tipo-material {
+  background: #fdecd9;
+  color: #b56a1d;
+}
+
+.badge-tipo.tipo-evento {
+  background: #d6e8f2;
+  color: #2d6892;
+}
+
+.badge-cercania {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 12px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-right: 6px;
+}
+
+.badge-cercania.cercania-municipio {
+  background: #d4f0db;
+  color: #2f7a4d;
+}
+
+.badge-cercania.cercania-provincia {
+  background: #fdf3d7;
+  color: #b88a1c;
+}
+
+.cp-text {
+  color: #888;
+  font-size: 0.85rem;
+}
+
+.btn-postular:disabled {
+  background: #d4f0db;
+  color: #2f7a4d;
+  cursor: default;
+  opacity: 0.85;
+}

@@ -6,14 +6,38 @@
       <h1>Lista de tareas</h1>
       <p>Hola <strong>{{ authService.user()?.nombre }}</strong>, ayuda a nuestros gatos:</p>
 
+      <div *ngIf="!cpUsuario" class="banner-cp">
+        <i class="fa-solid fa-location-dot"></i>
+        Añade tu código postal en tu perfil para ver primero las tareas cerca de ti.
+        <a routerLink="/perfil" class="link-cp">Ir al perfil</a>
+      </div>
+
       <div class="filtros">
-        <label for="filtroUrgencia">Urgencia:</label>
-        <select id="filtroUrgencia" [(ngModel)]="filtroSeleccionado" (change)="filtrar()">
-          <option value="Todas">Todas las misiones</option>
-          <option value="Alta">🔴 Alta Prioridad</option>
-          <option value="Media">🟡 Media</option>
-          <option value="Baja">🟢 Baja</option>
-        </select>
+        <div class="filtros-grupo">
+          <span class="filtros-label">Tipo</span>
+          <div class="tabs-tipo">
+            <button class="tab" [class.active]="filtroTipo === 'TODAS'" (click)="filtroTipo = 'TODAS'">Todas</button>
+            <button class="tab" [class.active]="filtroTipo === 'VOLUNTARIADO'" (click)="filtroTipo = 'VOLUNTARIADO'">
+              <i class="fa-solid fa-hands-holding"></i> Voluntariado
+            </button>
+            <button class="tab" [class.active]="filtroTipo === 'MATERIAL'" (click)="filtroTipo = 'MATERIAL'">
+              <i class="fa-solid fa-box-heart"></i> Material
+            </button>
+            <button class="tab" [class.active]="filtroTipo === 'EVENTO'" (click)="filtroTipo = 'EVENTO'">
+              <i class="fa-solid fa-calendar-day"></i> Eventos
+            </button>
+          </div>
+        </div>
+
+        <div class="filtros-grupo">
+          <label for="filtroUrgencia">Urgencia</label>
+          <select id="filtroUrgencia" [(ngModel)]="filtroUrgencia">
+            <option value="Todas">Todas las misiones</option>
+            <option value="Alta">🔴 Alta Prioridad</option>
+            <option value="Media">🟡 Media</option>
+            <option value="Baja">🟢 Baja</option>
+          </select>
+        </div>
       </div>
     </div>
 
@@ -22,8 +46,10 @@
         <thead>
         <tr>
           <th>Urgencia</th>
+          <th>Tipo</th>
           <th>Misión</th>
           <th>Descripción</th>
+          <th>Zona</th>
           <th>Estado</th>
           <th>Acción</th>
         </tr>
@@ -35,18 +61,34 @@
                 {{ tarea.urgencia }}
               </span>
           </td>
+          <td>
+            <span class="badge-tipo" [ngClass]="'tipo-' + (tarea.tipo || 'VOLUNTARIADO').toLowerCase()">
+              <i class="fa-solid" [ngClass]="iconoTipo(tarea.tipo)"></i>
+              {{ etiquetaTipo(tarea.tipo) }}
+            </span>
+          </td>
           <td class="titulo-tarea">{{ tarea.titulo }}</td>
           <td class="desc-tarea">{{ tarea.descripcion }}</td>
+          <td>
+            <span *ngIf="tarea.cercania !== 'lejos'" class="badge-cercania" [ngClass]="'cercania-' + tarea.cercania">
+              {{ badgeCercania(tarea.cercania) }}
+            </span>
+            <span class="cp-text" *ngIf="tarea.codigoPostal">{{ tarea.codigoPostal }}</span>
+            <span class="cp-text" *ngIf="!tarea.codigoPostal">—</span>
+          </td>
           <td><span class="status-tag">{{ tarea.estado }}</span></td>
           <td>
-            <button class="btn-postular" (click)="postular(tarea)">Yo me encargo</button>
+            <button class="btn-postular" (click)="postular(tarea)" [disabled]="estaInscrito(tarea.id)">
+              <ng-container *ngIf="!estaInscrito(tarea.id)">{{ textoBoton(tarea.tipo) }}</ng-container>
+              <ng-container *ngIf="estaInscrito(tarea.id)"><i class="fa-solid fa-check"></i> Inscrito</ng-container>
+            </button>
           </td>
         </tr>
         </tbody>
       </table>
 
       <div *ngIf="tareasFiltradas.length === 0" class="sin-tareas">
-        Actualmente no hay misiones de tipo "{{ filtroSeleccionado }}".
+        Actualmente no hay misiones que coincidan con los filtros.
       </div>
     </div>
   </div>

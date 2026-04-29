@@ -11,8 +11,10 @@
       <thead>
       <tr>
         <th>Urgencia</th>
+        <th>Tipo</th>
         <th>Misión</th>
         <th>Descripción</th>
+        <th>CP</th>
         <th>Estado</th>
         <th class="text-center">Acciones</th>
       </tr>
@@ -26,8 +28,18 @@
             <option value="Baja">Baja</option>
           </select>
         </td>
+        <td style="width: 150px;">
+          <select [(ngModel)]="t.tipo" class="select-admin-mustard-small">
+            <option value="VOLUNTARIADO">Voluntariado</option>
+            <option value="MATERIAL">Material</option>
+            <option value="EVENTO">Evento</option>
+          </select>
+        </td>
         <td><input type="text" [(ngModel)]="t.titulo" class="input-inline"></td>
         <td><textarea [(ngModel)]="t.descripcion" class="textarea-inline" rows="1"></textarea></td>
+        <td style="width: 90px;">
+          <input type="text" maxlength="5" [(ngModel)]="t.codigoPostal" class="input-inline" placeholder="—">
+        </td>
         <td style="width: 150px;">
           <select [(ngModel)]="t.estado" class="select-admin-mustard-small">
             <option value="Pendiente">Pendiente</option>
@@ -65,6 +77,18 @@
           <option value="Media">Media</option>
           <option value="Baja">Baja</option>
         </select>
+      </div>
+      <div class="field">
+        <label>Tipo</label>
+        <select [(ngModel)]="nuevaTarea.tipo">
+          <option value="VOLUNTARIADO">Voluntariado</option>
+          <option value="MATERIAL">Material (donaciones)</option>
+          <option value="EVENTO">Evento</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Código postal (zona)</label>
+        <input type="text" maxlength="5" [(ngModel)]="nuevaTarea.codigoPostal" placeholder="Ej: 28001 (opcional)">
       </div>
     </div>
     <div class="modal-actions">

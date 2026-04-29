@@ -11,6 +11,8 @@ export interface Usuario {
   email: string;
   password?: string;
   telefono: string;
+  codigoPostal?: string;
+  fotoUrl?: string;
   id_rol? : number;
   rol?: Rol;
 }
@@ -21,7 +23,8 @@ export interface Tarea {
   estado: string;
   titulo: string;
   urgencia: string;
-
+  tipo?: string;
+  codigoPostal?: string;
 }
 
 export interface Login {
@@ -91,6 +94,10 @@ export class UsuarioService {
   actualizarFoto(id: number, url: string): Observable<void> {
     // El backend espera un Map con la clave "fotoUrl" según el Controller que diseñamos
     return this.http.patch<void>(`${this.apiUrl}/${id}/foto`, { fotoUrl: url });
+  }
+
+  actualizarPerfil(id: number, datos: Partial<Usuario>): Observable<Usuario> {
+    return this.http.patch<Usuario>(`${this.apiUrl}/${id}/perfil`, datos);
   }
 
   getInsignias(id: number): Observable<Insignias> {

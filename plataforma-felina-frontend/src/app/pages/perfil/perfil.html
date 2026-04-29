@@ -47,8 +47,12 @@
             <label>Teléfono</label>
             <p>{{ authService.user()?.telefono || 'No proporcionado' }}</p>
           </div>
+          <div class="detail-box">
+            <label>Código postal</label>
+            <p>{{ authService.user()?.codigoPostal || 'No indicado' }}</p>
+          </div>
         </div>
-        <button class="btn-edit-info">Editar perfil</button>
+        <button class="btn-edit-info" (click)="abrirEditarPerfil()">Editar perfil</button>
       </div>
 
       <hr class="separator-soft">
@@ -60,6 +64,12 @@
           </button>
           <button class="tab-btn" [class.active]="activeTab === 'familia'" (click)="seleccionarTab('familia')">
             <i class="fa-solid fa-heart"></i> Mi familia felina
+          </button>
+          <button class="tab-btn" [class.active]="activeTab === 'favoritos'" (click)="seleccionarTab('favoritos')">
+            <i class="fa-solid fa-bookmark"></i> Mis favoritos
+          </button>
+          <button class="tab-btn" [class.active]="activeTab === 'novedades'" (click)="seleccionarTab('novedades')">
+            <i class="fa-solid fa-newspaper"></i> Novedades
           </button>
           <button class="tab-btn" [class.active]="activeTab === 'pagos'" (click)="seleccionarTab('pagos')">
             <i class="fa-solid fa-wallet"></i> Mis pagos
@@ -105,6 +115,48 @@
                 <p class="fecha" *ngIf="s.fechaSolicitud">Desde {{ s.fechaSolicitud | date:'dd/MM/yyyy' }}</p>
               </div>
             </div>
+          </div>
+        </div>
+
+        <div class="tab-content" *ngIf="activeTab === 'favoritos'">
+          <div *ngIf="favoritos.length === 0" class="empty-state">
+            <i class="fa-solid fa-bookmark empty-icon"></i>
+            <p>Aún no has añadido gatos a favoritos.</p>
+            <a routerLink="/gatos" class="btn-link-cta">Ver gatos disponibles</a>
+          </div>
+          <div *ngIf="favoritos.length > 0" class="favoritos-grid">
+            <div *ngFor="let g of favoritos" class="favorito-card">
+              <a [routerLink]="['/gato', g.id]" class="favorito-imagen-wrapper">
+                <img [src]="g.fotoUrl" [alt]="g.nombre" class="favorito-imagen">
+              </a>
+              <div class="favorito-info">
+                <h4>{{ g.nombre }}</h4>
+                <p class="favorito-meta">{{ g.raza }}</p>
+              </div>
+              <button class="btn-quitar-fav" (click)="quitarFavorito(g)" title="Quitar de favoritos">
+                <i class="fa-solid fa-heart-crack"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content" *ngIf="activeTab === 'novedades'">
+          <div *ngIf="feedNovedades.length === 0" class="empty-state">
+            <i class="fa-solid fa-newspaper empty-icon"></i>
+            <p>Aún no hay novedades de los gatos que apadrinas.</p>
+            <p class="meta">Cuando publiquemos una actualización aparecerá aquí.</p>
+          </div>
+          <div *ngIf="feedNovedades.length > 0" class="novedades-feed">
+            <a *ngFor="let n of feedNovedades" class="novedad-card" [routerLink]="['/gato', n.gato?.id]">
+              <img *ngIf="n.fotoUrl" [src]="n.fotoUrl" [alt]="n.titulo" class="novedad-foto">
+              <div class="novedad-cuerpo">
+                <h4>{{ n.titulo }}</h4>
+                <p class="novedad-meta">
+                  <strong>{{ n.gato?.nombre }}</strong> · {{ n.fecha | date:'dd MMM yyyy' }}
+                </p>
+                <p class="novedad-mensaje">{{ n.mensaje }}</p>
+              </div>
+            </a>
           </div>
         </div>
 
@@ -187,6 +239,41 @@
         <div *ngFor="let url of fotosGatos" class="gallery-item" (click)="seleccionarAvatar(url)">
           <img [src]="url">
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" *ngIf="mostrarEditarPerfil">
+    <div class="modal-card modal-importe">
+      <div class="modal-header">
+        <h3>Editar perfil</h3>
+        <button class="btn-close" (click)="cerrarEditarPerfil()" [disabled]="guardandoPerfil">&times;</button>
+      </div>
+      <div class="form-perfil">
+        <div class="campo">
+          <label>Nombre</label>
+          <input type="text" [(ngModel)]="perfilEdit.nombre" [disabled]="guardandoPerfil">
+        </div>
+        <div class="campo">
+          <label>Apellido</label>
+          <input type="text" [(ngModel)]="perfilEdit.apellido" [disabled]="guardandoPerfil">
+        </div>
+        <div class="campo">
+          <label>Teléfono</label>
+          <input type="tel" [(ngModel)]="perfilEdit.telefono" [disabled]="guardandoPerfil">
+        </div>
+        <div class="campo">
+          <label>Código postal</label>
+          <input type="text" maxlength="5" [(ngModel)]="perfilEdit.codigoPostal" placeholder="28001" [disabled]="guardandoPerfil">
+          <small class="ayuda">Lo usamos para mostrarte tareas cerca de ti.</small>
+        </div>
+      </div>
+      <p *ngIf="errorPerfil" class="error-importe">{{ errorPerfil }}</p>
+      <div class="modal-actions">
+        <button class="btn-cancel" (click)="cerrarEditarPerfil()" [disabled]="guardandoPerfil">Cancelar</button>
+        <button class="btn-confirm" (click)="guardarPerfil()" [disabled]="guardandoPerfil">
+          {{ guardandoPerfil ? 'Guardando...' : 'Guardar' }}
+        </button>
       </div>
     </div>
   </div>

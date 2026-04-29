@@ -10,7 +10,17 @@
 
     <div class="ficha-info">
       <span class="estado-adopcion">{{ gato.estado || 'Disponible' }}</span>
-      <h1>{{ gato.nombre }}</h1>
+      <div class="titulo-con-fav">
+        <h1>{{ gato.nombre }}</h1>
+        <button
+          *ngIf="isLoggedIn"
+          class="btn-favorito-detalle"
+          [class.activo]="esFavorito"
+          (click)="toggleFavorito()"
+          [attr.aria-label]="esFavorito ? 'Quitar de favoritos' : 'Añadir a favoritos'">
+          <i [class.fa-solid]="esFavorito" [class.fa-regular]="!esFavorito" class="fa-heart"></i>
+        </button>
+      </div>
 
       <div class="info-tags">
         <span class="info-tag">{{ gato.raza }}</span>
@@ -79,4 +89,21 @@
       </ng-template>
     </div>
   </div>
+
+  <section class="diario-seccion" *ngIf="actualizaciones.length > 0">
+    <h2 class="diario-titulo">
+      <i class="fa-solid fa-book-open"></i>
+      Diario de {{ gato.nombre }}
+    </h2>
+    <div class="diario-timeline">
+      <article *ngFor="let act of actualizaciones" class="diario-entrada">
+        <img *ngIf="act.fotoUrl" [src]="act.fotoUrl" [alt]="act.titulo" class="diario-foto">
+        <div class="diario-cuerpo">
+          <h3>{{ act.titulo }}</h3>
+          <time class="diario-fecha">{{ act.fecha | date:'dd MMM yyyy' }}</time>
+          <p class="diario-mensaje">{{ act.mensaje }}</p>
+        </div>
+      </article>
+    </div>
+  </section>
 </div>

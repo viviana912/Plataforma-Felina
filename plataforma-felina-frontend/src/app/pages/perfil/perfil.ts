@@ -7,11 +7,14 @@ import { GatoService } from '../../services/gato';
 import { SolicitudService } from '../../services/solicitud';
 import { DonacionService, Donacion } from '../../services/donacion';
 import { ApadrinamientoService, Apadrinamiento, PagoApadrinamiento } from '../../services/apadrinamiento';
+import { FavoritoService } from '../../services/favorito';
+import { ActualizacionGatoService, ActualizacionGato } from '../../services/actualizacion-gato';
+import { Gato } from '../../services/gato';
 import { TarjetaInsigniaComponent } from '../../components/tarjeta-insignia/tarjeta-insignia';
 import { Router, RouterLink } from '@angular/router';
 import { forkJoin } from 'rxjs';
 
-type TabPerfil = 'solicitudes' | 'familia' | 'pagos';
+type TabPerfil = 'solicitudes' | 'familia' | 'pagos' | 'favoritos' | 'novedades';
 
 interface InsigniaDef {
   clave: keyof Insignias;
@@ -34,6 +37,8 @@ export class PerfilComponent implements OnInit {
   solicitudService = inject(SolicitudService);
   donacionService = inject(DonacionService);
   apadrinamientoService = inject(ApadrinamientoService);
+  favoritoService = inject(FavoritoService);
+  actualizacionService = inject(ActualizacionGatoService);
   router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
 
@@ -55,6 +60,16 @@ export class PerfilComponent implements OnInit {
 
   insigniaSeleccionada: InsigniaDef | null = null;
 
+  favoritos: Gato[] = [];
+  feedNovedades: ActualizacionGato[] = [];
+
+  mostrarEditarPerfil = false;
+  perfilEdit: { nombre: string; apellido: string; telefono: string; codigoPostal: string } = {
+    nombre: '', apellido: '', telefono: '', codigoPostal: ''
+  };
+  guardandoPerfil = false;
+  errorPerfil: string | null = null;
+
   insignias: Insignias = { familia: false, donante: false, veterano: false };
   readonly insigniasCatalogo: InsigniaDef[] = [
     { clave: 'familia',  titulo: 'Familia',  descripcion: 'Has adoptado, acogido o apadrinado a un gato.', imagen: 'assets/insignias/familia.jpg' },
@@ -68,6 +83,44 @@ export class PerfilComponent implements OnInit {
     this.cargarInsignias();
     this.avatarSeleccionadoUrl = this.authService.user()?.fotoUrl || null;
     this.cargarPagosUsuario();
+    this.cargarFavoritos();
+    this.cargarFeedNovedades();
+  }
+
+  cargarFeedNovedades() {
+    const user = this.authService.user();
+    if (!user) return;
+    this.actualizacionService.getFeed(user.id).subscribe({
+      next: (data) => {
+        this.feedNovedades = data;
+        this.cdr.markForCheck();
+      },
+      error: (err) => console.error('Error cargando feed', err)
+    });
+  }
+
+  cargarFavoritos() {
+    const user = this.authService.user();
+    if (!user) return;
+    this.favoritoService.cargarIds(user.id).subscribe({
+      next: (gatos) => {
+        this.favoritos = gatos;
+        this.cdr.markForCheck();
+      },
+      error: (err) => console.error('Error cargando favoritos', err)
+    });
+  }
+
+  quitarFavorito(g: Gato) {
+    const user = this.authService.user();
+    if (!user) return;
+    this.favoritoService.quitar(user.id, g.id).subscribe({
+      next: () => {
+        this.favoritos = this.favoritos.filter(x => x.id !== g.id);
+        this.cdr.markForCheck();
+      },
+      error: (err) => console.error('Error quitando favorito', err)
+    });
   }
 
   cargarInsignias() {
@@ -146,6 +199,50 @@ export class PerfilComponent implements OnInit {
   pagosDeApadrinamiento(apadrinamientoId: number | undefined): PagoApadrinamiento[] {
     if (!apadrinamientoId) return [];
     return this.pagosApadrinamiento.filter(p => p.apadrinamiento?.id === apadrinamientoId);
+  }
+
+  abrirEditarPerfil() {
+    const u = this.authService.user();
+    if (!u) return;
+    this.perfilEdit = {
+      nombre: u.nombre || '',
+      apellido: u.apellido || '',
+      telefono: u.telefono || '',
+      codigoPostal: u.codigoPostal || ''
+    };
+    this.errorPerfil = null;
+    this.mostrarEditarPerfil = true;
+  }
+
+  cerrarEditarPerfil() {
+    this.mostrarEditarPerfil = false;
+    this.errorPerfil = null;
+  }
+
+  guardarPerfil() {
+    const u = this.authService.user();
+    if (!u) return;
+    if (this.perfilEdit.codigoPostal && !/^\d{5}$/.test(this.perfilEdit.codigoPostal)) {
+      this.errorPerfil = 'El código postal debe tener 5 dígitos.';
+      return;
+    }
+    this.guardandoPerfil = true;
+    this.errorPerfil = null;
+    this.usuarioService.actualizarPerfil(u.id, this.perfilEdit).subscribe({
+      next: (actualizado) => {
+        const usuarioMerged = { ...u, ...actualizado };
+        this.authService.setSession({ usuario: usuarioMerged, token: this.authService.getToken() });
+        this.guardandoPerfil = false;
+        this.mostrarEditarPerfil = false;
+        this.cdr.markForCheck();
+      },
+      error: (err) => {
+        console.error(err);
+        this.errorPerfil = 'No se pudo actualizar el perfil.';
+        this.guardandoPerfil = false;
+        this.cdr.markForCheck();
+      }
+    });
   }
 
   abrirEditorImporte(a: Apadrinamiento) {

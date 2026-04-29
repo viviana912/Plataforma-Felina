@@ -175,6 +175,56 @@
       <label>Notas adicionales</label>
       <textarea [(ngModel)]="gatoEditando.notas" rows="3" placeholder="Información extra sobre el gato..."></textarea>
     </div>
+
+    <div class="actualizaciones-bloque" *ngIf="gatoEditando?.id">
+      <div class="actualizaciones-header">
+        <h4><i class="fa-solid fa-book-open"></i> Diario del gato</h4>
+        <button type="button" class="btn-publicar-act" (click)="abrirFormActualizacion()" *ngIf="!mostrarFormActualizacion">
+          <i class="fa-solid fa-plus"></i> Publicar nueva
+        </button>
+      </div>
+
+      <div class="form-actualizacion" *ngIf="mostrarFormActualizacion">
+        <div class="input-group">
+          <label>Título</label>
+          <input type="text" [(ngModel)]="nuevaActualizacion.titulo" placeholder="Ej: Primer paseo">
+        </div>
+        <div class="input-group">
+          <label>Mensaje</label>
+          <textarea [(ngModel)]="nuevaActualizacion.mensaje" rows="3" placeholder="Cuenta cómo está..."></textarea>
+        </div>
+        <div class="input-group">
+          <label>Foto (opcional)</label>
+          <label class="btn-upload" [class.disabled]="subiendoFotoAct">
+            <i class="fa-solid fa-upload"></i>
+            {{ subiendoFotoAct ? 'Subiendo...' : 'Subir foto' }}
+            <input type="file" accept="image/*" (change)="onFotoActSeleccionada($event)" [disabled]="subiendoFotoAct" hidden>
+          </label>
+          <img *ngIf="nuevaActualizacion.fotoUrl" [src]="nuevaActualizacion.fotoUrl" class="preview-act">
+        </div>
+        <p *ngIf="errorActualizacion" class="upload-error">{{ errorActualizacion }}</p>
+        <div class="acciones-act">
+          <button type="button" class="btn-cancel" (click)="cancelarActualizacion()">Cancelar</button>
+          <button type="button" class="btn-save" (click)="guardarActualizacion()">Publicar</button>
+        </div>
+      </div>
+
+      <ul class="lista-actualizaciones" *ngIf="actualizacionesGato.length > 0">
+        <li *ngFor="let act of actualizacionesGato" class="item-actualizacion">
+          <img *ngIf="act.fotoUrl" [src]="act.fotoUrl" class="thumb-act">
+          <div class="info-act">
+            <strong>{{ act.titulo }}</strong>
+            <span class="fecha-act">{{ act.fecha | date:'dd MMM yyyy' }}</span>
+          </div>
+          <button type="button" class="btn-borrar-act" (click)="borrarActualizacion(act)" title="Borrar">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </li>
+      </ul>
+      <p *ngIf="actualizacionesGato.length === 0 && !mostrarFormActualizacion" class="sin-actualizaciones">
+        Aún no hay actualizaciones publicadas para este gato.
+      </p>
+    </div>
   </div>
 
   <div class="drawer-footer">

@@ -113,6 +113,16 @@
           <i class="fa-solid fa-syringe"></i> Vacunado
         </span>
 
+        <button
+          *ngIf="authService.isLoggedIn()"
+          class="btn-favorito"
+          [class.activo]="esFavorito(gato.id)"
+          (click)="toggleFavorito(gato, $event)"
+          [attr.aria-label]="esFavorito(gato.id) ? 'Quitar de favoritos' : 'Añadir a favoritos'"
+          title="{{ esFavorito(gato.id) ? 'Quitar de favoritos' : 'Añadir a favoritos' }}">
+          <i [class.fa-solid]="esFavorito(gato.id)" [class.fa-regular]="!esFavorito(gato.id)" class="fa-heart"></i>
+        </button>
+
         <div class="foto-overlay">
           <h3 class="overlay-nombre">
             {{ gato.nombre }}

@@ -1,8 +1,11 @@
-import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { GatoService } from '../../services/gato';
 import { AuthService } from '../../services/auth.service';
+import { FavoritoService } from '../../services/favorito';
+import { ActualizacionGatoService, ActualizacionGato } from '../../services/actualizacion-gato';
 import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-gato-detalle',
@@ -11,13 +14,18 @@ import { CommonModule } from '@angular/common';
   templateUrl: './gato-detalle.html',
   styleUrl: './gato-detalle.css'
 })
-export class GatoDetalleComponent implements OnInit {
+export class GatoDetalleComponent implements OnInit, OnDestroy {
   private cdr = inject(ChangeDetectorRef);
   private router = inject(Router);
   private authService = inject(AuthService);
+  private favoritoService = inject(FavoritoService);
+  private actualizacionService = inject(ActualizacionGatoService);
 
   gato: any = null;
   isLoggedIn: boolean = false;
+  esFavorito = false;
+  actualizaciones: ActualizacionGato[] = [];
+  private subFavoritos?: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -37,7 +45,41 @@ export class GatoDetalleComponent implements OnInit {
           },
           error: (err) => console.error('Error:', err)
         });
+        this.actualizacionService.getDeGato(Number(id)).subscribe({
+          next: (data) => {
+            this.actualizaciones = data;
+            this.cdr.markForCheck();
+          },
+          error: (err) => console.error('Error cargando diario:', err)
+        });
       }
+    });
+
+    if (this.isLoggedIn) {
+      const user = this.authService.user();
+      if (user) {
+        this.favoritoService.cargarIds(user.id).subscribe();
+      }
+      this.subFavoritos = this.favoritoService.idsFavoritos$.subscribe((ids) => {
+        this.esFavorito = !!this.gato && ids.has(this.gato.id);
+        this.cdr.markForCheck();
+      });
+    }
+  }
+
+  ngOnDestroy() {
+    this.subFavoritos?.unsubscribe();
+  }
+
+  toggleFavorito() {
+    const user = this.authService.user();
+    if (!user || !this.gato) return;
+    const obs = this.esFavorito
+      ? this.favoritoService.quitar(user.id, this.gato.id)
+      : this.favoritoService.agregar(user.id, this.gato.id);
+    obs.subscribe({
+      next: () => this.cdr.markForCheck(),
+      error: (err) => console.error('Error favorito', err)
     });
   }
 

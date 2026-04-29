@@ -191,3 +191,138 @@
 .atributo-no i {
   color: #ccc;
 }
+
+.titulo-con-fav {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.titulo-con-fav h1 {
+  margin: 0;
+  flex: 1;
+}
+
+.btn-favorito-detalle {
+  background: white;
+  border: 2px solid #ead7c2;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.18s ease, border-color 0.18s ease;
+  flex-shrink: 0;
+}
+
+.btn-favorito-detalle i {
+  font-size: 1.2rem;
+  color: #b88a1c;
+  transition: color 0.18s ease;
+}
+
+.btn-favorito-detalle:hover {
+  transform: scale(1.06);
+  border-color: #e7517f;
+}
+
+.btn-favorito-detalle.activo {
+  border-color: #e7517f;
+}
+
+.btn-favorito-detalle.activo i {
+  color: #e7517f;
+  animation: heartPop 0.32s ease;
+}
+
+@keyframes heartPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+.diario-seccion {
+  max-width: 900px;
+  margin: 50px auto 30px;
+  padding: 0 20px;
+}
+
+.diario-titulo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.7rem;
+  color: #3a2a4d;
+  margin-bottom: 24px;
+}
+
+.diario-titulo i {
+  color: #e9c46a;
+}
+
+.diario-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.diario-entrada {
+  display: flex;
+  gap: 20px;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(74, 56, 110, 0.1);
+  border: 1px solid #f1ead8;
+  padding: 20px;
+}
+
+.diario-foto {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.diario-cuerpo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.diario-cuerpo h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #3a2a4d;
+}
+
+.diario-fecha {
+  color: #b88a1c;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.diario-mensaje {
+  margin: 8px 0 0;
+  color: #4a3a5e;
+  line-height: 1.5;
+  font-size: 1rem;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 600px) {
+  .diario-entrada {
+    flex-direction: column;
+  }
+  .diario-foto {
+    width: 100%;
+    height: 220px;
+  }
+}

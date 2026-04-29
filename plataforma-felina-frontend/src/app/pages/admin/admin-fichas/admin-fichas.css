@@ -525,3 +525,134 @@
   border-color: var(--color-cta-mostaza, #e9c46a);
   font-weight: 600;
 }
+
+.actualizaciones-bloque {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px dashed #e0d4ed;
+}
+
+.actualizaciones-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.actualizaciones-header h4 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--color-texto-berenjena, #3a2a4d);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.actualizaciones-header h4 i {
+  color: var(--color-cta-mostaza, #e9c46a);
+}
+
+.btn-publicar-act {
+  background: var(--color-cta-mostaza, #e9c46a);
+  color: var(--color-texto-berenjena, #3a2a4d);
+  border: none;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-publicar-act:hover {
+  filter: brightness(0.95);
+}
+
+.form-actualizacion {
+  background: rgba(233, 196, 106, 0.08);
+  padding: 14px;
+  border-radius: 10px;
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.preview-act {
+  margin-top: 8px;
+  width: 140px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.acciones-act {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.lista-actualizaciones {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item-actualizacion {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: white;
+  border: 1px solid #f0e8d5;
+  border-radius: 8px;
+}
+
+.thumb-act {
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.info-act {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.info-act strong {
+  color: #3a2a4d;
+}
+
+.fecha-act {
+  font-size: 0.78rem;
+  color: #6c4a93;
+}
+
+.btn-borrar-act {
+  background: transparent;
+  border: none;
+  color: #c0392b;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+
+.btn-borrar-act:hover {
+  background: rgba(192, 57, 43, 0.1);
+}
+
+.sin-actualizaciones {
+  color: #888;
+  font-size: 0.9rem;
+  font-style: italic;
+  margin: 0;
+}

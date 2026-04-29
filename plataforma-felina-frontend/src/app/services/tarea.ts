@@ -9,6 +9,7 @@ import { environment } from '../../environments/environment';
 export class TareaService {
   private http = inject(HttpClient);
   private apiUrl = `${environment.apiUrl}/api/tareas`;
+  private apiSolicitud = `${environment.apiUrl}/api/solicitudes-tarea`;
 
   getTareas(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
@@ -18,7 +19,20 @@ export class TareaService {
     return this.http.post<any>(this.apiUrl, tarea);
   }
 
+  updateTarea(id: number, tarea: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, tarea);
+  }
+
   deleteTarea(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+
+  inscribirseEnTarea(usuarioId: number, tareaId: number): Observable<any> {
+    return this.http.post<any>(this.apiSolicitud, {
+      id: { usuarioId, tareaId },
+      usuario: { id: usuarioId },
+      tarea: { id: tareaId },
+      estadoSolicitud: 'PENDIENTE'
+    });
   }
 }
