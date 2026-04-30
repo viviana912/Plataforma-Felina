@@ -85,7 +85,9 @@ export class ChatAsistenteComponent implements OnInit, AfterViewChecked {
     this.debeScrollear = true;
     this.persistir();
 
-    const historia = this.mensajes.slice(0, -1);
+    const todos = this.mensajes.slice(0, -1);
+    const idxPrimerUsuario = todos.findIndex(m => m.rol === 'usuario');
+    const historia = idxPrimerUsuario === -1 ? [] : todos.slice(idxPrimerUsuario);
     const usuarioId = this.authService.user()?.id;
 
     this.chatService.enviar({ usuarioId, historia, mensaje: texto }).subscribe({

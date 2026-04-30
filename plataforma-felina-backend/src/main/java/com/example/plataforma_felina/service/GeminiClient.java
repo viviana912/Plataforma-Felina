@@ -36,10 +36,14 @@ public class GeminiClient {
         }
 
         List<Map<String, Object>> contents = new ArrayList<>();
+        boolean vistoUsuario = false;
         if (historia != null) {
             for (ChatDTO.Mensaje m : historia) {
+                boolean esModel = "asistente".equalsIgnoreCase(m.getRol());
+                if (!vistoUsuario && esModel) continue;
+                if (!esModel) vistoUsuario = true;
                 contents.add(Map.of(
-                        "role", "asistente".equalsIgnoreCase(m.getRol()) ? "model" : "user",
+                        "role", esModel ? "model" : "user",
                         "parts", List.of(Map.of("text", m.getTexto()))
                 ));
             }

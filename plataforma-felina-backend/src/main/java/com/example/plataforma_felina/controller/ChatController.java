@@ -4,9 +4,12 @@ import com.example.plataforma_felina.domain.Gato;
 import com.example.plataforma_felina.dto.ChatDTO;
 import com.example.plataforma_felina.service.GatoService;
 import com.example.plataforma_felina.service.GeminiClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpStatusCodeException;
 
 import java.time.Instant;
 import java.util.HashMap;
@@ -18,6 +21,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/chat")
 @CrossOrigin(origins = "*")
 public class ChatController {
+
+    private static final Logger log = LoggerFactory.getLogger(ChatController.class);
 
     private static final String SYSTEM_PROMPT_BASE = """
             Eres Bigotín, el asistente virtual de Plataforma Felina, una protectora de gatos.
@@ -75,8 +80,12 @@ public class ChatController {
                 respuesta = "Bigotín no ha sabido qué responder. ¿Puedes contarme algo más?";
             }
             return ResponseEntity.ok(new ChatDTO.Respuesta(respuesta));
+        } catch (HttpStatusCodeException ex) {
+            log.error("Gemini respondió {}: {}", ex.getStatusCode(), ex.getResponseBodyAsString());
+            return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+                    .body(new ChatDTO.Respuesta("Bigotín se ha despistado un momento. Inténtalo de nuevo en unos segundos."));
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("Error inesperado en /api/chat", ex);
             return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
                     .body(new ChatDTO.Respuesta("Bigotín se ha despistado un momento. Inténtalo de nuevo en unos segundos."));
         }
