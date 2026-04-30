@@ -4,8 +4,10 @@ import com.example.plataforma_felina.dto.ChatDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -18,11 +20,14 @@ public class GeminiClient {
     @Value("${gemini.api-key:}")
     private String apiKey;
 
-    @Value("${gemini.model:gemini-1.5-flash}")
+    @Value("${gemini.model:gemini-2.0-flash}")
     private String modelo;
 
     private static final String ENDPOINT_BASE =
             "https://generativelanguage.googleapis.com/v1beta/models/%s:generateContent?key=%s";
+
+    private static final int MAX_INTENTOS = 3;
+    private static final long[] BACKOFF_MS = {500L, 1500L};
 
     private final RestTemplate restTemplate = new RestTemplate();
 
@@ -69,8 +74,7 @@ public class GeminiClient {
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
 
         String url = String.format(ENDPOINT_BASE, modelo, apiKey);
-        @SuppressWarnings("unchecked")
-        Map<String, Object> response = restTemplate.postForObject(url, request, Map.class);
+        Map<String, Object> response = llamarConReintento(url, request);
 
         if (response == null) return "";
         @SuppressWarnings("unchecked")
@@ -84,5 +88,28 @@ public class GeminiClient {
         if (parts == null || parts.isEmpty()) return "";
         Object texto = parts.get(0).get("text");
         return texto != null ? texto.toString() : "";
+    }
+
+    @SuppressWarnings("unchecked")
+    private Map<String, Object> llamarConReintento(String url, HttpEntity<?> request) {
+        HttpStatusCodeException ultima = null;
+        for (int intento = 0; intento < MAX_INTENTOS; intento++) {
+            try {
+                return restTemplate.postForObject(url, request, Map.class);
+            } catch (HttpStatusCodeException ex) {
+                int code = ex.getStatusCode().value();
+                boolean reintentable = code == HttpStatus.SERVICE_UNAVAILABLE.value()
+                        || code == HttpStatus.TOO_MANY_REQUESTS.value();
+                if (!reintentable || intento == MAX_INTENTOS - 1) throw ex;
+                ultima = ex;
+                try {
+                    Thread.sleep(BACKOFF_MS[intento]);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                    throw ex;
+                }
+            }
+        }
+        throw ultima;
     }
 }

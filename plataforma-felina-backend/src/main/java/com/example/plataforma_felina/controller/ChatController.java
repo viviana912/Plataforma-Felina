@@ -31,7 +31,7 @@ public class ChatController {
             Solo recomiendas gatos del catálogo que te paso a continuación, llamándolos por su nombre.
             Cuando recomiendes, indica el nombre y por qué encaja con lo que ha dicho el usuario.
             Si te preguntan por temas no relacionados, redirige amablemente a la búsqueda del gato perfecto.
-            Sé conciso (máximo 4-5 frases por respuesta).
+            Explica de forma clara y específica por qué cada gato encaja, normalmente en 6-8 frases.
             """;
 
     private static final long COOLDOWN_MS = 3000;
@@ -82,8 +82,12 @@ public class ChatController {
             return ResponseEntity.ok(new ChatDTO.Respuesta(respuesta));
         } catch (HttpStatusCodeException ex) {
             log.error("Gemini respondió {}: {}", ex.getStatusCode(), ex.getResponseBodyAsString());
+            int code = ex.getStatusCode().value();
+            String mensajeUsuario = (code == 503 || code == 429)
+                    ? "Bigotín está saturado ahora mismo. Dame un momento e inténtalo otra vez."
+                    : "Bigotín se ha despistado un momento. Inténtalo de nuevo en unos segundos.";
             return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
-                    .body(new ChatDTO.Respuesta("Bigotín se ha despistado un momento. Inténtalo de nuevo en unos segundos."));
+                    .body(new ChatDTO.Respuesta(mensajeUsuario));
         } catch (Exception ex) {
             log.error("Error inesperado en /api/chat", ex);
             return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
@@ -101,7 +105,7 @@ public class ChatController {
 
     private String resumirGato(Gato g) {
         return String.format(
-                "- %s (id %d): %s, %d años, raza %s. Estado: %s. Vacunado: %s. Castrado: %s. Apto niños: %s. Apto otros gatos: %s. Apto perros: %s. Urgente: %s. Carácter: %s",
+                "- %s (id %d): %s, %d años, raza %s. Estado: %s. Vacunado: %s. Castrado: %s. Apto niños: %s. Apto otros gatos: %s. Apto perros: %s. Urgente: %s. Carácter: %s. Notas: %s",
                 safe(g.getNombre()),
                 g.getId(),
                 safe(g.getSexo()),
@@ -114,7 +118,8 @@ public class ChatController {
                 bool(g.getAptoOtrosGatos()),
                 bool(g.getAptoPerros()),
                 g.isUrgente() ? "sí" : "no",
-                resumirTexto(g.getCaracter(), 80)
+                resumirTexto(g.getCaracter(), 250),
+                resumirTexto(g.getNotas(), 200)
         );
     }
 
