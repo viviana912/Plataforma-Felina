@@ -89,6 +89,15 @@
   color: var(--color-texto-berenjena);
 }
 
+.btn-solicitar-grande.btn-solicitar-apadrinar {
+  background: var(--color-acento-secundario);
+}
+
+.btn-solicitar-grande.btn-solicitar-apadrinar:hover {
+  background: var(--color-cta-mostaza);
+  color: var(--color-texto-berenjena);
+}
+
 /* ============================================================
    RESPONSIVE — TABLET / MÓVIL (<= 768px)
    ============================================================ */
@@ -181,7 +190,7 @@
 }
 
 .atributo-si i {
-  color: #2f7a4d;
+  color: var(--color-acento-secundario);
 }
 
 .atributo-no {

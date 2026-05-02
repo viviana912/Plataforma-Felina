@@ -32,13 +32,13 @@
   height: 110px;
   object-fit: cover;
   border-radius: 14px;
-  border: 3px solid var(--color-cta-mostaza);
+  border: 3px solid var(--color-acento-secundario);
   flex-shrink: 0;
 }
 
 .apadrinar-header .label {
   display: block;
-  color: var(--color-cta-mostaza);
+  color: var(--color-acento-secundario);
   font-weight: 700;
   text-transform: uppercase;
   font-size: 0.75rem;
@@ -156,7 +156,7 @@
 }
 
 .exito-card p strong {
-  color: var(--color-cta-mostaza);
+  color: var(--color-acento-secundario);
 }
 
 .exito-sub {
@@ -168,8 +168,8 @@
 }
 
 .btn-primary {
-  background: var(--color-cta-mostaza);
-  color: var(--color-texto-berenjena);
+  background: var(--color-acento-secundario);
+  color: white;
   padding: 14px 28px;
   border-radius: 10px;
   font-weight: 700;
@@ -179,7 +179,7 @@
 }
 
 .btn-primary:hover {
-  background: var(--color-cta-mostaza-hover);
+  background: #6C9286;
 }
 
 @media (max-width: 600px) {

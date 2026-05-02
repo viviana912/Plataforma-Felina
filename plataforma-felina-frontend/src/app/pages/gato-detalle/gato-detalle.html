@@ -76,7 +76,9 @@
           </ul>
         </div>
 
-        <button class="btn-solicitar-grande" (click)="abrirFormulario()">
+        <button class="btn-solicitar-grande"
+                [class.btn-solicitar-apadrinar]="gato.estado === 'APADRINABLE'"
+                (click)="abrirFormulario()">
           {{ textoBoton }}
         </button>
       </div>
