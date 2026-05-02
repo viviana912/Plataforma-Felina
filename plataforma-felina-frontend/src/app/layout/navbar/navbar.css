@@ -19,9 +19,9 @@
 }
 
 .navbar-logo img {
-  height: 135px;
+  height: 95px;
   width: auto;
-  padding: 4px 0;
+  padding: 6px 0;
   object-fit: contain;
   display: block;
 }
@@ -232,7 +232,7 @@
   }
 
   .navbar-logo img {
-    height: 95px;
+    height: 70px;
   }
 
   .hamburger {
