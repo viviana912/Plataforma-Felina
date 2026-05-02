@@ -100,7 +100,7 @@
 
 /* Cuerpo de la tarjeta */
 .profile-content-card {
-  padding: 80px 50px 40px;
+  padding: 130px 50px 40px;
   text-align: left;
 }
 
@@ -953,7 +953,7 @@
   }
 
   .profile-content-card {
-    padding: 80px 20px 30px;
+    padding: 130px 20px 30px;
     text-align: center;
   }
 
