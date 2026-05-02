@@ -19,9 +19,9 @@
 }
 
 .navbar-logo img {
-  height: 95px;
+  height: 115px;
   width: auto;
-  padding: 6px 0;
+  padding: 4px 0;
   object-fit: contain;
   display: block;
 }
@@ -163,7 +163,7 @@
 }
 
 .link-donar i {
-  color: var(--color-texto-berenjena);
+  color: var(--color-peligro);
 }
 
 /* --- BOTÓN HAMBURGUESA (oculto en desktop) --- */
@@ -232,7 +232,7 @@
   }
 
   .navbar-logo img {
-    height: 72px;
+    height: 84px;
   }
 
   .hamburger {
