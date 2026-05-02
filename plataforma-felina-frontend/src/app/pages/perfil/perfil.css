@@ -25,7 +25,6 @@
   position: relative;
   width: 100%;
   border-top: none;
-  overflow: hidden;
 }
 
 .portada-morado   { background: linear-gradient(135deg, var(--color-texto-berenjena) 0%, var(--color-principal-malva) 100%); }
@@ -57,14 +56,14 @@
   background: rgba(255, 255, 255, 0.2);
   border: 1px solid white;
   color: white;
-  width: 38px;
-  height: 38px;
+  padding: 8px 14px;
   border-radius: 8px;
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  font-size: 1rem;
+  gap: 6px;
+  font-size: 0.9rem;
+  z-index: 2;
 }
 
 .btn-cambiar-portada:hover {
@@ -944,7 +943,9 @@
   .donaciones-list {
     grid-template-columns: 1fr;
   }
+}
 
+@media (max-width: 768px) {
   .avatar-overlap {
     left: 50%;
     transform: translateX(-50%);
@@ -960,7 +961,8 @@
   }
 
   .btn-cambiar-portada {
-    right: 95px;
+    top: 65px;
+    right: 20px;
   }
 }
 
