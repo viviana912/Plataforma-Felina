@@ -60,6 +60,14 @@ public class GatoController {
         existing.setFotoUrl(gato.getFotoUrl());
         existing.setUrgente(gato.isUrgente());
 
+        existing.setVacunado(gato.getVacunado());
+        existing.setCastrado(gato.getCastrado());
+        existing.setDesparasitado(gato.getDesparasitado());
+        existing.setMicrochip(gato.getMicrochip());
+        existing.setAptoNinos(gato.getAptoNinos());
+        existing.setAptoOtrosGatos(gato.getAptoOtrosGatos());
+        existing.setAptoPerros(gato.getAptoPerros());
+
         return gatoService.save(existing);
     }
 
