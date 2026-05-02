@@ -14,13 +14,17 @@ import { TarjetaInsigniaComponent } from '../../components/tarjeta-insignia/tarj
 import { Router, RouterLink } from '@angular/router';
 import { forkJoin } from 'rxjs';
 
-type TabPerfil = 'solicitudes' | 'familia' | 'pagos' | 'favoritos' | 'novedades';
-
 interface InsigniaDef {
   clave: keyof Insignias;
   titulo: string;
   descripcion: string;
   imagen: string;
+}
+
+interface PortadaDef {
+  clave: string;
+  tipo: 'color' | 'imagen';
+  etiqueta: string;
 }
 
 @Component({
@@ -51,7 +55,16 @@ export class PerfilComponent implements OnInit {
   apadrinamientos: Apadrinamiento[] = [];
   pagosApadrinamiento: PagoApadrinamiento[] = [];
 
-  activeTab: TabPerfil = 'solicitudes';
+  seccionesAbiertas = new Set<string>(['solicitudes']);
+
+  mostrarModalPortada = false;
+  readonly portadasCatalogo: PortadaDef[] = [
+    { clave: 'morado',   tipo: 'color',  etiqueta: 'Morado'   },
+    { clave: 'crema',    tipo: 'color',  etiqueta: 'Crema'    },
+    { clave: 'amanecer', tipo: 'imagen', etiqueta: 'Amanecer' },
+    { clave: 'lavanda',  tipo: 'imagen', etiqueta: 'Lavanda'  },
+    { clave: 'bosque',   tipo: 'imagen', etiqueta: 'Bosque'   }
+  ];
 
   apadrinamientoEditando: Apadrinamiento | null = null;
   nuevoImporte: number | null = null;
@@ -154,6 +167,10 @@ export class PerfilComponent implements OnInit {
     this.solicitudService.getAll().subscribe({
       next: (data: any[]) => {
         this.solicitudesUsuario = data.filter(s => s?.id?.usuarioId === user.id);
+        if (this.solicitudesPendientes.length === 0 && this.familiaFelina.length > 0) {
+          this.seccionesAbiertas.delete('solicitudes');
+          this.seccionesAbiertas.add('familia');
+        }
         this.cdr.markForCheck();
       },
       error: (err) => console.error('Error cargando solicitudes', err)
@@ -313,8 +330,45 @@ export class PerfilComponent implements OnInit {
     }
   }
 
-  seleccionarTab(tab: TabPerfil) {
-    this.activeTab = tab;
+  toggleSeccion(clave: string) {
+    if (this.seccionesAbiertas.has(clave)) {
+      this.seccionesAbiertas.delete(clave);
+    } else {
+      this.seccionesAbiertas.add(clave);
+    }
+  }
+
+  estaAbierta(clave: string): boolean {
+    return this.seccionesAbiertas.has(clave);
+  }
+
+  get portadaActual(): string {
+    return this.authService.user()?.portada || 'morado';
+  }
+
+  abrirModalPortada() {
+    this.mostrarModalPortada = true;
+  }
+
+  cerrarModalPortada() {
+    this.mostrarModalPortada = false;
+  }
+
+  seleccionarPortada(clave: string) {
+    const u = this.authService.user();
+    if (!u) return;
+    this.usuarioService.actualizarPerfil(u.id, { portada: clave }).subscribe({
+      next: (actualizado) => {
+        const usuarioMerged = { ...u, ...actualizado };
+        this.authService.setSession({ usuario: usuarioMerged, token: this.authService.getToken() });
+        this.mostrarModalPortada = false;
+        this.cdr.markForCheck();
+      },
+      error: (err) => {
+        console.error('Error guardando portada', err);
+        alert('No se pudo guardar la portada.');
+      }
+    });
   }
 
   cargarAvataresDisponibles() {

@@ -7,9 +7,9 @@
     <div #tarjeta class="tarjeta-logro">
       <div class="halo"></div>
       <div class="header">
-        <span class="marca-superior">PLATAFORMA FELINA</span>
-        <span class="separador"></span>
         <span class="titulo-pequeno">Insignia conseguida</span>
+        <span class="separador"></span>
+        <span class="marca-superior">REFUGIO DEL SOL</span>
       </div>
 
       <img [src]="insignia.imagen" [alt]="insignia.titulo" class="insignia-imagen" crossorigin="anonymous">
@@ -25,7 +25,7 @@
           {{ fechaDate | date:'dd MMM yyyy' }}
         </span>
         <span class="fecha" *ngIf="!fechaDate">Conseguida</span>
-        <span class="patita">🐾</span>
+        <span class="patitas">🐾 🐾</span>
       </div>
     </div>
 

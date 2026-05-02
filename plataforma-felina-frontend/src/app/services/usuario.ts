@@ -13,6 +13,7 @@ export interface Usuario {
   telefono: string;
   codigoPostal?: string;
   fotoUrl?: string;
+  portada?: string;
   id_rol? : number;
   rol?: Rol;
 }

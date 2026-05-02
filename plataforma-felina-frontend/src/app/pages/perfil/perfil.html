@@ -1,9 +1,13 @@
 <div class="perfil-page-bg">
   <div class="profile-main-container">
 
-    <div class="profile-banner">
+    <div class="profile-banner" [ngClass]="'portada-' + portadaActual">
       <button (click)="logout()" class="btn-logout-social">
         <i class="fas fa-sign-out-alt"></i> Salir
+      </button>
+
+      <button (click)="abrirModalPortada()" class="btn-cambiar-portada" title="Cambiar fondo">
+        <i class="fa-solid fa-image"></i>
       </button>
 
       <div class="avatar-overlap">
@@ -58,25 +62,14 @@
       <hr class="separator-soft">
 
       <div class="tabs-section">
-        <div class="tabs-nav">
-          <button class="tab-btn" [class.active]="activeTab === 'solicitudes'" (click)="seleccionarTab('solicitudes')">
-            <i class="fa-solid fa-paw"></i> Solicitudes de adopción
+        <div class="acordeon-item">
+          <button type="button" class="acordeon-header" (click)="toggleSeccion('solicitudes')">
+            <i class="fa-solid fa-paw"></i>
+            <span class="acordeon-titulo">Solicitudes de adopción</span>
+            <span class="acordeon-contador" *ngIf="solicitudesPendientes.length > 0">{{ solicitudesPendientes.length }}</span>
+            <i class="fa-solid fa-chevron-down acordeon-chevron" [class.abierto]="estaAbierta('solicitudes')"></i>
           </button>
-          <button class="tab-btn" [class.active]="activeTab === 'familia'" (click)="seleccionarTab('familia')">
-            <i class="fa-solid fa-heart"></i> Mi familia felina
-          </button>
-          <button class="tab-btn" [class.active]="activeTab === 'favoritos'" (click)="seleccionarTab('favoritos')">
-            <i class="fa-solid fa-bookmark"></i> Mis favoritos
-          </button>
-          <button class="tab-btn" [class.active]="activeTab === 'novedades'" (click)="seleccionarTab('novedades')">
-            <i class="fa-solid fa-newspaper"></i> Novedades
-          </button>
-          <button class="tab-btn" [class.active]="activeTab === 'pagos'" (click)="seleccionarTab('pagos')">
-            <i class="fa-solid fa-wallet"></i> Mis pagos
-          </button>
-        </div>
-
-        <div class="tab-content" *ngIf="activeTab === 'solicitudes'">
+          <div class="acordeon-cuerpo" *ngIf="estaAbierta('solicitudes')">
           <div *ngIf="solicitudesPendientes.length === 0" class="empty-state">
             <i class="fa-solid fa-paw empty-icon"></i>
             <p>No tienes solicitudes pendientes ni rechazadas.</p>
@@ -95,9 +88,17 @@
               </div>
             </div>
           </div>
+          </div>
         </div>
 
-        <div class="tab-content" *ngIf="activeTab === 'familia'">
+        <div class="acordeon-item">
+          <button type="button" class="acordeon-header" (click)="toggleSeccion('familia')">
+            <i class="fa-solid fa-heart"></i>
+            <span class="acordeon-titulo">Mi familia felina</span>
+            <span class="acordeon-contador" *ngIf="familiaFelina.length > 0">{{ familiaFelina.length }}</span>
+            <i class="fa-solid fa-chevron-down acordeon-chevron" [class.abierto]="estaAbierta('familia')"></i>
+          </button>
+          <div class="acordeon-cuerpo" *ngIf="estaAbierta('familia')">
           <div *ngIf="familiaFelina.length === 0" class="empty-state">
             <i class="fa-solid fa-cat empty-icon"></i>
             <p>Todavía no tienes gatos adoptados, en acogida ni apadrinados.</p>
@@ -116,9 +117,17 @@
               </div>
             </div>
           </div>
+          </div>
         </div>
 
-        <div class="tab-content" *ngIf="activeTab === 'favoritos'">
+        <div class="acordeon-item">
+          <button type="button" class="acordeon-header" (click)="toggleSeccion('favoritos')">
+            <i class="fa-solid fa-bookmark"></i>
+            <span class="acordeon-titulo">Mis favoritos</span>
+            <span class="acordeon-contador" *ngIf="favoritos.length > 0">{{ favoritos.length }}</span>
+            <i class="fa-solid fa-chevron-down acordeon-chevron" [class.abierto]="estaAbierta('favoritos')"></i>
+          </button>
+          <div class="acordeon-cuerpo" *ngIf="estaAbierta('favoritos')">
           <div *ngIf="favoritos.length === 0" class="empty-state">
             <i class="fa-solid fa-bookmark empty-icon"></i>
             <p>Aún no has añadido gatos a favoritos.</p>
@@ -138,9 +147,17 @@
               </button>
             </div>
           </div>
+          </div>
         </div>
 
-        <div class="tab-content" *ngIf="activeTab === 'novedades'">
+        <div class="acordeon-item">
+          <button type="button" class="acordeon-header" (click)="toggleSeccion('novedades')">
+            <i class="fa-solid fa-newspaper"></i>
+            <span class="acordeon-titulo">Novedades</span>
+            <span class="acordeon-contador" *ngIf="feedNovedades.length > 0">{{ feedNovedades.length }}</span>
+            <i class="fa-solid fa-chevron-down acordeon-chevron" [class.abierto]="estaAbierta('novedades')"></i>
+          </button>
+          <div class="acordeon-cuerpo" *ngIf="estaAbierta('novedades')">
           <div *ngIf="feedNovedades.length === 0" class="empty-state">
             <i class="fa-solid fa-newspaper empty-icon"></i>
             <p>Aún no hay novedades de los gatos que apadrinas.</p>
@@ -158,9 +175,17 @@
               </div>
             </a>
           </div>
+          </div>
         </div>
 
-        <div class="tab-content" *ngIf="activeTab === 'pagos'">
+        <div class="acordeon-item">
+          <button type="button" class="acordeon-header" (click)="toggleSeccion('pagos')">
+            <i class="fa-solid fa-wallet"></i>
+            <span class="acordeon-titulo">Mis pagos</span>
+            <span class="acordeon-contador" *ngIf="donaciones.length + apadrinamientosActivos.length > 0">{{ donaciones.length + apadrinamientosActivos.length }}</span>
+            <i class="fa-solid fa-chevron-down acordeon-chevron" [class.abierto]="estaAbierta('pagos')"></i>
+          </button>
+          <div class="acordeon-cuerpo" *ngIf="estaAbierta('pagos')">
           <div *ngIf="donaciones.length === 0 && apadrinamientos.length === 0" class="empty-state">
             <i class="fa-solid fa-wallet empty-icon"></i>
             <p>Aún no has realizado donaciones ni apadrinamientos.</p>
@@ -224,6 +249,7 @@
               </div>
             </div>
           </div>
+          </div>
         </div>
       </div>
     </div>
@@ -239,6 +265,25 @@
         <div *ngFor="let url of fotosGatos" class="gallery-item" (click)="seleccionarAvatar(url)">
           <img [src]="url">
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" *ngIf="mostrarModalPortada">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Elige tu portada</h3>
+        <button class="btn-close" (click)="cerrarModalPortada()">&times;</button>
+      </div>
+      <div class="portada-gallery">
+        <button *ngFor="let p of portadasCatalogo"
+                type="button"
+                class="portada-item"
+                [ngClass]="'portada-' + p.clave"
+                [class.activa]="portadaActual === p.clave"
+                (click)="seleccionarPortada(p.clave)">
+          <span class="portada-etiqueta">{{ p.etiqueta }}</span>
+        </button>
       </div>
     </div>
   </div>

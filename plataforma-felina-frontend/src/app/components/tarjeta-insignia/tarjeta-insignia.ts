@@ -15,9 +15,9 @@ export interface UsuarioTarjeta {
 }
 
 const MENSAJES: Record<string, string> = {
-  familia: 'He acogido a un gato gracias a Plataforma Felina.',
-  donante: 'He apoyado la causa felina con una donación.',
-  veterano: 'Llevo más de un año transformando vidas felinas.'
+  familia: 'He acogido a un gato gracias al Refugio del Sol.',
+  donante: 'He apoyado al Refugio del Sol con una donación.',
+  veterano: 'Llevo más de un año transformando vidas felinas en el Refugio del Sol.'
 };
 
 @Component({
@@ -42,7 +42,7 @@ export class TarjetaInsigniaComponent {
   toast: string | null = null;
 
   get mensaje(): string {
-    return MENSAJES[this.insignia?.clave] || '¡He conseguido una insignia en Plataforma Felina!';
+    return MENSAJES[this.insignia?.clave] || '¡He conseguido una insignia en el Refugio del Sol!';
   }
 
   get fechaDate(): Date | null {
@@ -77,7 +77,7 @@ export class TarjetaInsigniaComponent {
   }
 
   private nombreArchivo(): string {
-    return `insignia-${this.insignia?.clave || 'plataforma-felina'}.png`;
+    return `insignia-${this.insignia?.clave || 'refugio-del-sol'}.png`;
   }
 
   private mostrarToast(msg: string) {
@@ -122,7 +122,7 @@ export class TarjetaInsigniaComponent {
       if (!blob) throw new Error('No blob');
       const file = new File([blob], this.nombreArchivo(), { type: 'image/png' });
       const shareData: ShareData = {
-        title: `Insignia ${this.insignia.titulo} — Plataforma Felina`,
+        title: `Insignia ${this.insignia.titulo} — Refugio del Sol`,
         text: this.mensaje,
         files: [file]
       };

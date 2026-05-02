@@ -22,10 +22,53 @@
 /* Banner: Recto arriba para pegar con el Navbar */
 .profile-banner {
   height: 280px;
-  background: linear-gradient(135deg, var(--color-texto-berenjena) 0%, var(--color-principal-malva) 100%);
   position: relative;
   width: 100%;
-  border-top: none; /* Aseguramos que no haya bordes extraños */
+  border-top: none;
+  overflow: hidden;
+}
+
+.portada-morado   { background: linear-gradient(135deg, var(--color-texto-berenjena) 0%, var(--color-principal-malva) 100%); }
+.portada-crema    { background: linear-gradient(135deg, var(--color-mostaza-suave) 0%, var(--color-fondo-crema) 100%); }
+.portada-amanecer { background: url('/assets/portadas/amanecer.jpg') center/cover no-repeat; }
+.portada-lavanda  { background: url('/assets/portadas/lavanda.jpg')  center/cover no-repeat; }
+.portada-bosque   { background: url('/assets/portadas/bosque.jpg')   center/cover no-repeat; }
+
+.profile-banner.portada-amanecer::before,
+.profile-banner.portada-lavanda::before,
+.profile-banner.portada-bosque::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.profile-banner > * {
+  position: relative;
+  z-index: 1;
+}
+
+.btn-cambiar-portada {
+  position: absolute;
+  top: 20px;
+  right: 110px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid white;
+  color: white;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.btn-cambiar-portada:hover {
+  background: rgba(255, 255, 255, 0.35);
 }
 
 /* Avatar superpuesto */
@@ -162,45 +205,70 @@
   color: white; padding: 8px 18px; border-radius: 8px; cursor: pointer;
 }
 
-/* PESTAÑAS */
+/* ACORDEÓN */
 .tabs-section {
   margin-top: 30px;
 }
 
-.tabs-nav {
-  display: flex;
-  gap: 10px;
-  border-bottom: 2px solid var(--color-detalle-tarjeta);
-  margin-bottom: 25px;
-  flex-wrap: wrap;
+.acordeon-item {
+  border-top: 1px solid var(--color-detalle-tarjeta);
 }
 
-.tab-btn {
+.acordeon-item:last-child {
+  border-bottom: 1px solid var(--color-detalle-tarjeta);
+}
+
+.acordeon-header {
+  width: 100%;
   background: none;
   border: none;
-  padding: 12px 20px;
-  cursor: pointer;
-  color: var(--color-principal-malva);
-  font-weight: 600;
-  font-size: 1rem;
-  border-bottom: 3px solid transparent;
-  transition: 0.2s;
+  padding: 18px 4px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: -2px;
-}
-
-.tab-btn:hover {
+  gap: 12px;
+  cursor: pointer;
   color: var(--color-texto-berenjena);
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-align: left;
 }
 
-.tab-btn.active {
+.acordeon-header:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.acordeon-header > i:first-child {
+  color: var(--color-principal-malva);
+  width: 20px;
+  text-align: center;
+}
+
+.acordeon-titulo {
+  flex: 1;
+}
+
+.acordeon-contador {
+  background: var(--color-mostaza-suave);
   color: var(--color-texto-berenjena);
-  border-bottom-color: var(--color-mostaza-suave);
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  min-width: 24px;
+  text-align: center;
 }
 
-.tab-content {
+.acordeon-chevron {
+  transition: transform 0.2s ease;
+  color: var(--color-principal-malva);
+}
+
+.acordeon-chevron.abierto {
+  transform: rotate(180deg);
+}
+
+.acordeon-cuerpo {
+  padding: 4px 4px 24px;
   animation: fadeIn 0.25s ease-out;
 }
 
@@ -876,4 +944,62 @@
   .donaciones-list {
     grid-template-columns: 1fr;
   }
+
+  .avatar-overlap {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .profile-content-card {
+    padding: 80px 20px 30px;
+    text-align: center;
+  }
+
+  .insignias-row {
+    justify-content: center;
+  }
+
+  .btn-cambiar-portada {
+    right: 95px;
+  }
+}
+
+.portada-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.portada-item {
+  position: relative;
+  height: 90px;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.portada-item:hover {
+  transform: translateY(-2px);
+}
+
+.portada-item.activa {
+  border-color: var(--color-cta-mostaza, #e9c46a);
+  box-shadow: 0 0 0 3px rgba(233, 196, 106, 0.35);
+}
+
+.portada-etiqueta {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.55);
+  color: white;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 4px 6px;
+  text-align: center;
 }

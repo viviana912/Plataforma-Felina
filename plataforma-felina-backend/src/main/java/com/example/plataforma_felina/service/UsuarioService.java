@@ -111,6 +111,7 @@ public class UsuarioService {
                 .rol(usuario.getRol())
                 .fotoUrl(usuario.getFotoUrl())
                 .codigoPostal(usuario.getCodigoPostal())
+                .portada(usuario.getPortada())
                 .build();
     }
 
@@ -127,6 +128,9 @@ public class UsuarioService {
         }
         if (datos.containsKey("codigoPostal")) {
             usuario.setCodigoPostal(datos.get("codigoPostal"));
+        }
+        if (datos.containsKey("portada")) {
+            usuario.setPortada(datos.get("portada"));
         }
         return toDTO(usuarioRepository.save(usuario));
     }

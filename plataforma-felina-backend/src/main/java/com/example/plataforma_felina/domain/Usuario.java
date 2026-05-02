@@ -35,6 +35,9 @@ public class Usuario {
     @Column(name = "codigo_postal", length = 10)
     private String codigoPostal;
 
+    @Column(name = "portada", length = 30)
+    private String portada;
+
     @Column(name = "fecha_registro")
     private LocalDateTime fechaRegistro;
 

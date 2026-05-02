@@ -156,8 +156,10 @@
   color: #6c4a93;
 }
 
-.patita {
-  font-size: 1rem;
+.patitas {
+  font-size: 1.7rem;
+  letter-spacing: 2px;
+  line-height: 1;
 }
 
 .fecha {
