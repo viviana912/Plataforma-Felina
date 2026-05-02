@@ -207,7 +207,17 @@ export class PerfilComponent implements OnInit {
   }
 
   get familiaFelina(): any[] {
-    return this.solicitudesUsuario.filter(s => (s.estado || '').toUpperCase() === 'APROBADA');
+    const aprobadas = this.solicitudesUsuario
+      .filter(s => (s.estado || '').toUpperCase() === 'APROBADA');
+    const apadrinados = this.apadrinamientos
+      .filter(a => a.estado === 'ACTIVO')
+      .map(a => ({
+        gato: a.gato,
+        tipoSolicitud: 'APADRINAMIENTO',
+        fechaSolicitud: a.fechaInicio,
+        estado: 'APROBADA'
+      }));
+    return [...aprobadas, ...apadrinados];
   }
 
   get apadrinamientosActivos(): Apadrinamiento[] {
