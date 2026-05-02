@@ -58,6 +58,7 @@ export class PerfilComponent implements OnInit {
   seccionesAbiertas = new Set<string>(['solicitudes']);
 
   mostrarModalPortada = false;
+  imagenAmpliada: string | null = null;
   readonly portadasCatalogo: PortadaDef[] = [
     { clave: 'morado',   tipo: 'color',  etiqueta: 'Morado'   },
     { clave: 'crema',    tipo: 'color',  etiqueta: 'Crema'    },
@@ -352,6 +353,17 @@ export class PerfilComponent implements OnInit {
 
   cerrarModalPortada() {
     this.mostrarModalPortada = false;
+  }
+
+  abrirImagen(url: string | undefined, e: Event) {
+    if (!url) return;
+    e.stopPropagation();
+    e.preventDefault();
+    this.imagenAmpliada = url;
+  }
+
+  cerrarImagen() {
+    this.imagenAmpliada = null;
   }
 
   seleccionarPortada(clave: string) {

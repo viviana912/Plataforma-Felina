@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login';
 import { GatosComponent } from './pages/gatos/gatos';
-import { MisSolicitudesComponent } from './pages/mis-solicitudes/mis-solicitudes';
 import { RegisterComponent} from './pages/register/register';
 import {HomeComponent} from './pages/home/home';
 import {ColaboraComponent} from './pages/colabora/colabora';
@@ -26,7 +25,7 @@ export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'gatos', component: GatosComponent },
-  { path: 'mis-solicitudes', component: MisSolicitudesComponent },
+  { path: 'mis-solicitudes', redirectTo: 'perfil', pathMatch: 'full' },
   { path: 'register', component: RegisterComponent },
   { path: 'colabora', component: ColaboraComponent },
   {path: 'perfil', component: PerfilComponent},

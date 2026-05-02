@@ -165,7 +165,12 @@
           </div>
           <div *ngIf="feedNovedades.length > 0" class="novedades-feed">
             <a *ngFor="let n of feedNovedades" class="novedad-card" [routerLink]="['/gato', n.gato?.id]">
-              <img *ngIf="n.fotoUrl" [src]="n.fotoUrl" [alt]="n.titulo" class="novedad-foto">
+              <img *ngIf="n.fotoUrl"
+                   [src]="n.fotoUrl"
+                   [alt]="n.titulo"
+                   class="novedad-foto"
+                   (click)="abrirImagen(n.fotoUrl, $event)"
+                   style="cursor: zoom-in">
               <div class="novedad-cuerpo">
                 <h4>{{ n.titulo }}</h4>
                 <p class="novedad-meta">
@@ -321,6 +326,11 @@
         </button>
       </div>
     </div>
+  </div>
+
+  <div class="lightbox-overlay" *ngIf="imagenAmpliada" (click)="cerrarImagen()">
+    <button class="lightbox-close" (click)="cerrarImagen()" aria-label="Cerrar">&times;</button>
+    <img [src]="imagenAmpliada" alt="Imagen ampliada" class="lightbox-img" (click)="$event.stopPropagation()">
   </div>
 
   <app-tarjeta-insignia
