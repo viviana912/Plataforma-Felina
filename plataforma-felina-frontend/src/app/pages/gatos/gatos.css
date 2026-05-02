@@ -251,8 +251,8 @@ h2::after {
 }
 
 .estado-chip-apadrinable {
-  background-color: #E3F0EC;
-  color: #3F7B6B;
+  background-color: var(--color-acento-suave-bg);
+  color: var(--color-acento-suave-text);
 }
 
 .estado-chip-acogible {
@@ -403,6 +403,7 @@ h2::after {
   background-color: var(--color-acento-secundario);
   border-color: var(--color-acento-secundario);
   color: white;
+  box-shadow: 0 2px 6px rgba(128, 171, 159, 0.4);
 }
 
 .pill-urgente {

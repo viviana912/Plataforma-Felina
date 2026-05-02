@@ -179,7 +179,7 @@
 }
 
 .btn-primary:hover {
-  background: #6C9286;
+  background: var(--color-acento-secundario-hover);
 }
 
 @media (max-width: 600px) {

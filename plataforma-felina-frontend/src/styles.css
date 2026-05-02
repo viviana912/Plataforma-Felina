@@ -9,8 +9,11 @@
   --color-cta-mostaza-hover: #D4A943;
   --color-mostaza-suave: #FFE9B0;
 
-  /* Acento secundario (frio, jerarquia con mostaza) */
+  /* Acento secundario sage (frio, jerarquia con mostaza) */
   --color-acento-secundario: #80AB9F;
+  --color-acento-secundario-hover: #6C9286;
+  --color-acento-suave-bg: #E3F0EC;
+  --color-acento-suave-text: #3F7B6B;
 
   /* Fondos */
   --color-fondo-pagina: #F4F0F4;
