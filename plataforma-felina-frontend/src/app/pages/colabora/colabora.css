@@ -14,7 +14,7 @@
 }
 
 .header-seccion h1 {
-  color: #4A4E69;
+  color: var(--color-texto-berenjena);
   font-size: 2rem;
   margin-bottom: 10px;
 }
@@ -58,7 +58,7 @@
   padding: 15px;
   border-bottom: 1px solid #eee;
   vertical-align: middle;
-  color: #4A4E69;
+  color: var(--color-texto-berenjena);
 }
 
 .titulo-tarea {
@@ -125,7 +125,7 @@
 }
 
 .invitacion-card h2 {
-  color: #4A4E69;
+  color: var(--color-texto-berenjena);
   font-size: 2rem;
   margin-bottom: 15px;
 }
@@ -146,13 +146,13 @@
 }
 
 .btn-primario {
-  background-color: #4A4E69;
+  background-color: var(--color-texto-berenjena);
   color: white;
 }
 
 .btn-secundario {
   background-color: #ebcB8B;
-  color: #4A4E69;
+  color: var(--color-texto-berenjena);
 }
 
 .footer-note {
@@ -209,7 +209,7 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: #4A4E69;
+  color: var(--color-texto-berenjena);
 }
 
 .tabs-tipo {
@@ -235,13 +235,13 @@
 
 .tabs-tipo .tab:hover {
   border-color: #e9c46a;
-  color: #4A4E69;
+  color: var(--color-texto-berenjena);
 }
 
 .tabs-tipo .tab.active {
   background: #e9c46a;
   border-color: #e9c46a;
-  color: #3a2a4d;
+  color: var(--color-texto-berenjena);
 }
 
 .badge-tipo {

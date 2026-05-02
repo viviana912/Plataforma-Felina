@@ -25,7 +25,7 @@
   top: -10px;
   right: -10px;
   background: white;
-  color: #3a2a4d;
+  color: var(--color-texto-berenjena);
   border: none;
   width: 36px;
   height: 36px;
@@ -125,7 +125,7 @@
 .titulo {
   font-size: 1.7rem;
   margin: 0 0 4px;
-  color: #3a2a4d;
+  color: var(--color-texto-berenjena);
   font-weight: 800;
   letter-spacing: 0.5px;
 }
@@ -140,7 +140,7 @@
 .mensaje {
   font-size: 0.95rem;
   font-style: italic;
-  color: #4a3a5e;
+  color: var(--color-texto-berenjena);
   margin: 0 0 18px;
   line-height: 1.45;
   padding: 0 8px;
@@ -199,7 +199,7 @@
 
 .btn-descargar {
   background: #e9c46a;
-  color: #3a2a4d;
+  color: var(--color-texto-berenjena);
 }
 
 .btn-compartir {

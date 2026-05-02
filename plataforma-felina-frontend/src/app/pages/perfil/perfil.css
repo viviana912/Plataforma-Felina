@@ -801,7 +801,7 @@
 
 .novedad-mensaje {
   margin: 0;
-  color: #4a3a5e;
+  color: var(--color-texto-berenjena);
   line-height: 1.45;
   font-size: 0.95rem;
   display: -webkit-box;
