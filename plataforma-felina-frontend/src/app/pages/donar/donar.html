@@ -44,14 +44,9 @@
                   placeholder="Ej: En memoria de Lola, mi compañera 16 años..."></textarea>
       </div>
 
-      <label class="checkbox-anonima" *ngIf="authService.isLoggedIn()">
-        <input type="checkbox" [(ngModel)]="anonima" name="anonima">
-        <span>Donar como anónimo (mi nombre no aparecerá públicamente)</span>
-      </label>
-
       <p class="info-no-login" *ngIf="!authService.isLoggedIn()">
         <i class="fa-solid fa-circle-info"></i>
-        Estás donando como anónimo. <a routerLink="/login">Inicia sesión</a> para guardar la donación en tu historial.
+        <a routerLink="/login">Inicia sesión</a> para guardar la donación en tu historial.
       </p>
     </div>
 

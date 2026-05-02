@@ -24,7 +24,6 @@ export class DonarComponent {
   importeOtro: number | null = null;
 
   mensaje = '';
-  anonima = false;
 
   enviando = false;
   exito = false;
@@ -49,14 +48,14 @@ export class DonarComponent {
     if (!this.importeValido || this.enviando) return;
 
     const usuario = this.authService.user();
-    const enviarAnonimo = this.anonima || !usuario;
+    const sinUsuario = !usuario;
 
     const donacion: Donacion = {
       cantidad: this.importeFinal,
       mensaje: this.mensaje?.trim() || undefined,
       tarjetaUltimos4: evento.ultimos4,
-      anonima: enviarAnonimo,
-      usuario: enviarAnonimo ? null : { id: usuario.id }
+      anonima: sinUsuario,
+      usuario: sinUsuario ? null : { id: usuario.id }
     };
 
     this.enviando = true;
