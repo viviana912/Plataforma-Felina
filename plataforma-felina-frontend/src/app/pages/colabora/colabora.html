@@ -30,13 +30,19 @@
         </div>
 
         <div class="filtros-grupo">
-          <label for="filtroUrgencia">Urgencia</label>
-          <select id="filtroUrgencia" [(ngModel)]="filtroUrgencia">
-            <option value="Todas">Todas las misiones</option>
-            <option value="Alta">🔴 Alta Prioridad</option>
-            <option value="Media">🟡 Media</option>
-            <option value="Baja">🟢 Baja</option>
-          </select>
+          <span class="filtros-label">Urgencia</span>
+          <div class="tabs-tipo">
+            <button class="tab" [class.active]="filtroUrgencia === 'Todas'" (click)="filtroUrgencia = 'Todas'">Todas</button>
+            <button class="tab" [class.active]="filtroUrgencia === 'Alta'" (click)="filtroUrgencia = 'Alta'">
+              🔴 Alta
+            </button>
+            <button class="tab" [class.active]="filtroUrgencia === 'Media'" (click)="filtroUrgencia = 'Media'">
+              🟡 Media
+            </button>
+            <button class="tab" [class.active]="filtroUrgencia === 'Baja'" (click)="filtroUrgencia = 'Baja'">
+              🟢 Baja
+            </button>
+          </div>
         </div>
       </div>
     </div>

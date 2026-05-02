@@ -297,6 +297,23 @@
   font-size: 0.85rem;
 }
 
+.btn-postular {
+  background: var(--color-acento-secundario);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-postular:hover:not(:disabled) {
+  background: var(--color-acento-secundario-hover);
+}
+
 .btn-postular:disabled {
   background: #d4f0db;
   color: #2f7a4d;
