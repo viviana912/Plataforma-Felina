@@ -1,9 +1,15 @@
 <div class="colabora-container">
 
+  <section class="page-header colabora-page-header">
+    <div class="header-content">
+      <span class="subtitle">Échanos una pata</span>
+      <h1>Lista de tareas</h1>
+    </div>
+  </section>
+
   <div *ngIf="authService.isLoggedIn(); else mensajeInvitacion" class="muro-tareas">
 
     <div class="header-seccion">
-      <h1>Lista de tareas</h1>
       <p>Hola <strong>{{ authService.user()?.nombre }}</strong>, ayuda a nuestros gatos:</p>
 
       <div *ngIf="!cpUsuario" class="banner-cp">

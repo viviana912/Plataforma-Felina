@@ -1,17 +1,19 @@
 <div class="container">
 
-  <header class="gatos-header">
-    <div class="header-content-wrapper">
+  <section class="page-header gatos-page-header">
+    <div class="header-content">
       <span class="subtitle">Adopta un amigo</span>
       <h1>Nuestros Bigotes en Adopción</h1>
-      <div class="header-decoration"></div>
-      <p class="intro-text">
-        Cada uno de estos gatos tiene una historia de superación. Todos se entregan vacunados,
-        desparasitados y con muchas ganas de encontrar un hogar.
-        <strong>Tu oportunidad de cambiar una vida empieza aquí.</strong>
-      </p>
     </div>
-  </header>
+  </section>
+
+  <div class="intro-block">
+    <p class="intro-text">
+      Cada uno de estos gatos tiene una historia de superación. Todos se entregan vacunados,
+      desparasitados y con muchas ganas de encontrar un hogar.
+      <strong>Tu oportunidad de cambiar una vida empieza aquí.</strong>
+    </p>
+  </div>
 
   <div *ngIf="gatos.length === 0" class="no-gatos">
     <i class="fa-solid fa-cat no-gatos-icon"></i> <p>No hay gatos disponibles por el momento. ¡Vuelve pronto!</p>
