@@ -17,6 +17,7 @@
   box-shadow: 0 10px 30px rgba(0,0,0,0.08);
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 /* Banner: Recto arriba para pegar con el Navbar */
@@ -44,37 +45,36 @@
   z-index: 0;
 }
 
-.profile-banner > * {
-  position: relative;
-  z-index: 1;
-}
-
 .btn-cambiar-portada {
   position: absolute;
   top: 20px;
   right: 110px;
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid white;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   color: white;
-  padding: 8px 14px;
-  border-radius: 8px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.9rem;
+  gap: 8px;
   z-index: 2;
 }
 
 .btn-cambiar-portada:hover {
-  background: rgba(255, 255, 255, 0.35);
+  background: rgba(0, 0, 0, 0.75);
 }
 
-/* Avatar superpuesto */
+/* Avatar superpuesto: vive en .profile-main-container, no en el banner,
+   asi nunca lo clipa el overflow del banner */
 .avatar-overlap {
   position: absolute;
-  bottom: -60px;
+  top: 220px;
   left: 50px;
+  z-index: 3;
 }
 
 .main-avatar-wrapper {
@@ -202,6 +202,7 @@
   position: absolute; top: 20px; right: 20px;
   background: rgba(255, 255, 255, 0.2); border: 1px solid white;
   color: white; padding: 8px 18px; border-radius: 8px; cursor: pointer;
+  z-index: 2;
 }
 
 /* ACORDEÓN */

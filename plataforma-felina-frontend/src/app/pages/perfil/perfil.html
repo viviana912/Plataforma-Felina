@@ -9,13 +9,13 @@
       <button (click)="abrirModalPortada()" class="btn-cambiar-portada" title="Cambiar fondo">
         <i class="fa-solid fa-image"></i> Fondo
       </button>
+    </div>
 
-      <div class="avatar-overlap">
-        <div class="main-avatar-wrapper" (click)="mostrarModal = true">
-          <img [src]="authService.user()?.fotoUrl || 'assets/default-avatar.png'" alt="Avatar">
-          <div class="avatar-edit-hint">
-            <i class="fas fa-camera"></i>
-          </div>
+    <div class="avatar-overlap">
+      <div class="main-avatar-wrapper" (click)="mostrarModal = true">
+        <img [src]="authService.user()?.fotoUrl || 'assets/default-avatar.png'" alt="Avatar">
+        <div class="avatar-edit-hint">
+          <i class="fas fa-camera"></i>
         </div>
       </div>
     </div>
