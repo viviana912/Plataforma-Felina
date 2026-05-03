@@ -200,7 +200,16 @@
     justify-content: center;
   }
 
+  .ayuda-list {
+    display: inline-block;
+    text-align: left;
+  }
+
   .ayuda-list li {
+    justify-content: flex-start;
+  }
+
+  .social-links-ayuda {
     justify-content: center;
   }
 

@@ -99,7 +99,12 @@
     </h2>
     <div class="diario-timeline">
       <article *ngFor="let act of actualizaciones" class="diario-entrada">
-        <img *ngIf="act.fotoUrl" [src]="act.fotoUrl" [alt]="act.titulo" class="diario-foto">
+        <img *ngIf="act.fotoUrl"
+             [src]="act.fotoUrl"
+             [alt]="act.titulo"
+             class="diario-foto"
+             (click)="abrirImagen(act.fotoUrl, $event)"
+             style="cursor: zoom-in">
         <div class="diario-cuerpo">
           <h3>{{ act.titulo }}</h3>
           <time class="diario-fecha">{{ act.fecha | date:'dd MMM yyyy' }}</time>
@@ -108,4 +113,9 @@
       </article>
     </div>
   </section>
+
+  <div class="lightbox-overlay" *ngIf="imagenAmpliada" (click)="cerrarImagen()">
+    <button class="lightbox-close" (click)="cerrarImagen()" aria-label="Cerrar">&times;</button>
+    <img [src]="imagenAmpliada" alt="Imagen ampliada" class="lightbox-img" (click)="$event.stopPropagation()">
+  </div>
 </div>

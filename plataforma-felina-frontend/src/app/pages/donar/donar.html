@@ -1,10 +1,16 @@
-<div class="donar-container">
+<div class="donar-page">
 
-  <ng-container *ngIf="!exito">
-    <div class="donar-header">
+  <section class="page-header donar-page-header" *ngIf="!exito">
+    <div class="header-content">
+      <span class="subtitle">Cada euro cuenta</span>
       <h1><i class="fa-solid fa-heart-pulse"></i> Tu ayuda salva vidas</h1>
       <p>Cada euro va directo a comida, veterinario y mantas calentitas para nuestros gatos.</p>
     </div>
+  </section>
+
+<div class="donar-container">
+
+  <ng-container *ngIf="!exito">
 
     <div class="donar-card">
       <h2>Elige tu aportación</h2>
@@ -82,4 +88,5 @@
     </div>
   </div>
 
+</div>
 </div>

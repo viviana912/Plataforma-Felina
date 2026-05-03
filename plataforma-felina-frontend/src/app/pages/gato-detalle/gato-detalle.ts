@@ -25,6 +25,7 @@ export class GatoDetalleComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean = false;
   esFavorito = false;
   actualizaciones: ActualizacionGato[] = [];
+  imagenAmpliada: string | null = null;
   private subFavoritos?: Subscription;
 
   constructor(
@@ -81,6 +82,17 @@ export class GatoDetalleComponent implements OnInit, OnDestroy {
       next: () => this.cdr.markForCheck(),
       error: (err) => console.error('Error favorito', err)
     });
+  }
+
+  abrirImagen(url: string | undefined, e: Event) {
+    if (!url) return;
+    e.stopPropagation();
+    e.preventDefault();
+    this.imagenAmpliada = url;
+  }
+
+  cerrarImagen() {
+    this.imagenAmpliada = null;
   }
 
   abrirFormulario() {
