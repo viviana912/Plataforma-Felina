@@ -13,7 +13,7 @@
   <ng-container *ngIf="!exito">
 
     <div class="donar-card">
-      <h2>Elige tu aportación</h2>
+      <h2><i class="fa-solid fa-coins"></i> Elige tu aportación</h2>
       <div class="importes-rapidos">
         <button *ngFor="let imp of importesRapidos"
                 type="button"
@@ -47,7 +47,7 @@
                   rows="3"
                   maxlength="280"
                   [(ngModel)]="mensaje"
-                  placeholder="Ej: En memoria de Lola, mi compañera 16 años..."></textarea>
+                  placeholder="Ej: Gracias por cuidar tan bien de ellos"></textarea>
       </div>
 
       <p class="info-no-login" *ngIf="!authService.isLoggedIn()">
@@ -57,7 +57,7 @@
     </div>
 
     <div class="donar-card">
-      <h2>Datos de pago — Donas <strong>{{ importeFinal }} €</strong></h2>
+      <h2><i class="fa-solid fa-credit-card"></i> Datos de pago — Donas <strong>{{ importeFinal }} €</strong></h2>
 
       <p class="error-msg" *ngIf="!importeValido">
         Selecciona un importe de al menos 1 €.

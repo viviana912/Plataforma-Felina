@@ -8,7 +8,6 @@ import {AdminPanelComponent} from './pages/admin-panel/admin-panel';
 import {AdminUsuariosComponent} from './pages/admin/admin-usuarios/admin-usuarios';
 import {AdminTareasComponent} from './pages/admin/admin-tareas/admin-tareas';
 import {AdminFichasComponent} from './pages/admin/admin-fichas/admin-fichas';
-import {AdminSolicitudesComponent} from './pages/admin/admin-solicitudes/admin-solicitudes';
 import {AdminAdopcionesComponent} from './pages/admin/admin-adopciones/admin-adopciones';
 import {PerfilComponent} from './pages/perfil/perfil';
 import {ComoAyudar} from './pages/como-ayudar/como-ayudar';
@@ -56,7 +55,6 @@ export const routes: Routes = [
       { path: 'usuarios', component: AdminUsuariosComponent },
       {path: 'tareas', component: AdminTareasComponent },
       { path: 'fichas', component: AdminFichasComponent },
-      { path: 'solicitudes', component: AdminSolicitudesComponent },
       { path: 'adopciones', component: AdminAdopcionesComponent },
       {
         path: 'admin/panel',

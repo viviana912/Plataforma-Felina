@@ -55,7 +55,7 @@ export class PerfilComponent implements OnInit {
   apadrinamientos: Apadrinamiento[] = [];
   pagosApadrinamiento: PagoApadrinamiento[] = [];
 
-  seccionesAbiertas = new Set<string>(['solicitudes']);
+  seccionesAbiertas = new Set<string>(['familia']);
 
   mostrarModalPortada = false;
   imagenAmpliada: string | null = null;
@@ -71,6 +71,10 @@ export class PerfilComponent implements OnInit {
   nuevoImporte: number | null = null;
   guardandoImporte = false;
   errorImporte: string | null = null;
+
+  apadrinamientoACancelar: Apadrinamiento | null = null;
+  cancelando = false;
+  errorCancelacion: string | null = null;
 
   insigniaSeleccionada: InsigniaDef | null = null;
 
@@ -316,20 +320,36 @@ export class PerfilComponent implements OnInit {
 
   cancelarApadrinamiento(a: Apadrinamiento) {
     if (!a.id) return;
-    const ok = confirm(`¿Seguro que quieres cancelar el apadrinamiento de ${a.gato?.nombre || 'este gato'}? No se cobrarán más mensualidades.`);
-    if (!ok) return;
+    this.apadrinamientoACancelar = a;
+    this.errorCancelacion = null;
+  }
+
+  confirmarCancelacionApadrinamiento() {
+    const a = this.apadrinamientoACancelar;
+    if (!a?.id) return;
+    this.cancelando = true;
+    this.errorCancelacion = null;
     this.apadrinamientoService.cancelar(a.id).subscribe({
       next: (cancelado) => {
         const idx = this.apadrinamientos.findIndex(x => x.id === cancelado.id);
         if (idx >= 0) this.apadrinamientos[idx] = cancelado;
+        this.cancelando = false;
+        this.apadrinamientoACancelar = null;
         this.cdr.markForCheck();
       },
       error: (err) => {
         console.error(err);
-        alert('No se pudo cancelar el apadrinamiento.');
+        this.errorCancelacion = 'No se pudo cancelar el apadrinamiento.';
+        this.cancelando = false;
         this.cdr.markForCheck();
       }
     });
+  }
+
+  cerrarModalCancelacion() {
+    if (this.cancelando) return;
+    this.apadrinamientoACancelar = null;
+    this.errorCancelacion = null;
   }
 
   etiquetaTipo(tipo: string | null | undefined): string {

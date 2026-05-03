@@ -32,7 +32,7 @@ public class SolicitudController {
     public Solicitud actualizarEstado(@PathVariable Long usuarioId,
                                       @PathVariable Long gatoId,
                                       @RequestBody String nuevoEstado) {
-        // Limpiamos comillas por si acaso (mismo patrón que SolicitudColaboradorController)
+        // Limpiamos comillas por si acaso
         String estadoLimpio = nuevoEstado.replace("\"", "").trim();
         return solicitudService.actualizarEstado(new SolicitudId(usuarioId, gatoId), estadoLimpio);
     }

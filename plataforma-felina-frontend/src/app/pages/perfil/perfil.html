@@ -40,57 +40,7 @@
 
       <hr class="separator-soft">
 
-      <div class="contact-details">
-        <h3>Información de contacto</h3>
-        <div class="details-grid">
-          <div class="detail-box">
-            <label>Email</label>
-            <p>{{ authService.user()?.email }}</p>
-          </div>
-          <div class="detail-box">
-            <label>Teléfono</label>
-            <p>{{ authService.user()?.telefono || 'No proporcionado' }}</p>
-          </div>
-          <div class="detail-box">
-            <label>Código postal</label>
-            <p>{{ authService.user()?.codigoPostal || 'No indicado' }}</p>
-          </div>
-        </div>
-        <button class="btn-edit-info" (click)="abrirEditarPerfil()">Editar perfil</button>
-      </div>
-
-      <hr class="separator-soft">
-
       <div class="tabs-section">
-        <div class="acordeon-item">
-          <button type="button" class="acordeon-header" (click)="toggleSeccion('solicitudes')">
-            <i class="fa-solid fa-paw"></i>
-            <span class="acordeon-titulo">Solicitudes de adopción</span>
-            <span class="acordeon-contador" *ngIf="solicitudesPendientes.length > 0">{{ solicitudesPendientes.length }}</span>
-            <i class="fa-solid fa-chevron-down acordeon-chevron" [class.abierto]="estaAbierta('solicitudes')"></i>
-          </button>
-          <div class="acordeon-cuerpo" *ngIf="estaAbierta('solicitudes')">
-          <div *ngIf="solicitudesPendientes.length === 0" class="empty-state">
-            <i class="fa-solid fa-paw empty-icon"></i>
-            <p>No tienes solicitudes pendientes ni rechazadas.</p>
-          </div>
-          <div *ngIf="solicitudesPendientes.length > 0" class="solicitudes-grid">
-            <div *ngFor="let s of solicitudesPendientes" class="solicitud-card">
-              <div class="img-wrapper-badge">
-                <img [src]="s.gato?.fotoUrl || 'assets/default-avatar.png'" [alt]="s.gato?.nombre || 'Gato'" class="solicitud-gato-img">
-              </div>
-              <div class="solicitud-info">
-                <h4>{{ s.gato?.nombre || 'Gato' }}</h4>
-                <span class="estado-badge" [ngClass]="'estado-' + (s.estado || '').toLowerCase()">
-                  {{ s.estado || 'Sin estado' }}
-                </span>
-                <p class="fecha" *ngIf="s.fechaSolicitud">{{ s.fechaSolicitud | date:'dd/MM/yyyy' }}</p>
-              </div>
-            </div>
-          </div>
-          </div>
-        </div>
-
         <div class="acordeon-item">
           <button type="button" class="acordeon-header" (click)="toggleSeccion('familia')">
             <i class="fa-solid fa-heart"></i>
@@ -116,6 +66,39 @@
                 <p class="fecha" *ngIf="s.fechaSolicitud">Desde {{ s.fechaSolicitud | date:'dd/MM/yyyy' }}</p>
               </div>
             </div>
+          </div>
+          </div>
+        </div>
+
+        <div class="acordeon-item">
+          <button type="button" class="acordeon-header" (click)="toggleSeccion('novedades')">
+            <i class="fa-solid fa-newspaper"></i>
+            <span class="acordeon-titulo">Novedades</span>
+            <span class="acordeon-contador" *ngIf="feedNovedades.length > 0">{{ feedNovedades.length }}</span>
+            <i class="fa-solid fa-chevron-down acordeon-chevron" [class.abierto]="estaAbierta('novedades')"></i>
+          </button>
+          <div class="acordeon-cuerpo" *ngIf="estaAbierta('novedades')">
+          <div *ngIf="feedNovedades.length === 0" class="empty-state">
+            <i class="fa-solid fa-newspaper empty-icon"></i>
+            <p>Aún no hay novedades de los gatos que apadrinas.</p>
+            <p class="meta">Cuando publiquemos una actualización aparecerá aquí.</p>
+          </div>
+          <div *ngIf="feedNovedades.length > 0" class="novedades-feed">
+            <a *ngFor="let n of feedNovedades" class="novedad-card" [routerLink]="['/gato', n.gato?.id]">
+              <img *ngIf="n.fotoUrl"
+                   [src]="n.fotoUrl"
+                   [alt]="n.titulo"
+                   class="novedad-foto"
+                   (click)="abrirImagen(n.fotoUrl, $event)"
+                   style="cursor: zoom-in">
+              <div class="novedad-cuerpo">
+                <h4>{{ n.titulo }}</h4>
+                <p class="novedad-meta">
+                  <strong>{{ n.gato?.nombre }}</strong> · {{ n.fecha | date:'dd MMM yyyy' }}
+                </p>
+                <p class="novedad-mensaje">{{ n.mensaje }}</p>
+              </div>
+            </a>
           </div>
           </div>
         </div>
@@ -151,34 +134,30 @@
         </div>
 
         <div class="acordeon-item">
-          <button type="button" class="acordeon-header" (click)="toggleSeccion('novedades')">
-            <i class="fa-solid fa-newspaper"></i>
-            <span class="acordeon-titulo">Novedades</span>
-            <span class="acordeon-contador" *ngIf="feedNovedades.length > 0">{{ feedNovedades.length }}</span>
-            <i class="fa-solid fa-chevron-down acordeon-chevron" [class.abierto]="estaAbierta('novedades')"></i>
+          <button type="button" class="acordeon-header" (click)="toggleSeccion('solicitudes')">
+            <i class="fa-solid fa-paw"></i>
+            <span class="acordeon-titulo">Solicitudes de adopción</span>
+            <span class="acordeon-contador" *ngIf="solicitudesPendientes.length > 0">{{ solicitudesPendientes.length }}</span>
+            <i class="fa-solid fa-chevron-down acordeon-chevron" [class.abierto]="estaAbierta('solicitudes')"></i>
           </button>
-          <div class="acordeon-cuerpo" *ngIf="estaAbierta('novedades')">
-          <div *ngIf="feedNovedades.length === 0" class="empty-state">
-            <i class="fa-solid fa-newspaper empty-icon"></i>
-            <p>Aún no hay novedades de los gatos que apadrinas.</p>
-            <p class="meta">Cuando publiquemos una actualización aparecerá aquí.</p>
+          <div class="acordeon-cuerpo" *ngIf="estaAbierta('solicitudes')">
+          <div *ngIf="solicitudesPendientes.length === 0" class="empty-state">
+            <i class="fa-solid fa-paw empty-icon"></i>
+            <p>No tienes solicitudes pendientes ni rechazadas.</p>
           </div>
-          <div *ngIf="feedNovedades.length > 0" class="novedades-feed">
-            <a *ngFor="let n of feedNovedades" class="novedad-card" [routerLink]="['/gato', n.gato?.id]">
-              <img *ngIf="n.fotoUrl"
-                   [src]="n.fotoUrl"
-                   [alt]="n.titulo"
-                   class="novedad-foto"
-                   (click)="abrirImagen(n.fotoUrl, $event)"
-                   style="cursor: zoom-in">
-              <div class="novedad-cuerpo">
-                <h4>{{ n.titulo }}</h4>
-                <p class="novedad-meta">
-                  <strong>{{ n.gato?.nombre }}</strong> · {{ n.fecha | date:'dd MMM yyyy' }}
-                </p>
-                <p class="novedad-mensaje">{{ n.mensaje }}</p>
+          <div *ngIf="solicitudesPendientes.length > 0" class="solicitudes-grid">
+            <div *ngFor="let s of solicitudesPendientes" class="solicitud-card">
+              <div class="img-wrapper-badge">
+                <img [src]="s.gato?.fotoUrl || 'assets/default-avatar.png'" [alt]="s.gato?.nombre || 'Gato'" class="solicitud-gato-img">
               </div>
-            </a>
+              <div class="solicitud-info">
+                <h4>{{ s.gato?.nombre || 'Gato' }}</h4>
+                <span class="estado-badge" [ngClass]="'estado-' + (s.estado || '').toLowerCase()">
+                  {{ s.estado || 'Sin estado' }}
+                </span>
+                <p class="fecha" *ngIf="s.fechaSolicitud">{{ s.fechaSolicitud | date:'dd/MM/yyyy' }}</p>
+              </div>
+            </div>
           </div>
           </div>
         </div>
@@ -256,6 +235,33 @@
           </div>
           </div>
         </div>
+
+        <div class="acordeon-item">
+          <button type="button" class="acordeon-header" (click)="toggleSeccion('info-personal')">
+            <i class="fa-solid fa-id-card"></i>
+            <span class="acordeon-titulo">Información personal</span>
+            <i class="fa-solid fa-chevron-down acordeon-chevron" [class.abierto]="estaAbierta('info-personal')"></i>
+          </button>
+          <div class="acordeon-cuerpo" *ngIf="estaAbierta('info-personal')">
+            <div class="contact-details">
+              <div class="details-grid">
+                <div class="detail-box">
+                  <label>Email</label>
+                  <p>{{ authService.user()?.email }}</p>
+                </div>
+                <div class="detail-box">
+                  <label>Teléfono</label>
+                  <p>{{ authService.user()?.telefono || 'No proporcionado' }}</p>
+                </div>
+                <div class="detail-box">
+                  <label>Código postal</label>
+                  <p>{{ authService.user()?.codigoPostal || 'No indicado' }}</p>
+                </div>
+              </div>
+              <button class="btn-edit-info" (click)="abrirEditarPerfil()">Editar perfil</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -323,6 +329,23 @@
         <button class="btn-cancel" (click)="cerrarEditarPerfil()" [disabled]="guardandoPerfil">Cancelar</button>
         <button class="btn-confirm" (click)="guardarPerfil()" [disabled]="guardandoPerfil">
           {{ guardandoPerfil ? 'Guardando...' : 'Guardar' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" *ngIf="apadrinamientoACancelar" (click)="cerrarModalCancelacion()">
+    <div class="modal-card" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Cancelar apadrinamiento</h3>
+        <button class="btn-close" (click)="cerrarModalCancelacion()" [disabled]="cancelando">&times;</button>
+      </div>
+      <p>¿Seguro que quieres cancelar el apadrinamiento de <strong>{{ apadrinamientoACancelar?.gato?.nombre || 'este gato' }}</strong>? No se cobrarán más mensualidades.</p>
+      <p *ngIf="errorCancelacion" class="error-importe">{{ errorCancelacion }}</p>
+      <div class="modal-actions">
+        <button class="btn-cancel" (click)="cerrarModalCancelacion()" [disabled]="cancelando">Volver</button>
+        <button class="btn-confirm" (click)="confirmarCancelacionApadrinamiento()" [disabled]="cancelando">
+          {{ cancelando ? 'Cancelando...' : 'Sí, cancelar' }}
         </button>
       </div>
     </div>
