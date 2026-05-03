@@ -23,13 +23,13 @@ export class GatosComponent implements OnInit, OnDestroy {
   filtroTipo: 'todos' | 'ADOPTABLE' | 'APADRINABLE' | 'ACOGIBLE' = 'todos';
   filtroUrgente = false;
 
-  filtroVacunado = false;
   filtroCastrado = false;
-  filtroDesparasitado = false;
   filtroMicrochip = false;
   filtroAptoNinos = false;
   filtroAptoOtrosGatos = false;
   filtroAptoPerros = false;
+
+  filtrosVisibles = false;
 
   private platformId = inject(PLATFORM_ID);
   private cdr = inject(ChangeDetectorRef);
@@ -119,9 +119,7 @@ export class GatosComponent implements OnInit, OnDestroy {
         if (this.filtroEdad === 'joven' && (edad < 2 || edad >= 7)) return false;
         if (this.filtroEdad === 'adulto' && edad < 7) return false;
       }
-      if (this.filtroVacunado && !g.vacunado) return false;
       if (this.filtroCastrado && !g.castrado) return false;
-      if (this.filtroDesparasitado && !g.desparasitado) return false;
       if (this.filtroMicrochip && !g.microchip) return false;
       if (this.filtroAptoNinos && !g.aptoNinos) return false;
       if (this.filtroAptoOtrosGatos && !g.aptoOtrosGatos) return false;
@@ -135,12 +133,24 @@ export class GatosComponent implements OnInit, OnDestroy {
     this.filtroEdad = 'todos';
     this.filtroTipo = 'todos';
     this.filtroUrgente = false;
-    this.filtroVacunado = false;
     this.filtroCastrado = false;
-    this.filtroDesparasitado = false;
     this.filtroMicrochip = false;
     this.filtroAptoNinos = false;
     this.filtroAptoOtrosGatos = false;
     this.filtroAptoPerros = false;
+  }
+
+  get filtrosActivos(): number {
+    let n = 0;
+    if (this.filtroSexo !== 'todos') n++;
+    if (this.filtroEdad !== 'todos') n++;
+    if (this.filtroTipo !== 'todos') n++;
+    if (this.filtroUrgente) n++;
+    if (this.filtroCastrado) n++;
+    if (this.filtroMicrochip) n++;
+    if (this.filtroAptoNinos) n++;
+    if (this.filtroAptoOtrosGatos) n++;
+    if (this.filtroAptoPerros) n++;
+    return n;
   }
 }

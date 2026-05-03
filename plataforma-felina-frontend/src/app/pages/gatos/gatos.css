@@ -488,3 +488,49 @@ h2::after {
 .btn-reset:hover {
   background-color: var(--color-fondo-crema);
 }
+
+.btn-filtros-toggle {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  background: var(--color-fondo-tarjeta);
+  border: 1px solid var(--color-fondo-crema);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin: 20px 0 12px;
+  font-weight: 700;
+  color: var(--color-texto-berenjena);
+  cursor: pointer;
+  width: 100%;
+  box-shadow: var(--sombra-suave);
+}
+
+.btn-filtros-toggle .filtros-badge {
+  background: var(--color-cta-mostaza);
+  color: var(--color-texto-berenjena);
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.btn-filtros-toggle .chevron {
+  margin-left: auto;
+  transition: transform 0.2s ease;
+}
+
+.btn-filtros-toggle .chevron.abierto {
+  transform: rotate(180deg);
+}
+
+@media (max-width: 768px) {
+  .btn-filtros-toggle {
+    display: flex;
+  }
+  .filtros-container.colapsado-movil {
+    display: none;
+  }
+  .filtros-container {
+    margin-top: 0;
+  }
+}

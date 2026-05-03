@@ -16,7 +16,17 @@
     <i class="fa-solid fa-cat no-gatos-icon"></i> <p>No hay gatos disponibles por el momento. ¡Vuelve pronto!</p>
   </div>
 
-  <div class="filtros-container" *ngIf="gatos.length > 0">
+  <button type="button"
+          class="btn-filtros-toggle"
+          *ngIf="gatos.length > 0"
+          (click)="filtrosVisibles = !filtrosVisibles">
+    <i class="fa-solid fa-sliders"></i>
+    Filtros
+    <span class="filtros-badge" *ngIf="filtrosActivos > 0">{{ filtrosActivos }}</span>
+    <i class="fa-solid fa-chevron-down chevron" [class.abierto]="filtrosVisibles"></i>
+  </button>
+
+  <div class="filtros-container" [class.colapsado-movil]="!filtrosVisibles" *ngIf="gatos.length > 0">
     <div class="filtros-grupo">
       <span class="filtros-label">Sexo</span>
       <div class="filtros-pills">
@@ -49,14 +59,8 @@
     <div class="filtros-grupo">
       <span class="filtros-label">Salud</span>
       <div class="filtros-pills">
-        <button class="pill" [class.active]="filtroVacunado" (click)="filtroVacunado = !filtroVacunado">
-          <i class="fa-solid fa-syringe"></i> Vacunado
-        </button>
         <button class="pill" [class.active]="filtroCastrado" (click)="filtroCastrado = !filtroCastrado">
           <i class="fa-solid fa-scissors"></i> Castrado
-        </button>
-        <button class="pill" [class.active]="filtroDesparasitado" (click)="filtroDesparasitado = !filtroDesparasitado">
-          <i class="fa-solid fa-shield-virus"></i> Desparasitado
         </button>
         <button class="pill" [class.active]="filtroMicrochip" (click)="filtroMicrochip = !filtroMicrochip">
           <i class="fa-solid fa-microchip"></i> Microchip
