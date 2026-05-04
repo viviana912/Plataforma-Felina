@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  backend-tests:
+    name: Backend (Spring Boot + JUnit)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: plataforma-felina-backend
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configurar JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Ejecutar tests
+        run: bash mvnw -B test
+
+      - name: Publicar informe de tests
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-surefire-reports
+          path: plataforma-felina-backend/target/surefire-reports/
+          if-no-files-found: ignore
+
+  frontend-tests:
+    name: Frontend (Angular + Vitest)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: plataforma-felina-frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configurar Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: plataforma-felina-frontend/package-lock.json
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Ejecutar tests
+        run: npm test -- --watch=false
