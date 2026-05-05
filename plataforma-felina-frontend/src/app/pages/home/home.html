@@ -1,8 +1,14 @@
 <div class="home-container">
 
   <section class="hero">
+    <div
+      *ngFor="let slide of heroSlides; let i = index"
+      class="hero-slide"
+      [class.is-active]="i === heroIndex"
+      [style.background-image]="'url(' + slide + ')'">
+    </div>
     <div class="hero-overlay">
-      <div class="hero-content">
+      <div class="hero-content hero-content--animated">
         <h1>Refugio del Sol</h1>
         <p>"Que el sol de su vida sea un hogar"</p>
         <div class="hero-buttons">
@@ -13,29 +19,17 @@
     </div>
   </section>
 
-  <section class="stats-section">
+  <section class="stats-section" #statsSection>
     <div class="stats-grid">
-      <div class="stat-item">
-        <span class="stat-number">1.500+</span>
-        <span class="stat-label">Vidas Rescatadas</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-number">10+</span>
-        <span class="stat-label">Colonias Cuidadas</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-number">1.500+</span>
-        <span class="stat-label">Adopciones Felices</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-number">8.000€+</span>
-        <span class="stat-label">Fondos Recaudados</span>
+      <div class="stat-item" *ngFor="let stat of stats; let i = index">
+        <span class="stat-number">{{ formatStat(displayedStats[i], stat.suffix) }}</span>
+        <span class="stat-label">{{ stat.label }}</span>
       </div>
     </div>
   </section>
 
   <section class="story-section">
-    <div class="story-container">
+    <div class="story-container" appReveal>
       <div class="story-text">
         <span class="subtitle">Conoce el Refugio del Sol</span>
         <h2>Nuestra Historia: Donde brota la esperanza</h2>
@@ -57,31 +51,31 @@
   </section>
 
   <section class="info-section">
-    <span class="subtitle">Nuestros Ideales</span>
-    <h2>Lo que nos mueve</h2>
+    <span class="subtitle" appReveal>Nuestros Ideales</span>
+    <h2 appReveal [revealDelay]="80">Lo que nos mueve</h2>
     <div class="info-grid">
-      <div class="info-card">
+      <div class="info-card" appReveal [revealDelay]="0">
         <div class="icon-container">
           <i class="fa-solid fa-paw"></i>
         </div>
         <h3>Respeto por la vida</h3>
         <p>Cada ser merece cuidado, dignidad y compasión. Tratamos a cada gato como parte de nuestra familia.</p>
       </div>
-      <div class="info-card">
+      <div class="info-card" appReveal [revealDelay]="120">
         <div class="icon-container">
           <i class="fa-solid fa-handshake-angle"></i>
         </div>
         <h3>Solidaridad</h3>
         <p>Somos una comunidad. Juntos tejemos una red de esperanza para quienes más lo necesitan.</p>
       </div>
-      <div class="info-card">
+      <div class="info-card" appReveal [revealDelay]="240">
         <div class="icon-container">
           <i class="fa-solid fa-shield-cat"></i>
         </div>
         <h3>Perseverancia</h3>
         <p>No abandonamos. Incluso cuando el camino es difícil, seguimos luchando por cada vida.</p>
       </div>
-      <div class="info-card">
+      <div class="info-card info-card--heart" appReveal [revealDelay]="360">
         <div class="icon-container">
           <i class="fa-solid fa-heart"></i>
         </div>
@@ -92,10 +86,13 @@
   </section>
 
   <section class="happy-endings" *ngIf="gatosAdoptados.length > 0">
-    <span class="subtitle">Historias con final feliz</span>
-    <h2>Ya están en su hogar</h2>
+    <span class="subtitle" appReveal>Historias con final feliz</span>
+    <h2 appReveal [revealDelay]="80">Ya están en su hogar</h2>
     <div class="polaroid-grid">
-      <div *ngFor="let gato of gatosAdoptados" class="polaroid-item">
+      <div *ngFor="let gato of gatosAdoptados; let i = index"
+           class="polaroid-item"
+           appReveal
+           [revealDelay]="i * 120">
         <div class="polaroid-card">
           <img [src]="gato.fotoUrl" [alt]="gato.nombre">
           <div class="polaroid-caption">
@@ -107,7 +104,7 @@
     </div>
   </section>
 
-  <section class="cta-section">
+  <section class="cta-section" appReveal>
     <h2>¿Listo para dejar tu huella?</h2>
     <p>Ellos no tienen voz, pero sí un corazón inmenso que espera por ti.</p>
     <div class="hero-buttons">

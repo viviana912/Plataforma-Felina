@@ -9,7 +9,7 @@
 
   <div *ngIf="authService.isLoggedIn(); else mensajeInvitacion" class="muro-tareas">
 
-    <div class="header-seccion">
+    <div class="header-seccion" appReveal>
       <p>Hola <strong>{{ authService.user()?.nombre }}</strong>, ayuda a nuestros gatos:</p>
 
       <div *ngIf="!cpUsuario" class="banner-cp">
@@ -53,7 +53,7 @@
       </div>
     </div>
 
-    <div class="tabla-container">
+    <div class="tabla-container" appReveal [revealDelay]="120">
       <table class="tabla-colabora">
         <thead>
         <tr>
@@ -106,7 +106,7 @@
   </div>
 
   <ng-template #mensajeInvitacion>
-    <div class="invitacion-card">
+    <div class="invitacion-card" appReveal>
       <h2>¡Te necesitamos!</h2>
       <p>Para poder ver las misiones de voluntariado y ayudar a los gatos, primero debes formar parte de nuestra comunidad.</p>
 

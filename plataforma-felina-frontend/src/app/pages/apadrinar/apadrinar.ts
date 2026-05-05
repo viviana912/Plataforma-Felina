@@ -6,11 +6,12 @@ import { AuthService } from '../../services/auth.service';
 import { GatoService } from '../../services/gato';
 import { ApadrinamientoService, Apadrinamiento } from '../../services/apadrinamiento';
 import { TarjetaPagoComponent } from '../../components/tarjeta-pago/tarjeta-pago';
+import { RevealDirective } from '../../directives/reveal.directive';
 
 @Component({
   selector: 'app-apadrinar',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, TarjetaPagoComponent],
+  imports: [CommonModule, FormsModule, RouterLink, TarjetaPagoComponent, RevealDirective],
   templateUrl: './apadrinar.html',
   styleUrls: ['./apadrinar.css']
 })

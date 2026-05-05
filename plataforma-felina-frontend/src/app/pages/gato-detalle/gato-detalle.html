@@ -3,7 +3,7 @@
     <a routerLink="/gatos"><i class="fa-solid fa-arrow-left"></i> Volver al listado</a>
   </div>
 
-  <div class="ficha-grid">
+  <div class="ficha-grid" appReveal>
     <div class="ficha-media">
       <img [src]="gato.fotoUrl" [alt]="gato.nombre" class="img-ficha">
     </div>
@@ -93,12 +93,15 @@
   </div>
 
   <section class="diario-seccion" *ngIf="actualizaciones.length > 0">
-    <h2 class="diario-titulo">
+    <h2 class="diario-titulo" appReveal>
       <i class="fa-solid fa-book-open"></i>
       Diario de {{ gato.nombre }}
     </h2>
     <div class="diario-timeline">
-      <article *ngFor="let act of actualizaciones" class="diario-entrada">
+      <article *ngFor="let act of actualizaciones; let i = index"
+               class="diario-entrada"
+               appReveal
+               [revealDelay]="i * 100">
         <img *ngIf="act.fotoUrl"
              [src]="act.fotoUrl"
              [alt]="act.titulo"

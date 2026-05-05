@@ -5,11 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { GatoService } from '../../services/gato';
 import { SolicitudService, Solicitud } from '../../services/solicitud';
 import { AuthService } from '../../services/auth.service';
+import { RevealDirective } from '../../directives/reveal.directive';
 
 @Component({
   selector: 'app-solicitud-adopcion',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, RevealDirective],
   templateUrl: './solicitud-adopcion.html',
   styleUrls: ['../login/login.css', './solicitud-adopcion.css']
 })

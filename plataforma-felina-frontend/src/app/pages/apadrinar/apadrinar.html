@@ -7,7 +7,7 @@
       </a>
     </div>
 
-    <div class="apadrinar-header">
+    <div class="apadrinar-header" appReveal>
       <img [src]="gato.fotoUrl" [alt]="gato.nombre">
       <div>
         <span class="label">Vas a apadrinar a</span>
@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <div class="apadrinar-card">
+    <div class="apadrinar-card" appReveal [revealDelay]="120">
       <h2>Importe mensual</h2>
       <div class="input-eur grande">
         <input type="number"
@@ -30,7 +30,7 @@
       <p class="hint">Mínimo 1 € al mes. Puedes cancelar cuando quieras desde tu perfil.</p>
     </div>
 
-    <div class="apadrinar-card">
+    <div class="apadrinar-card" appReveal [revealDelay]="240">
       <h2>Datos de pago</h2>
 
       <p class="error-msg" *ngIf="!importeValido">

@@ -1,12 +1,32 @@
 .hero {
   height: 80vh;
-  background-image: url('/assets/portadas/pexels-pixabay-45170.jpg');
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
   background-size: cover;
   background-position: center;
-  position: relative;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  will-change: opacity, transform;
+}
+
+.hero-slide.is-active {
+  opacity: 1;
+  animation: kenBurns 14s ease-out forwards;
+}
+
+@keyframes kenBurns {
+  from { transform: scale(1); }
+  to   { transform: scale(1.08); }
 }
 
 .hero-overlay {
+  position: relative;
+  z-index: 1;
   background: rgba(79, 61, 99, 0.5);
   height: 100%;
   display: flex;
@@ -31,6 +51,32 @@
   font-size: 1.5rem;
   font-style: italic;
   margin-bottom: 2rem;
+}
+
+.hero-content--animated h1,
+.hero-content--animated p,
+.hero-content--animated .hero-buttons {
+  opacity: 0;
+  animation: heroFadeUp 0.9s ease-out forwards;
+}
+
+.hero-content--animated h1            { animation-delay: 0.15s; }
+.hero-content--animated p             { animation-delay: 0.35s; }
+.hero-content--animated .hero-buttons { animation-delay: 0.55s; }
+
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide.is-active { animation: none; }
+  .hero-content--animated h1,
+  .hero-content--animated p,
+  .hero-content--animated .hero-buttons {
+    opacity: 1;
+    animation: none;
+  }
 }
 
 .btn-primary {
@@ -192,6 +238,12 @@
   width: 100%;
   border-radius: 20px;
   box-shadow: 20px 20px 0px var(--color-cta-mostaza);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.story-image:hover .img-rounded {
+  transform: translate(8px, 8px);
+  box-shadow: 12px 12px 0 var(--color-cta-mostaza);
 }
 
 /* --- AJUSTE INFO-CARD (VALORES) --- */
@@ -254,6 +306,24 @@
   background: var(--color-cta-mostaza);
   border-radius: 50%;
   box-shadow: 0 8px 18px rgba(233, 196, 106, 0.4);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, background-color 0.35s ease;
+}
+
+.info-card:hover .icon-container {
+  transform: scale(1.08) rotate(-6deg);
+  box-shadow: 0 14px 26px rgba(233, 196, 106, 0.55);
+  background: var(--color-cta-mostaza-hover);
+}
+
+.info-card--heart:hover .icon-container i {
+  animation: heartBeat 0.9s ease-in-out;
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  25%      { transform: scale(1.18); }
+  50%      { transform: scale(0.95); }
+  75%      { transform: scale(1.12); }
 }
 
 /* Ajuste para el icono del enlace de la historia */

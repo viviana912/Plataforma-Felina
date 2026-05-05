@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { Tarea, UsuarioService } from '../../services/usuario';
 import { TareaService } from '../../services/tarea';
 import { AuthService } from '../../services/auth.service';
+import { RevealDirective } from '../../directives/reveal.directive';
 
 type TipoTarea = 'TODAS' | 'VOLUNTARIADO' | 'MATERIAL' | 'EVENTO';
 type Cercania = 'municipio' | 'provincia' | 'lejos';
@@ -16,7 +17,7 @@ interface TareaConCercania extends Tarea {
 @Component({
   selector: 'app-colabora',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, RevealDirective],
   templateUrl: './colabora.html',
   styleUrls: ['./colabora.css']
 })

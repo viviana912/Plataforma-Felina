@@ -3,7 +3,7 @@
     <a [routerLink]="['/gato', gato.id]"><i class="fa-solid fa-arrow-left"></i> Volver a la ficha</a>
   </div>
 
-  <div class="gato-card">
+  <div class="gato-card" appReveal>
     <img [src]="gato.fotoUrl" [alt]="gato.nombre">
     <div class="gato-info">
       <span class="label">{{ encabezadoAccion }}</span>
@@ -16,7 +16,7 @@
     </div>
   </div>
 
-  <div class="form-card">
+  <div class="form-card" appReveal [revealDelay]="120">
     <div class="form-header">
       <h1>Solicitud de {{ sustantivo }}</h1>
       <p>{{ textoIntroduccion }}</p>

@@ -47,3 +47,55 @@ html, body {
   background-color: var(--color-fondo-pagina);
   color: var(--color-texto-berenjena);
 }
+
+/* --- Scroll reveal (directiva appReveal) --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  will-change: opacity, transform;
+}
+
+.reveal.reveal-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* --- Realce sutil global en CTAs primarios --- */
+.btn-primary {
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(233, 196, 106, 0.45);
+}
+
+/* --- Accesibilidad: respetar prefers-reduced-motion --- */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal.reveal-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .btn-primary,
+  .btn-primary:hover,
+  .btn-secondary,
+  .btn-secondary:hover,
+  .btn-secondary-dark,
+  .btn-secondary-dark:hover,
+  .info-card,
+  .info-card:hover,
+  .polaroid-card,
+  .polaroid-card:hover,
+  .icon-container,
+  .story-image,
+  .story-image:hover,
+  .hero-slide {
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}

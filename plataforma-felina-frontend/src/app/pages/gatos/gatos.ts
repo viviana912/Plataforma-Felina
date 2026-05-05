@@ -5,11 +5,12 @@ import { RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { FavoritoService } from '../../services/favorito';
 import { Subscription } from 'rxjs';
+import { RevealDirective } from '../../directives/reveal.directive';
 
 @Component({
   selector: 'app-gatos',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, RevealDirective],
   templateUrl: './gatos.html',
   styleUrls: ['./gatos.css']
 })

@@ -1,5 +1,5 @@
 <section class="page-header gatos-page-header">
-  <div class="header-content">
+  <div class="header-content" appReveal>
     <span class="subtitle">Adopta un amigo</span>
     <h1>Nuestros Bigotes en Adopción</h1>
     <p class="intro-text">
@@ -103,7 +103,10 @@
   </div>
 
   <div class="cards">
-    <div *ngFor="let gato of gatosFiltrados" class="card">
+    <div *ngFor="let gato of gatosFiltrados; let i = index"
+         class="card"
+         appReveal
+         [revealDelay]="(i % 4) * 80">
 
       <div class="gato-foto-wrapper">
         <img [src]="gato.fotoUrl" [alt]="gato.nombre" class="gato-foto">

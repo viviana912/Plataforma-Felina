@@ -6,11 +6,12 @@ import { FavoritoService } from '../../services/favorito';
 import { ActualizacionGatoService, ActualizacionGato } from '../../services/actualizacion-gato';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { RevealDirective } from '../../directives/reveal.directive';
 
 @Component({
   selector: 'app-gato-detalle',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, RevealDirective],
   templateUrl: './gato-detalle.html',
   styleUrl: './gato-detalle.css'
 })
