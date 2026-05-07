@@ -16,7 +16,27 @@
     </div>
   </div>
 
-  <div class="form-card" appReveal [revealDelay]="120">
+  <!-- Aviso: el usuario ya tiene una solicitud activa para este gato -->
+  <div class="aviso-existente" *ngIf="solicitudExistente" appReveal [revealDelay]="120">
+    <div class="aviso-icono">
+      <i class="fa-solid fa-circle-info"></i>
+    </div>
+    <h2>Ya tienes una solicitud para {{ gato.nombre }}</h2>
+    <p>
+      Tu solicitud está <strong>{{ estadoExistenteLegible }}</strong>.
+      Puedes consultar su seguimiento desde tu perfil.
+    </p>
+    <p class="aviso-nota">
+      Si quieres modificar los datos enviados, contacta con la asociación
+      o espera a la resolución antes de presentar una nueva solicitud.
+    </p>
+    <button class="btn-aviso" (click)="irAPerfil()">
+      <i class="fa-solid fa-user"></i>
+      Ir a mi perfil
+    </button>
+  </div>
+
+  <div class="form-card" *ngIf="!solicitudExistente && !cargandoEstado" appReveal [revealDelay]="120">
     <div class="form-header">
       <h1>Solicitud de {{ sustantivo }}</h1>
       <p>{{ textoIntroduccion }}</p>

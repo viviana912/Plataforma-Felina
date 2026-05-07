@@ -28,6 +28,11 @@ export class SolicitudAdopcionComponent implements OnInit {
   solicitudEnviada = false;
   tipoSolicitud: 'ADOPCION' | 'APADRINAMIENTO' | 'ACOGIDA' = 'ADOPCION';
 
+  // Si el usuario ya tiene una solicitud activa para este gato (no rechazada),
+  // bloqueamos el formulario y mostramos un aviso.
+  solicitudExistente: Solicitud | null = null;
+  cargandoEstado = true;
+
   datos = {
     experienciaPrevia: '',
     motivoAdopcion: '',
@@ -88,11 +93,57 @@ export class SolicitudAdopcionComponent implements OnInit {
             else if (data?.estado === 'ACOGIBLE') this.tipoSolicitud = 'ACOGIDA';
             else this.tipoSolicitud = 'ADOPCION';
           }
-          this.cdr.markForCheck();
+          this.comprobarSolicitudExistente();
         },
-        error: (err) => console.error('Error al cargar el gato:', err)
+        error: (err) => {
+          console.error('Error al cargar el gato:', err);
+          this.cargandoEstado = false;
+          this.cdr.markForCheck();
+        }
       });
     }
+  }
+
+  private comprobarSolicitudExistente(): void {
+    const usuarioId = this.authService.user()?.id;
+    if (!usuarioId || !this.gato) {
+      this.cargandoEstado = false;
+      this.cdr.markForCheck();
+      return;
+    }
+
+    this.solicitudService.getByUsuario(usuarioId).subscribe({
+      next: (lista) => {
+        const previa = lista.find(s => s?.id?.gatoId === this.gato.id);
+        // Solo se considera "activa" si NO está rechazada (en cuyo caso se permite reintento).
+        if (previa && previa.estado?.toUpperCase() !== 'RECHAZADA') {
+          this.solicitudExistente = previa;
+        }
+        this.cargandoEstado = false;
+        this.cdr.markForCheck();
+      },
+      error: (err) => {
+        console.error('Error al comprobar solicitudes previas:', err);
+        this.cargandoEstado = false;
+        this.cdr.markForCheck();
+      }
+    });
+  }
+
+  get estadoExistenteLegible(): string {
+    const estado = this.solicitudExistente?.estado?.toUpperCase() ?? '';
+    switch (estado) {
+      case 'PENDIENTE': return 'pendiente de revisión';
+      case 'EN_REVISION':
+      case 'EN REVISION':
+      case 'EN-REVISION': return 'en revisión por el equipo';
+      case 'APROBADA': return 'aprobada';
+      default: return estado.toLowerCase();
+    }
+  }
+
+  irAPerfil(): void {
+    this.router.navigate(['/perfil']);
   }
 
   enviarSolicitud() {
@@ -124,8 +175,16 @@ export class SolicitudAdopcionComponent implements OnInit {
       },
       error: (err) => {
         console.error(err);
-        this.errorMsg = 'No se pudo enviar la solicitud. Inténtalo de nuevo.';
+        if (err?.status === 409) {
+          this.errorMsg = err?.error?.message
+            ?? 'Ya tienes una solicitud activa para este gato.';
+          // Recargamos el estado para que aparezca la tarjeta de "ya tienes solicitud"
+          this.comprobarSolicitudExistente();
+        } else {
+          this.errorMsg = 'No se pudo enviar la solicitud. Inténtalo de nuevo.';
+        }
         this.enviando = false;
+        this.cdr.markForCheck();
       }
     });
   }

@@ -26,6 +26,10 @@ export class SolicitudService {
     return this.http.get<Solicitud[]>(this.apiUrl);
   }
 
+  getByUsuario(usuarioId: number): Observable<Solicitud[]> {
+    return this.http.get<Solicitud[]>(`${this.apiUrl}/usuario/${usuarioId}`);
+  }
+
   save(solicitud: Solicitud): Observable<any> {
     return this.http.post<any>(this.apiUrl, solicitud);
   }

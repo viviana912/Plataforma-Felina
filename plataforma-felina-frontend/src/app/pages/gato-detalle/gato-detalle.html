@@ -78,9 +78,14 @@
 
         <button class="btn-solicitar-grande"
                 [class.btn-solicitar-apadrinar]="gato.estado === 'APADRINABLE'"
+                [class.btn-solicitar-existente]="solicitudActivaEstado"
                 (click)="abrirFormulario()">
           {{ textoBoton }}
         </button>
+        <p class="aviso-solicitud-activa" *ngIf="solicitudActivaEstado">
+          <i class="fa-solid fa-circle-info"></i>
+          Ya tienes una solicitud para {{ gato.nombre }}.
+        </p>
       </div>
 
       <ng-template #avisoRegistro>

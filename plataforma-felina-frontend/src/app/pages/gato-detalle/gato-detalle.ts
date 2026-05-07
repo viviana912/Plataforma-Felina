@@ -4,6 +4,7 @@ import { GatoService } from '../../services/gato';
 import { AuthService } from '../../services/auth.service';
 import { FavoritoService } from '../../services/favorito';
 import { ActualizacionGatoService, ActualizacionGato } from '../../services/actualizacion-gato';
+import { SolicitudService } from '../../services/solicitud';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { RevealDirective } from '../../directives/reveal.directive';
@@ -21,12 +22,15 @@ export class GatoDetalleComponent implements OnInit, OnDestroy {
   private authService = inject(AuthService);
   private favoritoService = inject(FavoritoService);
   private actualizacionService = inject(ActualizacionGatoService);
+  private solicitudService = inject(SolicitudService);
 
   gato: any = null;
   isLoggedIn: boolean = false;
   esFavorito = false;
   actualizaciones: ActualizacionGato[] = [];
   imagenAmpliada: string | null = null;
+  // Estado de la solicitud activa del usuario para este gato (si existe).
+  solicitudActivaEstado: string | null = null;
   private subFavoritos?: Subscription;
 
   constructor(
@@ -44,6 +48,7 @@ export class GatoDetalleComponent implements OnInit, OnDestroy {
           next: (data) => {
             this.gato = data;
             this.cdr.markForCheck();
+            this.comprobarSolicitudActiva();
           },
           error: (err) => console.error('Error:', err)
         });
@@ -101,14 +106,39 @@ export class GatoDetalleComponent implements OnInit, OnDestroy {
       this.router.navigate(['/login']);
       return;
     }
+    // Si ya hay solicitud activa, llevamos al perfil para verla
+    if (this.solicitudActivaEstado) {
+      this.router.navigate(['/perfil']);
+      return;
+    }
     let ruta = '/adoptar';
     if (this.gato?.estado === 'APADRINABLE') ruta = '/apadrinar';
     else if (this.gato?.estado === 'ACOGIBLE') ruta = '/acoger';
     this.router.navigate([ruta, this.gato.id]);
   }
 
+  private comprobarSolicitudActiva(): void {
+    if (!this.isLoggedIn || !this.gato) return;
+    const user = this.authService.user();
+    if (!user) return;
+
+    this.solicitudService.getByUsuario(user.id).subscribe({
+      next: (lista) => {
+        const previa = lista.find(s => s?.id?.gatoId === this.gato.id);
+        if (previa && previa.estado?.toUpperCase() !== 'RECHAZADA') {
+          this.solicitudActivaEstado = previa.estado;
+        } else {
+          this.solicitudActivaEstado = null;
+        }
+        this.cdr.markForCheck();
+      },
+      error: (err) => console.error('Error comprobando solicitudes:', err)
+    });
+  }
+
   get textoBoton(): string {
     if (!this.gato) return '';
+    if (this.solicitudActivaEstado) return 'Ver mi solicitud';
     if (this.gato.estado === 'APADRINABLE') return `Apadrinar a ${this.gato.nombre}`;
     if (this.gato.estado === 'ACOGIBLE') return 'Ofrecerme como casa de acogida';
     return 'Presentar solicitud de adopción';

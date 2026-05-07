@@ -98,6 +98,33 @@
   color: var(--color-texto-berenjena);
 }
 
+/* Variante: el usuario ya tiene una solicitud activa para este gato */
+.btn-solicitar-grande.btn-solicitar-existente {
+  background: var(--color-fondo-crema);
+  color: var(--color-texto-berenjena);
+  border: 2px solid var(--color-cta-mostaza);
+}
+
+.btn-solicitar-grande.btn-solicitar-existente:hover {
+  background: var(--color-cta-mostaza);
+  color: var(--color-texto-berenjena);
+}
+
+.aviso-solicitud-activa {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--color-principal-malva);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.aviso-solicitud-activa i {
+  color: var(--color-cta-mostaza-hover, var(--color-cta-mostaza));
+}
+
 /* ============================================================
    RESPONSIVE — TABLET / MÓVIL (<= 768px)
    ============================================================ */

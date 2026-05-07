@@ -5,9 +5,12 @@ import com.example.plataforma_felina.domain.Solicitud;
 import com.example.plataforma_felina.domain.SolicitudId;
 import com.example.plataforma_felina.domain.Usuario;
 import com.example.plataforma_felina.repository.SolicitudRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SolicitudService {
@@ -28,12 +31,31 @@ public class SolicitudService {
         return solicitudRepository.findAll();
     }
 
+    public List<Solicitud> getByUsuario(Long usuarioId) {
+        return solicitudRepository.findByIdUsuarioId(usuarioId);
+    }
+
     public Solicitud findOne(SolicitudId id) {
         return solicitudRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Solicitud no encontrada"));
     }
 
     public Solicitud save(Solicitud solicitud) {
+        // Si ya existe una solicitud para ese usuario+gato, solo se permite
+        // sobreescribir si la anterior fue rechazada (re-intento). En cualquier
+        // otro estado (PENDIENTE, EN_REVISION, APROBADA) se bloquea.
+        Optional<Solicitud> existente = solicitudRepository.findById(solicitud.getId());
+        if (existente.isPresent()) {
+            String estadoActual = existente.get().getEstado();
+            if (estadoActual == null || !"RECHAZADA".equalsIgnoreCase(estadoActual)) {
+                throw new ResponseStatusException(
+                        HttpStatus.CONFLICT,
+                        "Ya tienes una solicitud activa para este gato (estado: "
+                                + (estadoActual != null ? estadoActual.toLowerCase() : "desconocido") + ")."
+                );
+            }
+        }
+
         Usuario usuario = usuarioService.findOne(solicitud.getId().getUsuarioId());
         Gato gato = gatoService.findOne(solicitud.getId().getGatoId());
 

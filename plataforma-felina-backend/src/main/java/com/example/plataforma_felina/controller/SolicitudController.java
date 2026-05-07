@@ -23,6 +23,11 @@ public class SolicitudController {
         return solicitudService.getAll();
     }
 
+    @GetMapping("/usuario/{usuarioId}")
+    public List<Solicitud> getByUsuario(@PathVariable Long usuarioId) {
+        return solicitudService.getByUsuario(usuarioId);
+    }
+
     @PostMapping
     public void create(@RequestBody Solicitud solicitud) {
         solicitudService.save(solicitud);

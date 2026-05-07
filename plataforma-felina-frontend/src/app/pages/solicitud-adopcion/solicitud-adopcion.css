@@ -120,6 +120,81 @@
 }
 
 /* ===========================================================
+   Aviso: el usuario ya tiene una solicitud activa para el gato
+   =========================================================== */
+.aviso-existente {
+  background: white;
+  border-radius: 20px;
+  padding: 35px 30px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(74, 78, 105, 0.08);
+  border-left: 4px solid var(--color-cta-mostaza);
+}
+
+.aviso-icono {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--color-fondo-crema);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 18px;
+}
+
+.aviso-icono i {
+  color: var(--color-cta-mostaza-hover, var(--color-cta-mostaza));
+  font-size: 1.7rem;
+}
+
+.aviso-existente h2 {
+  color: var(--color-texto-berenjena);
+  font-size: 1.5rem;
+  margin: 0 0 10px;
+}
+
+.aviso-existente p {
+  color: var(--color-principal-malva);
+  font-size: 0.97rem;
+  line-height: 1.6;
+  margin: 0 auto 12px;
+  max-width: 480px;
+}
+
+.aviso-existente p strong {
+  color: var(--color-texto-berenjena);
+  font-weight: 700;
+}
+
+.aviso-existente .aviso-nota {
+  font-size: 0.88rem;
+  font-style: italic;
+  margin-bottom: 24px;
+}
+
+.btn-aviso {
+  background: var(--color-texto-berenjena);
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.btn-aviso:hover {
+  background: var(--color-cta-mostaza-hover, var(--color-cta-mostaza));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(79, 61, 99, 0.2);
+}
+
+/* ===========================================================
    Modal de éxito al enviar la solicitud
    =========================================================== */
 .exito-overlay {
