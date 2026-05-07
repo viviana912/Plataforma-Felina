@@ -118,3 +118,126 @@
     padding: 25px;
   }
 }
+
+/* ===========================================================
+   Modal de éxito al enviar la solicitud
+   =========================================================== */
+.exito-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(79, 61, 99, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  animation: exitoFadeIn 0.25s ease-out;
+}
+
+.exito-card {
+  background: white;
+  border-radius: 24px;
+  padding: 40px 35px 35px;
+  max-width: 440px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(79, 61, 99, 0.25);
+  animation: exitoSlideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.exito-icono {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-cta-mostaza), var(--color-cta-mostaza-hover));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  box-shadow: 0 8px 20px rgba(233, 196, 106, 0.4);
+}
+
+.exito-icono i {
+  color: white;
+  font-size: 2.2rem;
+}
+
+.exito-card h2 {
+  color: var(--color-texto-berenjena);
+  font-size: 1.7rem;
+  margin: 0 0 12px;
+}
+
+.exito-card p {
+  color: var(--color-principal-malva);
+  font-size: 0.98rem;
+  line-height: 1.6;
+  margin: 0 0 28px;
+}
+
+.exito-card p strong {
+  color: var(--color-texto-berenjena);
+  font-weight: 700;
+}
+
+.btn-exito {
+  background: var(--color-texto-berenjena);
+  color: white;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.btn-exito:hover {
+  background: var(--color-cta-mostaza-hover, var(--color-cta-mostaza));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(79, 61, 99, 0.25);
+}
+
+.btn-exito i {
+  font-size: 0.9rem;
+}
+
+@keyframes exitoFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes exitoSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 600px) {
+  .exito-card {
+    padding: 32px 24px 28px;
+  }
+
+  .exito-icono {
+    width: 70px;
+    height: 70px;
+  }
+
+  .exito-icono i {
+    font-size: 1.9rem;
+  }
+
+  .exito-card h2 {
+    font-size: 1.45rem;
+  }
+}

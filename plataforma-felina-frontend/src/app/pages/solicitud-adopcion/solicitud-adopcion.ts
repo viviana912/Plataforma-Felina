@@ -25,6 +25,7 @@ export class SolicitudAdopcionComponent implements OnInit {
   gato: any = null;
   errorMsg = '';
   enviando = false;
+  solicitudEnviada = false;
   tipoSolicitud: 'ADOPCION' | 'APADRINAMIENTO' | 'ACOGIDA' = 'ADOPCION';
 
   datos = {
@@ -117,8 +118,9 @@ export class SolicitudAdopcionComponent implements OnInit {
     this.enviando = true;
     this.solicitudService.save(solicitud).subscribe({
       next: () => {
-        alert('¡Solicitud enviada con éxito! Revisaremos tu perfil.');
-        this.router.navigate(['/mis-solicitudes']);
+        this.solicitudEnviada = true;
+        this.enviando = false;
+        this.cdr.markForCheck();
       },
       error: (err) => {
         console.error(err);
@@ -126,5 +128,10 @@ export class SolicitudAdopcionComponent implements OnInit {
         this.enviando = false;
       }
     });
+  }
+
+  cerrarExito() {
+    this.solicitudEnviada = false;
+    this.router.navigate(['/perfil']);
   }
 }

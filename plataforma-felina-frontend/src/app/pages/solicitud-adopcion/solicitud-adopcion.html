@@ -75,3 +75,22 @@
     </form>
   </div>
 </div>
+
+<!-- Modal de éxito al enviar la solicitud -->
+<div class="exito-overlay" *ngIf="solicitudEnviada" (click)="cerrarExito()">
+  <div class="exito-card" (click)="$event.stopPropagation()">
+    <div class="exito-icono">
+      <i class="fa-solid fa-paw"></i>
+    </div>
+    <h2>¡Solicitud enviada!</h2>
+    <p>
+      Hemos recibido tu solicitud de <strong>{{ sustantivo | lowercase }}</strong>
+      <span *ngIf="gato"> para {{ gato.nombre }}</span>.
+      Revisaremos tu perfil y te avisaremos en cuanto haya novedades.
+    </p>
+    <button class="btn-exito" (click)="cerrarExito()">
+      <i class="fa-solid fa-arrow-right"></i>
+      Ir a mi perfil
+    </button>
+  </div>
+</div>
