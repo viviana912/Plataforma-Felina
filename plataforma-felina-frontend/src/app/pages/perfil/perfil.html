@@ -163,6 +163,48 @@
         </div>
 
         <div class="acordeon-item">
+          <button type="button" class="acordeon-header" (click)="toggleSeccion('colaboraciones')">
+            <i class="fa-solid fa-hands-holding"></i>
+            <span class="acordeon-titulo">Mis colaboraciones</span>
+            <span class="acordeon-contador" *ngIf="colaboraciones.length > 0">{{ colaboraciones.length }}</span>
+            <i class="fa-solid fa-chevron-down acordeon-chevron" [class.abierto]="estaAbierta('colaboraciones')"></i>
+          </button>
+          <div class="acordeon-cuerpo" *ngIf="estaAbierta('colaboraciones')">
+            <div *ngIf="colaboraciones.length === 0" class="empty-state">
+              <i class="fa-solid fa-hands-holding empty-icon"></i>
+              <p>Aún no te has inscrito en ninguna misión.</p>
+              <a routerLink="/colabora" class="btn-link-cta">Ver misiones disponibles</a>
+            </div>
+            <div *ngIf="colaboraciones.length > 0" class="colaboraciones-grid">
+              <div *ngFor="let c of colaboraciones" class="colaboracion-card">
+                <div class="colab-icono">
+                  <i class="fa-solid"
+                     [class.fa-hands-holding]="(c.tarea?.tipo || 'VOLUNTARIADO') === 'VOLUNTARIADO'"
+                     [class.fa-box-heart]="c.tarea?.tipo === 'MATERIAL'"
+                     [class.fa-calendar-day]="c.tarea?.tipo === 'EVENTO'"></i>
+                </div>
+                <div class="colab-info">
+                  <h4>{{ c.tarea?.titulo || 'Misión' }}</h4>
+                  <p class="colab-descripcion" *ngIf="c.tarea?.descripcion">{{ c.tarea.descripcion }}</p>
+                  <div class="colab-meta">
+                    <span class="colab-estado" [ngClass]="'estado-' + (c.tarea?.estado || '').toLowerCase().replaceAll(' ', '-')">
+                      {{ c.tarea?.estado || '—' }}
+                    </span>
+                    <span class="colab-fecha" *ngIf="c.fechaSolicitud">
+                      Inscrito el {{ c.fechaSolicitud | date:'dd/MM/yyyy' }}
+                    </span>
+                  </div>
+                  <p class="colab-info-contacto">
+                    <i class="fa-solid fa-circle-info"></i>
+                    La asociación se pondrá en contacto contigo para coordinar los detalles.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acordeon-item">
           <button type="button" class="acordeon-header" (click)="toggleSeccion('pagos')">
             <i class="fa-solid fa-wallet"></i>
             <span class="acordeon-titulo">Mis pagos</span>

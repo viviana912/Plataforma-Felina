@@ -35,4 +35,14 @@ export class TareaService {
       estadoSolicitud: 'PENDIENTE'
     });
   }
+
+  /** Inscritos de una tarea concreta (uso del panel de admin). */
+  getInscritosDeTarea(tareaId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiSolicitud}/tarea/${tareaId}`);
+  }
+
+  /** Tareas en las que se ha inscrito un usuario (uso del perfil). */
+  getInscripcionesDeUsuario(usuarioId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiSolicitud}/usuario/${usuarioId}`);
+  }
 }

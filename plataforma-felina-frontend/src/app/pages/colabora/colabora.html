@@ -1,5 +1,17 @@
 <div class="colabora-container">
 
+  <!-- Notificación toast (sustituye al alert nativo) -->
+  <div class="toast-notif"
+       *ngIf="notificacion"
+       [class.exito]="notificacion.tipo === 'exito'"
+       [class.error]="notificacion.tipo === 'error'">
+    <i class="fa-solid"
+       [class.fa-circle-check]="notificacion.tipo === 'exito'"
+       [class.fa-circle-exclamation]="notificacion.tipo === 'error'"></i>
+    <span>{{ notificacion.mensaje }}</span>
+    <button class="toast-cerrar" (click)="cerrarNotificacion()" aria-label="Cerrar">&times;</button>
+  </div>
+
   <section class="page-header colabora-page-header">
     <div class="header-content">
       <span class="subtitle">Échanos una pata</span>

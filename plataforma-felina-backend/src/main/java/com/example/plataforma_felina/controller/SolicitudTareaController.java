@@ -22,6 +22,16 @@ public class SolicitudTareaController {
         return solicitudTareaService.getAll();
     }
 
+    @GetMapping("/tarea/{tareaId}")
+    public List<SolicitudTarea> getByTarea(@PathVariable Long tareaId) {
+        return solicitudTareaService.getByTarea(tareaId);
+    }
+
+    @GetMapping("/usuario/{usuarioId}")
+    public List<SolicitudTarea> getByUsuario(@PathVariable Long usuarioId) {
+        return solicitudTareaService.getByUsuario(usuarioId);
+    }
+
     @PostMapping
     public SolicitudTarea create(@RequestBody SolicitudTarea solicitud) {
         return solicitudTareaService.save(solicitud);

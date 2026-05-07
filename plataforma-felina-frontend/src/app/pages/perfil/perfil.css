@@ -1048,3 +1048,108 @@
 .lightbox-close:hover {
   background: white;
 }
+
+/* ===========================================================
+   Sección "Mis colaboraciones"
+   =========================================================== */
+.colaboraciones-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.colaboracion-card {
+  background: white;
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  gap: 14px;
+  box-shadow: 0 4px 12px rgba(74, 78, 105, 0.06);
+  border-left: 3px solid var(--color-cta-mostaza);
+}
+
+.colab-icono {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-fondo-crema);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.colab-icono i {
+  color: var(--color-cta-mostaza-hover, var(--color-cta-mostaza));
+  font-size: 1.1rem;
+}
+
+.colab-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.colab-info h4 {
+  color: var(--color-texto-berenjena);
+  margin: 0 0 4px;
+  font-size: 1.05rem;
+}
+
+.colab-descripcion {
+  color: var(--color-principal-malva);
+  font-size: 0.9rem;
+  margin: 0 0 8px;
+}
+
+.colab-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.colab-estado {
+  background: var(--color-fondo-crema);
+  color: var(--color-texto-berenjena);
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.colab-estado.estado-pendiente {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.colab-estado.estado-en-curso {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.colab-estado.estado-finalizada {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.colab-fecha {
+  font-size: 0.8rem;
+  color: var(--color-principal-malva);
+}
+
+.colab-info-contacto {
+  margin: 0;
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--color-principal-malva);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.colab-info-contacto i {
+  color: var(--color-cta-mostaza-hover, var(--color-cta-mostaza));
+}

@@ -289,3 +289,150 @@
     font-size: 0.7rem;
   }
 }
+
+/* ===========================================================
+   Botón "Inscritos" en cada fila + modal de voluntarios
+   =========================================================== */
+.btn-inscritos {
+  background: var(--color-fondo-crema);
+  color: var(--color-texto-berenjena);
+  border: 1px solid var(--color-cta-mostaza-hover, var(--color-cta-mostaza));
+  padding: 6px 12px;
+  border-radius: 18px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-right: 6px;
+  transition: background 0.2s ease, transform 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-inscritos:hover {
+  background: var(--color-cta-mostaza);
+  transform: translateY(-1px);
+}
+
+.btn-inscritos i {
+  font-size: 0.85rem;
+}
+
+.modal-inscritos {
+  max-width: 540px;
+  text-align: left;
+}
+
+.modal-inscritos h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-texto-berenjena);
+}
+
+.modal-inscritos-subtitle {
+  color: var(--color-principal-malva);
+  margin: 4px 0 18px;
+  font-size: 0.95rem;
+}
+
+.modal-inscritos-subtitle strong {
+  color: var(--color-texto-berenjena);
+}
+
+.cargando-msg {
+  text-align: center;
+  color: var(--color-principal-malva);
+  padding: 16px;
+  font-style: italic;
+}
+
+.empty-inscritos {
+  background: var(--color-fondo-crema);
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  color: var(--color-principal-malva);
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.empty-inscritos i {
+  color: var(--color-cta-mostaza-hover, var(--color-cta-mostaza));
+}
+
+.lista-inscritos {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 18px;
+  max-height: 380px;
+  overflow-y: auto;
+}
+
+.inscrito-item {
+  border-bottom: 1px solid #ece5ec;
+  padding: 12px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.inscrito-item:last-child {
+  border-bottom: none;
+}
+
+.inscrito-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.inscrito-info strong {
+  color: var(--color-texto-berenjena);
+  font-size: 1rem;
+}
+
+.inscrito-fecha {
+  color: var(--color-principal-malva);
+  font-size: 0.82rem;
+}
+
+.inscrito-contacto {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.contacto-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-texto-berenjena);
+  text-decoration: none;
+  background: var(--color-fondo-crema);
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: 0.85rem;
+  transition: background 0.2s ease;
+}
+
+.contacto-link:hover {
+  background: var(--color-cta-mostaza);
+}
+
+.contacto-link i {
+  color: var(--color-cta-mostaza-hover, var(--color-cta-mostaza));
+}
+
+.contacto-link:hover i {
+  color: var(--color-texto-berenjena);
+}
+
+.contacto-vacio {
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--color-principal-malva);
+}

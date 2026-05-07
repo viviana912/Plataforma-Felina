@@ -9,6 +9,7 @@ import { DonacionService, Donacion } from '../../services/donacion';
 import { ApadrinamientoService, Apadrinamiento, PagoApadrinamiento } from '../../services/apadrinamiento';
 import { FavoritoService } from '../../services/favorito';
 import { ActualizacionGatoService, ActualizacionGato } from '../../services/actualizacion-gato';
+import { TareaService } from '../../services/tarea';
 import { Gato } from '../../services/gato';
 import { TarjetaInsigniaComponent } from '../../components/tarjeta-insignia/tarjeta-insignia';
 import { Router, RouterLink } from '@angular/router';
@@ -43,6 +44,7 @@ export class PerfilComponent implements OnInit {
   apadrinamientoService = inject(ApadrinamientoService);
   favoritoService = inject(FavoritoService);
   actualizacionService = inject(ActualizacionGatoService);
+  tareaService = inject(TareaService);
   router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
 
@@ -80,6 +82,7 @@ export class PerfilComponent implements OnInit {
 
   favoritos: Gato[] = [];
   feedNovedades: ActualizacionGato[] = [];
+  colaboraciones: any[] = [];
 
   mostrarEditarPerfil = false;
   perfilEdit: { nombre: string; apellido: string; telefono: string; codigoPostal: string } = {
@@ -103,6 +106,19 @@ export class PerfilComponent implements OnInit {
     this.cargarPagosUsuario();
     this.cargarFavoritos();
     this.cargarFeedNovedades();
+    this.cargarColaboraciones();
+  }
+
+  cargarColaboraciones() {
+    const user = this.authService.user();
+    if (!user) return;
+    this.tareaService.getInscripcionesDeUsuario(user.id).subscribe({
+      next: (data) => {
+        this.colaboraciones = data;
+        this.cdr.markForCheck();
+      },
+      error: (err) => console.error('Error cargando colaboraciones', err)
+    });
   }
 
   cargarFeedNovedades() {

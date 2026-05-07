@@ -32,6 +32,11 @@ export class AdminTareasComponent implements OnInit {
     codigoPostal: ''
   };
 
+  // Modal de inscritos en una tarea concreta
+  tareaInscritos: any = null;
+  inscritos: any[] = [];
+  cargandoInscritos: boolean = false;
+
   ngOnInit() {
     this.cargarTareas();
   }
@@ -130,5 +135,28 @@ export class AdminTareasComponent implements OnInit {
     this.mostrarConfirmarGuardar = false;
     this.cambiosGuardadosExito = false;
     this.errorBorrado = null;
+  }
+
+  abrirModalInscritos(tarea: any) {
+    this.tareaInscritos = tarea;
+    this.inscritos = [];
+    this.cargandoInscritos = true;
+    this.tareaService.getInscritosDeTarea(tarea.id).subscribe({
+      next: (data) => {
+        this.inscritos = data;
+        this.cargandoInscritos = false;
+        this.cdr.markForCheck();
+      },
+      error: (err) => {
+        console.error('Error cargando inscritos:', err);
+        this.cargandoInscritos = false;
+        this.cdr.markForCheck();
+      }
+    });
+  }
+
+  cerrarModalInscritos() {
+    this.tareaInscritos = null;
+    this.inscritos = [];
   }
 }

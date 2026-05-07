@@ -26,6 +26,14 @@ public class SolicitudTareaService {
         return solicitudTareaRepository.findAll();
     }
 
+    public List<SolicitudTarea> getByTarea(Long tareaId) {
+        return solicitudTareaRepository.findByIdTareaId(tareaId);
+    }
+
+    public List<SolicitudTarea> getByUsuario(Long usuarioId) {
+        return solicitudTareaRepository.findByIdUsuarioId(usuarioId);
+    }
+
     public SolicitudTarea findOne(SolicitudTareaId id) {
         return solicitudTareaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Solicitud de tarea no encontrada"));

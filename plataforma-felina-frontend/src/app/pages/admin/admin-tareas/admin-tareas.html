@@ -48,6 +48,9 @@
           </select>
         </td>
         <td class="text-center">
+          <button class="btn-inscritos" (click)="abrirModalInscritos(t)" title="Ver voluntarios inscritos">
+            <i class="fa-solid fa-users"></i> Inscritos
+          </button>
           <button class="btn-eliminar-soft" (click)="abrirModalBorrar(t)">Borrar</button>
         </td>
       </tr>
@@ -127,6 +130,56 @@
       <button type="button" class="btn-confirm-delete" (click)="confirmarBorrado()" *ngIf="!errorBorrado">
         Confirmar eliminación
       </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: voluntarios inscritos en una tarea -->
+<div class="modal-overlay" *ngIf="tareaInscritos" (click)="cerrarModalInscritos()">
+  <div class="modal-card modal-inscritos" (click)="$event.stopPropagation()">
+    <h3>
+      <i class="fa-solid fa-users"></i>
+      Voluntarios inscritos
+    </h3>
+    <p class="modal-inscritos-subtitle">
+      Misión: <strong>{{ tareaInscritos.titulo }}</strong>
+    </p>
+
+    <div class="cargando-msg" *ngIf="cargandoInscritos">
+      Cargando inscritos…
+    </div>
+
+    <div class="empty-inscritos" *ngIf="!cargandoInscritos && inscritos.length === 0">
+      <i class="fa-regular fa-circle-info"></i>
+      Aún no hay nadie inscrito en esta misión.
+    </div>
+
+    <ul class="lista-inscritos" *ngIf="!cargandoInscritos && inscritos.length > 0">
+      <li *ngFor="let s of inscritos" class="inscrito-item">
+        <div class="inscrito-info">
+          <strong>{{ s.usuario?.nombre }} {{ s.usuario?.apellido }}</strong>
+          <span class="inscrito-fecha">Inscrito el {{ s.fechaSolicitud | date:'dd/MM/yyyy' }}</span>
+        </div>
+        <div class="inscrito-contacto">
+          <a *ngIf="s.usuario?.email"
+             [href]="'mailto:' + s.usuario.email"
+             class="contacto-link">
+            <i class="fa-solid fa-envelope"></i> {{ s.usuario.email }}
+          </a>
+          <a *ngIf="s.usuario?.telefono"
+             [href]="'tel:' + s.usuario.telefono"
+             class="contacto-link">
+            <i class="fa-solid fa-phone"></i> {{ s.usuario.telefono }}
+          </a>
+          <span *ngIf="!s.usuario?.telefono" class="contacto-vacio">
+            (sin teléfono registrado)
+          </span>
+        </div>
+      </li>
+    </ul>
+
+    <div class="modal-actions">
+      <button class="btn-rol" (click)="cerrarModalInscritos()">Cerrar</button>
     </div>
   </div>
 </div>

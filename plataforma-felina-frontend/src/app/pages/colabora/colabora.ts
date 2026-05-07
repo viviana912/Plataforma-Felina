@@ -33,8 +33,28 @@ export class ColaboraComponent implements OnInit {
 
   inscritas = new Set<number>();
 
+  // Notificación visible al inscribirse o al fallar la inscripción
+  notificacion: { tipo: 'exito' | 'error'; mensaje: string } | null = null;
+  private notificacionTimeout: any = null;
+
   ngOnInit() {
     this.cargarTareas();
+    this.cargarInscripcionesPrevias();
+  }
+
+  private cargarInscripcionesPrevias() {
+    const user = this.authService.user();
+    if (!user) return;
+    this.tareaService.getInscripcionesDeUsuario(user.id).subscribe({
+      next: (lista) => {
+        lista.forEach(s => {
+          if (s?.tarea?.id) this.inscritas.add(s.tarea.id);
+          else if (s?.id?.tareaId) this.inscritas.add(s.id.tareaId);
+        });
+        this.cdr.markForCheck();
+      },
+      error: (err) => console.error('Error cargando inscripciones previas:', err)
+    });
   }
 
   cargarTareas() {
@@ -105,16 +125,38 @@ export class ColaboraComponent implements OnInit {
     this.tareaService.inscribirseEnTarea(user.id, tarea.id).subscribe({
       next: () => {
         this.inscritas.add(tarea.id);
+        this.mostrarNotificacion(
+          'exito',
+          'Te has inscrito correctamente. La asociación se pondrá en contacto contigo para coordinar los detalles.'
+        );
         this.cdr.markForCheck();
       },
       error: (err) => {
         console.error('Error al postular', err);
-        alert('No se pudo enviar tu inscripción. Inténtalo de nuevo.');
+        this.mostrarNotificacion(
+          'error',
+          'No se pudo enviar tu inscripción. Inténtalo de nuevo en unos minutos.'
+        );
       }
     });
   }
 
   estaInscrito(id: number): boolean {
     return this.inscritas.has(id);
+  }
+
+  private mostrarNotificacion(tipo: 'exito' | 'error', mensaje: string) {
+    this.notificacion = { tipo, mensaje };
+    this.cdr.markForCheck();
+    if (this.notificacionTimeout) clearTimeout(this.notificacionTimeout);
+    this.notificacionTimeout = setTimeout(() => {
+      this.notificacion = null;
+      this.cdr.markForCheck();
+    }, 5000);
+  }
+
+  cerrarNotificacion() {
+    this.notificacion = null;
+    if (this.notificacionTimeout) clearTimeout(this.notificacionTimeout);
   }
 }
