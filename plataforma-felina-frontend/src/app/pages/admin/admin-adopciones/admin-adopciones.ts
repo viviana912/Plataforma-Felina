@@ -15,7 +15,7 @@ export class AdminAdopcionesComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
 
   solicitudes: any[] = [];
-  filtroTipo: 'TODAS' | 'ADOPCION' | 'APADRINAMIENTO' = 'TODAS';
+  filtroTipo: 'TODAS' | 'ADOPCION' | 'ACOGIDA' = 'TODAS';
 
   // Estados para modales
   solicitudParaEditar: any = null;
@@ -30,7 +30,9 @@ export class AdminAdopcionesComponent implements OnInit {
   cargar() {
     this.service.getAll().subscribe({
       next: (data) => {
-        this.solicitudes = data;
+        // Apadrinamiento es una suscripción recurrente, no requiere
+        // aprobación/rechazo, por lo que se gestiona en su propio módulo.
+        this.solicitudes = data.filter(s => s.tipoSolicitud !== 'APADRINAMIENTO');
         this.cdr.markForCheck();
       },
       error: (e) => console.error(e)

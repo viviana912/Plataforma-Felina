@@ -1,6 +1,6 @@
 <div class="admin-panel-content">
   <div class="header-seccion">
-    <h1>Adopciones y Apadrinamientos</h1>
+    <h1>Adopciones y Acogidas</h1>
     <p>Revisa y gestiona las solicitudes de los usuarios</p>
   </div>
 
@@ -16,9 +16,9 @@
       <i class="fa-solid fa-house-chimney-user"></i> Adopciones
     </button>
     <button class="filtro-pill"
-            [class.activo]="filtroTipo === 'APADRINAMIENTO'"
-            (click)="filtroTipo = 'APADRINAMIENTO'">
-      <i class="fa-solid fa-hand-holding-heart"></i> Apadrinamientos
+            [class.activo]="filtroTipo === 'ACOGIDA'"
+            (click)="filtroTipo = 'ACOGIDA'">
+      <i class="fa-solid fa-house-user"></i> Casas de acogida
     </button>
   </div>
 
@@ -54,7 +54,7 @@
         <td>
           <span class="badge-tipo"
                 [class.adopcion]="s.tipoSolicitud === 'ADOPCION'"
-                [class.apadrinamiento]="s.tipoSolicitud === 'APADRINAMIENTO'">
+                [class.acogida]="s.tipoSolicitud === 'ACOGIDA'">
             {{ s.tipoSolicitud }}
           </span>
         </td>
