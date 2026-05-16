@@ -7,6 +7,7 @@ import com.example.plataforma_felina.dto.LoginResponse;
 import com.example.plataforma_felina.dto.Registro;
 import com.example.plataforma_felina.dto.UsuarioDTO;
 import com.example.plataforma_felina.security.JwtService;
+import com.example.plataforma_felina.security.SecurityUtils;
 import com.example.plataforma_felina.service.UsuarioService;
 
 import org.springframework.web.bind.annotation.*;
@@ -42,18 +43,20 @@ public class UsuarioController {
         UsuarioDTO usuario = usuarioService.login(request.getEmail(), request.getPassword());
 
         String rol = usuario.getRol().getNombre();
-        String token = jwtService.generateToken(usuario.getEmail(), rol);
+        String token = jwtService.generateToken(usuario.getId(), usuario.getEmail(), rol);
 
         return new LoginResponse(token, usuario);
     }
 
     @GetMapping("/{id}")
     public UsuarioDTO getById(@PathVariable Long id) {
+        SecurityUtils.requireAccessToUser(id);
         return usuarioService.getDTOById(id);
     }
 
     @GetMapping("/{id}/insignias")
     public InsigniasDTO getInsignias(@PathVariable Long id) {
+        SecurityUtils.requireAccessToUser(id);
         return usuarioService.getInsignias(id);
     }
 
@@ -69,16 +72,16 @@ public class UsuarioController {
 
 
     }
-    // Añade esto al final de tu UsuarioController
     @PatchMapping("/{id}/foto")
     public void actualizarFoto(@PathVariable Long id, @RequestBody java.util.Map<String, String> payload) {
+        SecurityUtils.requireAccessToUser(id);
         String nuevaFotoUrl = payload.get("fotoUrl");
         usuarioService.actualizarFotoUsuario(id, nuevaFotoUrl);
-        // 👆 Nota: Deberás añadir este método 'actualizarFotoUsuario' en tu UsuarioService.java
     }
 
     @PatchMapping("/{id}/perfil")
     public UsuarioDTO actualizarPerfil(@PathVariable Long id, @RequestBody java.util.Map<String, String> payload) {
+        SecurityUtils.requireAccessToUser(id);
         return usuarioService.actualizarPerfil(id, payload);
     }
 }

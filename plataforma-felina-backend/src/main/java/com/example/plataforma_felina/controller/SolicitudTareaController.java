@@ -1,6 +1,7 @@
 package com.example.plataforma_felina.controller;
 
 import com.example.plataforma_felina.domain.SolicitudTarea;
+import com.example.plataforma_felina.security.SecurityUtils;
 import com.example.plataforma_felina.service.SolicitudTareaService;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,11 +30,14 @@ public class SolicitudTareaController {
 
     @GetMapping("/usuario/{usuarioId}")
     public List<SolicitudTarea> getByUsuario(@PathVariable Long usuarioId) {
+        SecurityUtils.requireAccessToUser(usuarioId);
         return solicitudTareaService.getByUsuario(usuarioId);
     }
 
     @PostMapping
     public SolicitudTarea create(@RequestBody SolicitudTarea solicitud) {
+        Long bodyUsuarioId = solicitud.getUsuario() == null ? null : solicitud.getUsuario().getId();
+        SecurityUtils.requireAccessToUser(bodyUsuarioId);
         return solicitudTareaService.save(solicitud);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.plataforma_felina.controller;
 
 import com.example.plataforma_felina.domain.ActualizacionGato;
+import com.example.plataforma_felina.security.SecurityUtils;
 import com.example.plataforma_felina.service.ActualizacionGatoService;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,7 @@ public class ActualizacionGatoController {
 
     @GetMapping("/feed/usuario/{usuarioId}")
     public List<ActualizacionGato> feedDeUsuario(@PathVariable Long usuarioId) {
+        SecurityUtils.requireAccessToUser(usuarioId);
         return service.feedDeUsuario(usuarioId);
     }
 

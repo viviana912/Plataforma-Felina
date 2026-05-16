@@ -56,6 +56,12 @@ public class ApadrinamientoService {
         return apadrinamientoRepository.findByUsuarioIdOrderByFechaInicioDesc(usuarioId);
     }
 
+    public Long getOwnerId(Long apadrinamientoId) {
+        return apadrinamientoRepository.findById(apadrinamientoId)
+                .map(a -> a.getUsuario() == null ? null : a.getUsuario().getId())
+                .orElseThrow(() -> new RuntimeException("Apadrinamiento no encontrado"));
+    }
+
     @Transactional
     public Apadrinamiento actualizarImporte(Long id, BigDecimal nuevoImporte) {
         if (nuevoImporte == null || nuevoImporte.compareTo(IMPORTE_MINIMO) < 0) {

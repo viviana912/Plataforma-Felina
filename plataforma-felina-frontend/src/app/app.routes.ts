@@ -24,7 +24,6 @@ export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'gatos', component: GatosComponent },
-  { path: 'mis-solicitudes', redirectTo: 'perfil', pathMatch: 'full' },
   { path: 'register', component: RegisterComponent },
   { path: 'colabora', component: ColaboraComponent },
   {path: 'perfil', component: PerfilComponent},
@@ -53,14 +52,9 @@ export const routes: Routes = [
     component: AdminPanelComponent,
     children: [
       { path: 'usuarios', component: AdminUsuariosComponent },
-      {path: 'tareas', component: AdminTareasComponent },
+      { path: 'tareas', component: AdminTareasComponent },
       { path: 'fichas', component: AdminFichasComponent },
       { path: 'adopciones', component: AdminAdopcionesComponent },
-      {
-        path: 'admin/panel',
-        component: AdminPanelComponent,
-        canActivate: [adminGuard]
-      },
       { path: '', redirectTo: 'usuarios', pathMatch: 'full' }
     ]
   },

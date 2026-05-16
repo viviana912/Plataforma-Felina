@@ -2,6 +2,7 @@ package com.example.plataforma_felina.controller;
 
 import com.example.plataforma_felina.domain.Solicitud;
 import com.example.plataforma_felina.domain.SolicitudId;
+import com.example.plataforma_felina.security.SecurityUtils;
 import com.example.plataforma_felina.service.SolicitudService;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,11 +26,14 @@ public class SolicitudController {
 
     @GetMapping("/usuario/{usuarioId}")
     public List<Solicitud> getByUsuario(@PathVariable Long usuarioId) {
+        SecurityUtils.requireAccessToUser(usuarioId);
         return solicitudService.getByUsuario(usuarioId);
     }
 
     @PostMapping
     public void create(@RequestBody Solicitud solicitud) {
+        Long bodyUsuarioId = solicitud.getId() == null ? null : solicitud.getId().getUsuarioId();
+        SecurityUtils.requireAccessToUser(bodyUsuarioId);
         solicitudService.save(solicitud);
     }
 
@@ -44,6 +48,7 @@ public class SolicitudController {
 
     @DeleteMapping("/{usuarioId}/{gatoId}")
     public void delete(@PathVariable Long usuarioId, @PathVariable Long gatoId) {
+        SecurityUtils.requireAccessToUser(usuarioId);
         solicitudService.delete(new SolicitudId(usuarioId, gatoId));
     }
 }

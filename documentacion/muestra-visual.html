@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Refugio del Sol — Documentación del Proyecto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  /* =====================================================================
+     REFUGIO DEL SOL — Documentación profesional
+     Paleta extraída de plataforma-felina-frontend/src/styles.css
+     ===================================================================== */
+  :root {
+    --mostaza: #E9C46A;
+    --mostaza-oscuro: #D4A943;
+    --sage: #80AB9F;
+    --sage-oscuro: #6C9286;
+    --berenjena: #4f3d63;
+    --berenjena-oscuro: #2D1F3D;
+    --malva: #9A8C98;
+    --crema: #F2E9E4;
+    --fondo: #F4F0F4;
+    --blanco: #ffffff;
+    --texto: #2D1F3D;
+    --texto-suave: #6b5b73;
+  }
+
+  /* ---------- Paged Media: A4, márgenes y header/footer ---------- */
+  @page {
+    size: A4;
+    margin: 22mm 22mm 22mm 22mm;
+
+    @top-left {
+      content: "Refugio del Sol";
+      font-family: 'Poppins', sans-serif;
+      font-weight: 300;
+      font-size: 9pt;
+      color: #4f3d63;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      padding-bottom: 6mm;
+      border-bottom: 0.4pt solid #E9C46A;
+      vertical-align: bottom;
+    }
+    @top-right {
+      content: "Documentación del Proyecto";
+      font-family: 'Poppins', sans-serif;
+      font-weight: 400;
+      font-size: 9pt;
+      color: #80AB9F;
+      letter-spacing: 0.5px;
+      padding-bottom: 6mm;
+      border-bottom: 0.4pt solid #E9C46A;
+      vertical-align: bottom;
+    }
+    @bottom-left {
+      content: "Viviana Salazar  ·  2º DAW";
+      font-family: 'Poppins', sans-serif;
+      font-weight: 400;
+      font-size: 9pt;
+      color: #4f3d63;
+      padding-top: 6mm;
+      border-top: 0.4pt solid #80AB9F;
+      vertical-align: top;
+    }
+    @bottom-right {
+      content: "— " counter(page) " —";
+      font-family: 'Poppins', sans-serif;
+      font-weight: 400;
+      font-style: italic;
+      font-size: 9pt;
+      color: #4f3d63;
+      padding-top: 6mm;
+      border-top: 0.4pt solid #80AB9F;
+      vertical-align: top;
+    }
+  }
+  @page :first {
+    margin: 0;
+    @top-left { content: none; }
+    @top-right { content: none; }
+    @bottom-left { content: none; }
+    @bottom-right { content: none; }
+  }
+
+  /* ---------- Reset & base ---------- */
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', -apple-system, sans-serif;
+    color: var(--texto);
+    background: #ddd;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* En pantalla simulamos hojas A4 sobre un escritorio gris */
+  @media screen {
+    body {
+      padding: 30px 0;
+      background: #d8d4d8;
+    }
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto 24px auto;
+      background: var(--blanco);
+      box-shadow: 0 8px 30px rgba(79,61,99,0.18);
+      position: relative;
+      padding: 22mm;
+    }
+    .page.cover {
+      padding: 0;
+    }
+    /* Simulamos header/footer en pantalla con elementos absolutos */
+    .page:not(.cover)::before {
+      content: "Refugio del Sol";
+      position: absolute;
+      top: 14mm;
+      left: 22mm;
+      font-size: 9pt;
+      font-weight: 300;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--berenjena);
+    }
+    .page:not(.cover) .header-right {
+      position: absolute;
+      top: 14mm;
+      right: 22mm;
+      font-size: 9pt;
+      color: var(--sage);
+      letter-spacing: 0.5px;
+    }
+    .page:not(.cover) .header-rule {
+      position: absolute;
+      top: 18mm;
+      left: 22mm;
+      right: 22mm;
+      border-top: 0.6pt solid var(--mostaza);
+    }
+    .page:not(.cover) .footer-rule {
+      position: absolute;
+      bottom: 18mm;
+      left: 22mm;
+      right: 22mm;
+      border-top: 0.4pt solid var(--sage);
+    }
+    .page:not(.cover) .footer-left {
+      position: absolute;
+      bottom: 12mm;
+      left: 22mm;
+      font-size: 9pt;
+      color: var(--berenjena);
+    }
+    .page:not(.cover) .footer-right {
+      position: absolute;
+      bottom: 12mm;
+      right: 22mm;
+      font-size: 9pt;
+      font-style: italic;
+      color: var(--berenjena);
+    }
+  }
+
+  /* ---------- Impresión: oculta los simuladores en pantalla ---------- */
+  @media print {
+    body { background: white; padding: 0; }
+    .page {
+      width: 100%;
+      min-height: auto;
+      margin: 0;
+      box-shadow: none;
+      padding: 0;
+      page-break-after: always;
+    }
+    .page.cover { padding: 0; }
+    .page:last-child { page-break-after: auto; }
+    .header-right, .header-rule, .footer-rule, .footer-left, .footer-right {
+      display: none;
+    }
+  }
+
+  .page { page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+
+  /* =====================================================================
+     PORTADA
+     ===================================================================== */
+  .cover {
+    display: flex;
+    flex-direction: column;
+    background: var(--blanco);
+    position: relative;
+    overflow: hidden;
+  }
+  .cover .band-top {
+    height: 8mm;
+    background: linear-gradient(90deg, var(--mostaza) 0%, var(--mostaza-oscuro) 100%);
+  }
+  .cover .band-bottom {
+    height: 5mm;
+    background: var(--sage);
+    margin-top: auto;
+  }
+  .cover-inner {
+    flex: 1;
+    padding: 24mm 28mm 18mm 28mm;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    position: relative;
+  }
+  .cover-eyebrow {
+    font-size: 9pt;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--sage-oscuro);
+    font-weight: 500;
+    margin-bottom: 14mm;
+  }
+  .cover-logo {
+    width: 60mm;
+    height: auto;
+    margin: 0 auto 14mm auto;
+    display: block;
+  }
+  .cover-title {
+    font-size: 32pt;
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--berenjena);
+    letter-spacing: -0.5px;
+    margin: 0 0 10mm 0;
+    padding: 0 6mm;
+  }
+  .cover-rule {
+    width: 40mm;
+    height: 1.2pt;
+    background: var(--sage);
+    margin: 0 auto 8mm auto;
+  }
+  .cover-brand {
+    font-size: 24pt;
+    font-weight: 300;
+    color: var(--mostaza-oscuro);
+    letter-spacing: 1px;
+    margin: 0 0 4mm 0;
+  }
+  .cover-tagline {
+    font-family: 'Cormorant Garamond', 'Poppins', serif;
+    font-style: italic;
+    font-size: 14pt;
+    color: var(--berenjena);
+    margin: 0 0 18mm 0;
+    font-weight: 500;
+  }
+  .cover-meta {
+    margin-top: auto;
+    text-align: left;
+    border-left: 2pt solid var(--mostaza);
+    padding: 4mm 0 4mm 8mm;
+    display: inline-block;
+    align-self: flex-start;
+  }
+  .cover-meta dl {
+    margin: 0;
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 10mm;
+    row-gap: 2mm;
+  }
+  .cover-meta dt {
+    font-size: 8.5pt;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--sage-oscuro);
+  }
+  .cover-meta dd {
+    margin: 0;
+    font-size: 11pt;
+    font-weight: 500;
+    color: var(--berenjena);
+  }
+
+  /* =====================================================================
+     ÍNDICE
+     ===================================================================== */
+  .toc-header {
+    margin-top: 8mm;
+    margin-bottom: 14mm;
+  }
+  .toc-eyebrow {
+    font-size: 9pt;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--sage-oscuro);
+    font-weight: 500;
+    margin: 0 0 4mm 0;
+  }
+  .toc-title {
+    font-size: 36pt;
+    font-weight: 600;
+    color: var(--berenjena);
+    margin: 0;
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+  .toc-rule {
+    width: 22mm;
+    height: 1.5pt;
+    background: var(--mostaza);
+    margin: 5mm 0 0 0;
+  }
+  .toc-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .toc-item {
+    display: grid;
+    grid-template-columns: 14mm 1fr auto;
+    align-items: baseline;
+    column-gap: 4mm;
+    padding: 3mm 0;
+    border-bottom: 0.3pt dotted #d4cad4;
+  }
+  .toc-num {
+    font-weight: 600;
+    color: var(--mostaza-oscuro);
+    font-size: 11pt;
+    font-variant-numeric: tabular-nums;
+  }
+  .toc-text {
+    font-size: 11pt;
+    color: var(--berenjena);
+    font-weight: 500;
+  }
+  .toc-page {
+    font-size: 10pt;
+    color: var(--texto-suave);
+    font-variant-numeric: tabular-nums;
+    font-weight: 400;
+  }
+  .toc-sub {
+    list-style: none;
+    margin: 1mm 0 0 0;
+    padding: 0;
+    grid-column: 2 / 4;
+  }
+  .toc-sub li {
+    display: grid;
+    grid-template-columns: 14mm 1fr auto;
+    align-items: baseline;
+    column-gap: 4mm;
+    padding: 1mm 0;
+    font-size: 10pt;
+    color: var(--sage-oscuro);
+    font-weight: 400;
+  }
+  .toc-sub li .sub-num {
+    font-weight: 500;
+    color: var(--sage);
+    font-variant-numeric: tabular-nums;
+  }
+  .toc-sub li .sub-page {
+    color: var(--texto-suave);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* =====================================================================
+     SECCIONES DE CONTENIDO
+     ===================================================================== */
+  .section {
+    position: relative;
+  }
+  .section-watermark {
+    position: absolute;
+    top: -4mm;
+    right: 0;
+    font-size: 120pt;
+    font-weight: 700;
+    color: var(--mostaza);
+    opacity: 0.14;
+    line-height: 1;
+    letter-spacing: -4px;
+    pointer-events: none;
+    user-select: none;
+  }
+  .section-eyebrow {
+    font-size: 9pt;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--sage-oscuro);
+    font-weight: 500;
+    margin: 8mm 0 3mm 0;
+  }
+  .section-title {
+    font-size: 30pt;
+    font-weight: 600;
+    color: var(--berenjena);
+    margin: 0 0 4mm 0;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+  .section-rule {
+    width: 18mm;
+    height: 1.5pt;
+    background: var(--sage);
+    margin: 0 0 8mm 0;
+  }
+
+  .lead {
+    font-size: 12.5pt;
+    line-height: 1.65;
+    font-weight: 500;
+    color: var(--berenjena);
+    margin: 0 0 7mm 0;
+  }
+  p {
+    font-size: 11pt;
+    line-height: 1.75;
+    color: var(--texto);
+    margin: 0 0 4mm 0;
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  h2.subhead {
+    font-size: 16pt;
+    font-weight: 600;
+    color: var(--mostaza-oscuro);
+    margin: 9mm 0 4mm 0;
+    letter-spacing: -0.2px;
+    display: flex;
+    align-items: center;
+    gap: 5mm;
+  }
+  h2.subhead::before {
+    content: "";
+    width: 4mm;
+    height: 2.5pt;
+    background: var(--mostaza);
+    display: inline-block;
+  }
+
+  h3.subsub {
+    font-size: 12pt;
+    font-weight: 600;
+    color: var(--sage-oscuro);
+    margin: 6mm 0 2mm 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* Callout destacado */
+  .callout {
+    background: var(--crema);
+    border-left: 3pt solid var(--sage);
+    padding: 6mm 7mm;
+    margin: 7mm 0;
+    border-radius: 1mm;
+  }
+  .callout p {
+    margin: 0;
+    font-size: 11pt;
+    line-height: 1.65;
+    color: var(--berenjena);
+    font-weight: 400;
+    font-style: normal;
+    text-align: left;
+  }
+  .callout .callout-label {
+    display: block;
+    font-size: 8.5pt;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--sage-oscuro);
+    margin-bottom: 2mm;
+  }
+
+  /* Listas con bullets cuadrados mostaza */
+  ul.styled {
+    list-style: none;
+    padding-left: 0;
+    margin: 4mm 0 6mm 0;
+  }
+  ul.styled li {
+    position: relative;
+    padding-left: 8mm;
+    font-size: 11pt;
+    line-height: 1.65;
+    color: var(--texto);
+    margin-bottom: 2.5mm;
+  }
+  ul.styled li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 2.6mm;
+    width: 2.2mm;
+    height: 2.2mm;
+    background: var(--mostaza);
+  }
+  ul.styled li strong {
+    color: var(--berenjena);
+    font-weight: 600;
+  }
+
+  /* Cierre decorativo de sección */
+  .end-rule {
+    width: 14mm;
+    height: 0.6pt;
+    background: var(--sage);
+    margin: 12mm auto 0 auto;
+  }
+
+  /* Drop cap */
+  .lead::first-letter {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38pt;
+    line-height: 0.9;
+    color: var(--mostaza-oscuro);
+    float: left;
+    margin: 1mm 3mm 0 0;
+    font-weight: 500;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<!-- ====================================================================
+     PORTADA
+     ==================================================================== -->
+<section class="page cover">
+  <div class="band-top"></div>
+  <div class="cover-inner">
+    <p class="cover-eyebrow">Proyecto Final · 2º DAW</p>
+
+    <img class="cover-logo" src="assets/logo.png" alt="Logo Refugio del Sol">
+
+    <h1 class="cover-title">Plataforma Web para la Gestión Integral<br>de Asociaciones Felinas</h1>
+
+    <div class="cover-rule"></div>
+
+    <p class="cover-brand">Refugio del Sol</p>
+    <p class="cover-tagline">“Que el sol de su vida sea un hogar”</p>
+
+    <div class="cover-meta">
+      <dl>
+        <dt>Autora</dt><dd>Viviana Salazar</dd>
+        <dt>Curso</dt><dd>2º Desarrollo de Aplicaciones Web</dd>
+        <dt>Centro</dt><dd>IES Belén</dd>
+        <dt>Curso académico</dt><dd>2025 / 2026</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="band-bottom"></div>
+</section>
+
+<!-- ====================================================================
+     ÍNDICE
+     ==================================================================== -->
+<section class="page">
+  <div class="header-right">Índice general</div>
+  <div class="header-rule"></div>
+  <div class="footer-rule"></div>
+  <div class="footer-left">Viviana Salazar  ·  2º DAW</div>
+  <div class="footer-right">— 2 —</div>
+
+  <header class="toc-header">
+    <p class="toc-eyebrow">Tabla de contenidos</p>
+    <h1 class="toc-title">Índice</h1>
+    <div class="toc-rule"></div>
+  </header>
+
+  <ol class="toc-list">
+    <li class="toc-item"><span class="toc-num">01</span><span class="toc-text">Título del proyecto</span><span class="toc-page">01</span></li>
+    <li class="toc-item"><span class="toc-num">02</span><span class="toc-text">Índice</span><span class="toc-page">02</span></li>
+    <li class="toc-item"><span class="toc-num">03</span><span class="toc-text">Estudio del sector productivo</span><span class="toc-page">04</span></li>
+    <li class="toc-item"><span class="toc-num">04</span><span class="toc-text">Finalidad del proyecto</span><span class="toc-page">07</span></li>
+    <li class="toc-item"><span class="toc-num">05</span><span class="toc-text">Descripción básica del proyecto</span><span class="toc-page">11</span></li>
+
+    <li class="toc-item"><span class="toc-num">06</span><span class="toc-text">Descripción detallada del proyecto</span><span class="toc-page">15</span>
+      <ul class="toc-sub">
+        <li><span class="sub-num">6.1</span><span>Herramientas de desarrollo software utilizadas</span><span class="sub-page">16</span></li>
+        <li><span class="sub-num">6.2</span><span>Diseño del proyecto</span><span class="sub-page">19</span></li>
+        <li><span class="sub-num">6.3</span><span>Esquema de funcionamiento de la aplicación</span><span class="sub-page">23</span></li>
+        <li><span class="sub-num">6.4</span><span>Descomposición modular e interrelación entre módulos</span><span class="sub-page">27</span></li>
+        <li><span class="sub-num">6.5</span><span>Descripción de los módulos del proyecto</span><span class="sub-page">31</span></li>
+        <li><span class="sub-num">6.6</span><span>Descripción de la interfaz de usuario</span><span class="sub-page">38</span></li>
+        <li><span class="sub-num">6.7</span><span>Descripción de listados e informes</span><span class="sub-page">44</span></li>
+        <li><span class="sub-num">6.8</span><span>Manual de usuario</span><span class="sub-page">47</span></li>
+        <li><span class="sub-num">6.9</span><span>Manual de instalación o despliegue</span><span class="sub-page">53</span></li>
+        <li><span class="sub-num">6.10</span><span>Presentación de la aplicación</span><span class="sub-page">58</span></li>
+      </ul>
+    </li>
+
+    <li class="toc-item"><span class="toc-num">07</span><span class="toc-text">Planificación del proyecto</span><span class="toc-page">61</span></li>
+    <li class="toc-item"><span class="toc-num">08</span><span class="toc-text">Control de la ejecución</span><span class="toc-page">65</span></li>
+    <li class="toc-item"><span class="toc-num">09</span><span class="toc-text">Dificultades encontradas</span><span class="toc-page">68</span></li>
+    <li class="toc-item"><span class="toc-num">10</span><span class="toc-text">Propuestas de mejora</span><span class="toc-page">71</span></li>
+    <li class="toc-item"><span class="toc-num">11</span><span class="toc-text">Conclusión final</span><span class="toc-page">74</span></li>
+  </ol>
+</section>
+
+<!-- ====================================================================
+     SECCIÓN DE EJEMPLO: FINALIDAD DEL PROYECTO
+     ==================================================================== -->
+<section class="page">
+  <div class="header-right">04 · Finalidad del proyecto</div>
+  <div class="header-rule"></div>
+  <div class="footer-rule"></div>
+  <div class="footer-left">Viviana Salazar  ·  2º DAW</div>
+  <div class="footer-right">— 7 —</div>
+
+  <article class="section">
+    <span class="section-watermark">04</span>
+    <p class="section-eyebrow">Sección 04</p>
+    <h1 class="section-title">Finalidad del proyecto</h1>
+    <div class="section-rule"></div>
+
+    <p class="lead">El objetivo primordial de <strong>Refugio del Sol</strong> es dotar a una asociación de rescate y acogida felina de una herramienta digital centralizada y eficiente que facilite su administración diaria, amplíe su alcance hacia adoptantes, padrinos y voluntarios, y fortalezca el vínculo emocional y financiero con la comunidad existente.</p>
+
+    <h2 class="subhead">Necesidad detectada en el sector</h2>
+
+    <p>En la mayoría de webs de asociaciones animales actuales la información se presenta de forma incompleta o difícil de localizar. Las solicitudes de adopción se reducen a formularios sin respuesta inmediata o a textos demasiado extensos que terminan por desalentar al usuario interesado.</p>
+
+    <p>No existe, en la práctica, un espacio digital en el que adoptantes, voluntarios y padrinos puedan acceder a información personalizada o realizar un seguimiento real de sus actividades. Los padrinos, en concreto, no reciben actualizaciones —fotografías, vídeos o pequeños informes— de los animales apadrinados, lo que rompe el vínculo emocional y, con frecuencia, conduce al abandono del apoyo económico.</p>
+
+    <p>Las tiendas solidarias y los canales de donación suelen estar alojados en plataformas externas como Instagram, Vinted o Wallapop. Esto obliga al usuario a abandonar el sitio principal y a registrarse en otros portales, reduciendo la probabilidad de compra o donación. A esto se suma que los gatos en adopción o acogida no siempre están bien representados: a menudo solo se muestran los casos urgentes, con información en texto plano y sin estructura visual.</p>
+
+    <div class="callout">
+      <span class="callout-label">Idea fuerza</span>
+      <p>La nueva plataforma se plantea como una <strong>solución integral</strong> que centraliza la información, facilita la interacción personalizada con la comunidad e integra tienda solidaria y pasarela de pago en un único entorno; abriendo además la puerta a colaboraciones y afiliaciones con marcas de productos para mascotas como nueva fuente de ingresos sostenibles.</p>
+    </div>
+
+    <h2 class="subhead">Solución propuesta</h2>
+
+    <p>La plataforma articula la respuesta a las necesidades anteriores en torno a cuatro ejes complementarios, pensados para reforzarse entre sí y simplificar el día a día tanto del equipo gestor como de los usuarios externos:</p>
+
+    <ul class="styled">
+      <li><strong>Centralización</strong> de la información y de la gestión interna en un único panel coherente, accesible desde cualquier dispositivo.</li>
+      <li><strong>Interacción personalizada</strong> con adoptantes, padrinos y voluntarios, con seguimiento del estado de cada solicitud y un feed privado para los animales apadrinados.</li>
+      <li><strong>Tienda solidaria y pasarela de pago integradas</strong>, eliminando la fricción de plataformas externas y aumentando la conversión de la intención de ayuda en aportación real.</li>
+      <li><strong>Logística interna ordenada</strong> mediante una lista de tareas compartida y una pizarra comunitaria, que mejora la organización de traslados, repartos y mantenimiento de los espacios físicos.</li>
+    </ul>
+
+    <p>De este modo, la herramienta no se limita a digitalizar un proceso existente: redefine el modelo de relación entre la asociación y su comunidad, y prepara a la organización para escalar su impacto sin multiplicar su carga administrativa.</p>
+
+    <div class="end-rule"></div>
+  </article>
+</section>
+
+</body>
+</html>

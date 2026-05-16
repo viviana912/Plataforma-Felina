@@ -1,0 +1,3 @@
+# Volcados de base de datos (datos personales: emails, hashes BCrypt, etc.)
+dump.sql
+*.dump

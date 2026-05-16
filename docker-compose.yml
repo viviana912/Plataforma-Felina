@@ -1,41 +1,69 @@
+# =============================================================================
+# Plataforma Felina - Refugio del Sol
+# =============================================================================
+# Levanta el proyecto entero (PostgreSQL + backend Spring Boot + frontend
+# Angular sobre nginx) con un solo comando:
+#
+#     docker compose up --build
+#
+# Frontend disponible en  http://localhost:4200
+# Backend  disponible en  http://localhost:8080
+#
+# Para Render se utilizan los Dockerfiles individuales y una BD gestionada
+# aparte; este compose es para desarrollo y demostracion en local.
+# =============================================================================
+
 services:
 
-  mysql-db:
-    image: mysql:8.0
-    container_name: mysql-db
-    restart: always
-    command: --default-authentication-plugin=mysql_native_password
+  postgres-db:
+    image: postgres:18-alpine
+    container_name: plataforma-felina-db
+    restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: 12345678
-      MYSQL_DATABASE: plataforma_felina
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: plataforma_felina
     ports:
-      - "3306:3306"
+      - "5432:5432"
     volumes:
-      - mysql_data:/var/lib/mysql
-
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d plataforma_felina"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   backend:
     build: ./plataforma-felina-backend
-    container_name: backend-app
-    restart: always
+    container_name: plataforma-felina-backend
+    restart: unless-stopped
     ports:
       - "8080:8080"
     depends_on:
-      - mysql-db
+      postgres-db:
+        condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/plataforma_felina?createDatabaseIfNotExist=true&serverTimezone=UTC&useSSL=false
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: 12345678
-    volumes:
-      - uploads_data:/app/uploads
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5432/plataforma_felina
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      JWT_SECRET: ${JWT_SECRET:-cambia-este-secreto-en-produccion-y-usa-uno-de-al-menos-32-caracteres}
+      CORS_ALLOWED_ORIGINS: http://localhost:4200
+      CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME:-}
+      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY:-}
+      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
 
   frontend:
-    build: ./plataforma-felina-frontend
-    container_name: frontend-app
-    restart: always
+    build:
+      context: ./plataforma-felina-frontend
+      args:
+        BUILD_CONFIG: development
+    container_name: plataforma-felina-frontend
+    restart: unless-stopped
     ports:
       - "4200:80"
+    depends_on:
+      - backend
 
 volumes:
-  mysql_data:
-  uploads_data:
+  postgres_data:

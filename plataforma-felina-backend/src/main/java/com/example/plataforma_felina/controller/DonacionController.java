@@ -1,6 +1,7 @@
 package com.example.plataforma_felina.controller;
 
 import com.example.plataforma_felina.domain.Donacion;
+import com.example.plataforma_felina.security.SecurityUtils;
 import com.example.plataforma_felina.service.DonacionService;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,7 @@ public class DonacionController {
 
     @GetMapping("/usuario/{usuarioId}")
     public List<Donacion> getByUsuario(@PathVariable Long usuarioId) {
+        SecurityUtils.requireAccessToUser(usuarioId);
         return donacionService.getByUsuario(usuarioId);
     }
 

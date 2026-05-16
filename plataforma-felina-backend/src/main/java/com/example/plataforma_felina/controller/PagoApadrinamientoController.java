@@ -1,6 +1,7 @@
 package com.example.plataforma_felina.controller;
 
 import com.example.plataforma_felina.domain.PagoApadrinamiento;
+import com.example.plataforma_felina.security.SecurityUtils;
 import com.example.plataforma_felina.service.PagoApadrinamientoService;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ public class PagoApadrinamientoController {
 
     @GetMapping("/usuario/{usuarioId}")
     public List<PagoApadrinamiento> getByUsuario(@PathVariable Long usuarioId) {
+        SecurityUtils.requireAccessToUser(usuarioId);
         return pagoService.getByUsuario(usuarioId);
     }
 }
