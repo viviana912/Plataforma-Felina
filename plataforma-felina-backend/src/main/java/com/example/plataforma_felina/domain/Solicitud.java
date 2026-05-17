@@ -16,8 +16,6 @@ public class Solicitud {
     @EmbeddedId
     private SolicitudId id;
 
-    // Hibernate convertirá automáticamente fechaSolicitud a fecha_solicitud
-    // Si quieres asegurar el nombre, úsalo así pero ASEGÚRATE de no tenerlo repetido
     @Column(name = "fecha_solicitud")
     private LocalDateTime fechaSolicitud;
 
